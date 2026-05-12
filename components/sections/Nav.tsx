@@ -61,6 +61,9 @@ export function Nav() {
           className="md:hidden text-text-primary"
           onClick={() => setMenuOpen(!menuOpen)}
           aria-label="Menu"
+          aria-expanded={menuOpen}
+          aria-controls="mobile-nav"
+          type="button"
         >
           <div className="w-6 h-4 flex flex-col justify-between">
             <span className={cn("block h-0.5 bg-current transition-all duration-fast", menuOpen && "rotate-45 translate-y-[7px]")} />
@@ -72,7 +75,7 @@ export function Nav() {
 
       {/* Menu mobile overlay */}
       {menuOpen && (
-        <div className="md:hidden glass border-t border-border-subtle">
+        <div id="mobile-nav" className="md:hidden glass border-t border-border-subtle">
           <ul className="max-w-6xl mx-auto px-6 py-6 flex flex-col gap-4">
             {NAV_LINKS.map((link) => (
               <li key={link.href}>

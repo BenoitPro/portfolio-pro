@@ -133,7 +133,7 @@ export function KnowledgeGraph({
       height={height}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      aria-label="Knowledge graph interactif — compétences et projets de Benoît Baillon"
+      aria-label="Knowledge graph interactif : compétences et projets de Benoît Baillon"
       role="img"
     >
       {/* Edges */}
@@ -192,7 +192,7 @@ export function KnowledgeGraph({
                   onNodeClick?.(node.sectionAnchor);
                 }
               }}
-              aria-label={`Node ${node.label}${node.sectionAnchor ? " — cliquer pour voir la section" : ""}`}
+              aria-label={`Node ${node.label}${node.sectionAnchor ? " : cliquer pour voir la section" : ""}`}
               role={node.sectionAnchor ? "button" : undefined}
             >
               {/* Halo sur le node central */}
