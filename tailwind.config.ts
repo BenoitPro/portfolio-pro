@@ -28,8 +28,8 @@ const config: Config = {
         "graph-node-output": "#378ADD",
       },
       fontFamily: {
-        sans: ["Inter", "system-ui", "sans-serif"],
-        serif: ["Spectral", "Georgia", "serif"],
+        sans: ["var(--font-inter)", "system-ui", "sans-serif"],
+        serif: ["var(--font-spectral)", "Georgia", "serif"],
       },
       fontSize: {
         display: ["5rem", { lineHeight: "1.05", fontWeight: "500" }],

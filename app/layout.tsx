@@ -1,6 +1,22 @@
 import type { Metadata } from "next";
+import { Inter, Spectral } from "next/font/google";
 import "./globals.css";
 import { seo } from "@/data/portfolio";
+
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+const spectral = Spectral({
+  subsets: ["latin"],
+  weight: ["400"],
+  style: ["italic"],
+  variable: "--font-spectral",
+  display: "swap",
+});
 
 export const metadata: Metadata = {
   title: seo.title,
@@ -24,7 +40,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="fr" className="scroll-smooth">
+    <html lang="fr" className={`${inter.variable} ${spectral.variable} scroll-smooth`}>
       <body className="bg-bg-base text-text-primary antialiased">
         <a href="#main" className="skip-link">Aller au contenu</a>
         <main id="main">{children}</main>
