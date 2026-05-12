@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { cn } from "@/lib/cn";
+import { cn } from "@/lib/utils";
 
 interface MagneticButtonProps {
   children: React.ReactNode;
@@ -18,11 +18,12 @@ export function MagneticButton({
   variant = "primary",
   className,
 }: MagneticButtonProps) {
-  const ref = useRef<HTMLAnchorElement & HTMLButtonElement>(null);
+  const anchorRef = useRef<HTMLAnchorElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    const el = ref.current;
+    const el = href ? anchorRef.current : buttonRef.current;
     if (!el) return;
     const rect = el.getBoundingClientRect();
     const cx = rect.left + rect.width / 2;
@@ -51,15 +52,19 @@ export function MagneticButton({
     className
   );
 
+  // External links get rel="noopener"
+  const isExternal = href?.startsWith("http");
+
   if (href) {
     return (
       <a
-        ref={ref as React.Ref<HTMLAnchorElement>}
+        ref={anchorRef}
         href={href}
         className={baseClass}
         style={style}
         onMouseMove={handleMouseMove}
         onMouseLeave={handleMouseLeave}
+        {...(isExternal && { target: "_blank", rel: "noopener noreferrer" })}
       >
         {children}
       </a>
@@ -68,7 +73,8 @@ export function MagneticButton({
 
   return (
     <button
-      ref={ref as React.Ref<HTMLButtonElement>}
+      ref={buttonRef}
+      type="button"
       onClick={onClick}
       className={baseClass}
       style={style}

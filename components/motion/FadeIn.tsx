@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { cn } from "@/lib/cn";
+import { cn } from "@/lib/utils";
 
 interface FadeInProps {
   children: React.ReactNode;
