@@ -67,7 +67,11 @@ export function KnowledgeGraph({
     const nodeIds = graphNodes.map((n) => n.id);
     const interval = setInterval(() => {
       if (i < nodeIds.length) {
-        setVisibleNodes((prev) => new Set([...prev, nodeIds[i]]));
+        setVisibleNodes((prev) => {
+          const next = new Set(prev);
+          next.add(nodeIds[i]);
+          return next;
+        });
         i++;
       } else {
         clearInterval(interval);
