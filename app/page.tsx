@@ -1,10 +1,18 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
+import { Nav } from "@/components/sections/Nav";
 import { Hero } from "@/components/sections/Hero";
+import { ProofBar } from "@/components/sections/ProofBar";
+import { WhyMe } from "@/components/sections/WhyMe";
+import { Projects } from "@/components/sections/Projects";
+import { Approche } from "@/components/sections/Approche";
+import { Stack } from "@/components/sections/Stack";
+import { Experience } from "@/components/sections/Experience";
+import { Cta } from "@/components/sections/Cta";
+import { Footer } from "@/components/sections/Footer";
 import { MiniMap } from "@/components/graph/MiniMap";
 
-// Liste des sections avec leur ancre (même ancres que dans portfolio.ts)
 const SECTIONS = [
   "#pourquoi-moi",
   "#projets",
@@ -19,7 +27,6 @@ export default function Home() {
   const [activeSection, setActiveSection] = useState<string | null>(null);
 
   useEffect(() => {
-    // Observer pour détecter si on a dépassé le hero
     const heroEl = document.getElementById("hero");
     if (!heroEl) return;
     const obs = new IntersectionObserver(
@@ -31,7 +38,6 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    // Observer pour la section active
     const observers: IntersectionObserver[] = [];
     SECTIONS.forEach((anchor) => {
       const el = document.querySelector(anchor);
@@ -40,7 +46,7 @@ export default function Home() {
         ([entry]) => {
           if (entry.isIntersecting) setActiveSection(anchor);
         },
-        { threshold: 0.5 }
+        { threshold: 0.4 }
       );
       obs.observe(el);
       observers.push(obs);
@@ -49,19 +55,26 @@ export default function Home() {
   }, []);
 
   const handleNodeClick = useCallback((anchor: string) => {
-    const el = document.querySelector(anchor);
-    if (el) el.scrollIntoView({ behavior: "smooth" });
+    document.querySelector(anchor)?.scrollIntoView({ behavior: "smooth" });
   }, []);
 
   return (
     <>
+      <Nav />
       <Hero />
+      <ProofBar />
+      <WhyMe />
+      <Projects />
+      <Approche />
+      <Stack />
+      <Experience />
+      <Cta />
+      <Footer />
       <MiniMap
         activeSection={activeSection}
         onNodeClick={handleNodeClick}
         visible={pastHero}
       />
-      {/* Sections à venir */}
     </>
   );
 }
