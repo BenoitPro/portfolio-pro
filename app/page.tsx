@@ -12,6 +12,7 @@ import { Experience } from "@/components/sections/Experience";
 import { Cta } from "@/components/sections/Cta";
 import { Footer } from "@/components/sections/Footer";
 import { MiniMap } from "@/components/graph/MiniMap";
+import { CommandPalette } from "@/components/CommandPalette";
 
 const SECTIONS = [
   "#pourquoi-moi",
@@ -75,6 +76,7 @@ export default function Home() {
         onNodeClick={handleNodeClick}
         visible={pastHero}
       />
+      <CommandPalette />
     </>
   );
 }
