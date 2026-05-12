@@ -1,40 +1,55 @@
-# Portfolio Benoît Baillon · Mister IA
+# Portfolio Mister IA — Benoît Baillon
 
-Repo de candidature pour le poste Consultant IA chez Mister IA (Paris). Le site sera un portfolio one-page avec un knowledge graph interactif en hero, des sections classiques au scroll, et un design premium fond clair × bleu Anthropic.
+Portfolio one-page personnel : `benoit-baillon.com`.
 
-## Workflow
+## Stack
 
-1. Pousser ce repo sur GitHub (instructions plus bas).
-2. Brancher le repo sur Claude Design (ou Claude Code, ou tout agent de build).
-3. Copier-coller le contenu de `PROMPT.md` dans la conversation avec l'agent.
-4. L'agent lit `CLAUDE.md`, `BRIEF.md`, `ROADMAP.md`, `design-tokens.md`, `data/portfolio.ts` et démarre la Phase 1 de la roadmap.
-5. Reviewer à chaque checkpoint de la roadmap.
+- Next.js 14 (App Router) + TypeScript strict
+- Tailwind CSS + shadcn/ui
+- Framer Motion (animations)
+- Lucide React (icônes)
+- Knowledge Graph SVG custom (simulation physique maison)
 
-## Structure des fichiers
-
-- `CLAUDE.md` — contexte permanent du projet, lu à chaque session par l'agent
-- `BRIEF.md` — brief produit complet (DA, sections, animations, comportement)
-- `PROMPT.md` — prompt copy-paste à donner à Claude Design
-- `ROADMAP.md` — plan d'exécution en 7 phases avec checkpoints
-- `design-tokens.md` — palette, typo, spacing, durées d'animation
-- `data/portfolio.ts` — toutes les données du site (nodes, projets, expériences, copywriting)
-
-## Initialisation git
+## Développement local
 
 ```bash
-cd portfolio-mister-ia
-git init
-git add .
-git commit -m "init: portfolio kit"
-git branch -M main
-git remote add origin git@github.com:<ton-handle>/<nom-repo>.git
-git push -u origin main
+npm install
+npm run dev
 ```
 
-## Stack imposée
+Le site tourne sur http://localhost:3000.
 
-Next.js 14 (App Router) · TypeScript · Tailwind CSS · shadcn/ui · Framer Motion · react-force-graph-2d · Vercel.
+## Build production
+
+```bash
+npm run build
+npm run start
+```
+
+## Source de vérité
+
+Tout le contenu vient de `data/portfolio.ts`. Pour modifier un mot, c'est là.
+
+Pour les conventions de design (couleurs, typo, animations), voir `design-tokens.md`.
 
 ## Déploiement
 
-Vercel auto-deploy depuis main. Le custom domain sera ajouté plus tard.
+Hébergé sur Vercel. Push sur la branche `main` déclenche le déploiement.
+
+## Easter eggs
+
+- `⌘K` (ou `Ctrl+K`) ouvre la command palette
+- Console DevTools affiche une signature au load
+
+## Repo organisation
+
+```
+app/             # Next.js App Router (layout, page, schema, robots, sitemap)
+components/
+  graph/         # KnowledgeGraph, MiniMap
+  motion/        # Wrappers Framer Motion
+  sections/      # Sections de la page
+  ui/            # Primitives shadcn + maison
+data/            # portfolio.ts (source de vérité)
+lib/             # utils (cn), graph-physics
+```
