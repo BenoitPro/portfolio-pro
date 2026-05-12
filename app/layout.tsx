@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Spectral } from "next/font/google";
 import "./globals.css";
 import { seo } from "@/data/portfolio";
+import { JsonLdSchema } from "./schema";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -42,6 +43,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="fr" className={`${inter.variable} ${spectral.variable} scroll-smooth`}>
       <body className="bg-bg-base text-text-primary antialiased">
+        <JsonLdSchema />
         <a href="#main" className="skip-link">Aller au contenu</a>
         <main id="main">{children}</main>
       </body>
