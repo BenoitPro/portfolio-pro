@@ -113,10 +113,24 @@
     padding: 22px clamp(20px, 4vw, 56px);
     pointer-events: none;
     background: transparent;
-    transition: padding 0.3s ease;
+    border-bottom: 1px solid transparent;
+    transition: padding 0.3s ease, background 0.3s ease, border-color 0.3s ease, backdrop-filter 0.3s ease;
   }
   .topbar > * { pointer-events: auto; }
-  .topbar.scrolled { padding-top: 16px; }
+  .topbar.scrolled {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    background: rgba(250, 250, 248, 0.72);
+    backdrop-filter: blur(14px) saturate(1.4);
+    -webkit-backdrop-filter: blur(14px) saturate(1.4);
+    border-bottom-color: var(--line);
+  }
+  .topbar.scrolled .nav-links {
+    background: transparent;
+    border-color: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
   .brand {
     display: inline-flex;
     align-items: baseline;
@@ -330,11 +344,19 @@
       drop-shadow(-10px 14px 28px rgba(11, 20, 38, 0.12))
       drop-shadow(0 4px 10px rgba(11, 20, 38, 0.07));
     opacity: 0;
-    transform: translateY(14px);
+    --parallax-y: 0px;
+    transform: translate3d(0, calc(14px + var(--parallax-y)), 0);
     animation: selfieIn 1.2s cubic-bezier(.2,.7,.2,1) 0.2s forwards;
+    will-change: transform, opacity;
   }
   @keyframes selfieIn {
-    to { opacity: 1; transform: none; }
+    to { opacity: 1; transform: translate3d(0, var(--parallax-y), 0); }
+  }
+  .hero-selfie.parallax-ready {
+    opacity: 1;
+    animation: none;
+    transform: translate3d(0, var(--parallax-y), 0);
+    transition: transform 0.05s linear;
   }
 
   /* Graph stage */
@@ -946,28 +968,8 @@
     padding: 4px 9px;
     letter-spacing: 0.04em;
   }
-  .gcard-meta {
-    position: absolute; left: 12px; right: 12px; bottom: 12px; z-index: 2;
-    display: flex; justify-content: space-between; align-items: center;
-    font-family: "JetBrains Mono", monospace;
-    font-size: 10.5px;
-    color: var(--ink-70);
-    letter-spacing: 0.03em;
-  }
-  .gcard-meta .gcard-dot {
-    width: 6px; height: 6px; border-radius: 50%;
-    background: var(--accent);
-    box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.15);
-  }
-  .gcard-caption {
-    position: absolute; left: 12px; right: 12px; bottom: 36px; z-index: 2;
-    color: var(--ink);
-    font-size: 14px;
-    font-weight: 500;
-    letter-spacing: -0.01em;
-    line-height: 1.25;
-    text-shadow: 0 1px 0 rgba(255,255,255,0.4);
-  }
+  .gcard-meta { display: none; }
+  .gcard-caption { display: none; }
   @media (max-width: 720px) {
     .gcard.size-a { width: 180px; height: 230px; }
     .gcard.size-b { width: 210px; height: 170px; }
@@ -1023,10 +1025,10 @@
   .footer-row .mono { font-size: 11px; }
 
   /* Reveal */
-  .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.8s cubic-bezier(.2,.6,.2,1), transform 0.8s cubic-bezier(.2,.6,.2,1); }
-  .reveal.in { opacity: 1; transform: none; }
-  .reveal-stagger > * { opacity: 0; transform: translateY(14px); transition: opacity 0.6s, transform 0.6s; }
-  .reveal-stagger.in > * { opacity: 1; transform: none; }
+  .reveal { opacity: 0; transform: translateY(22px) scale(0.985); transition: opacity 0.85s cubic-bezier(.2,.7,.2,1), transform 0.85s cubic-bezier(.2,.7,.2,1); }
+  .reveal.in { opacity: 1; transform: translateY(0) scale(1); }
+  .reveal-stagger > * { opacity: 0; transform: translateY(16px) scale(0.99); transition: opacity 0.65s cubic-bezier(.2,.7,.2,1), transform 0.65s cubic-bezier(.2,.7,.2,1); }
+  .reveal-stagger.in > * { opacity: 1; transform: translateY(0) scale(1); }
   .reveal-stagger.in > *:nth-child(1) { transition-delay: 0.05s; }
   .reveal-stagger.in > *:nth-child(2) { transition-delay: 0.12s; }
   .reveal-stagger.in > *:nth-child(3) { transition-delay: 0.19s; }
@@ -1217,28 +1219,21 @@ window.PORTFOLIO = {
       { t: "type", italic: true },
       { t: " derrière le code." },
     ],
-    sub: "Conférences, rings, hackathons, terrain. Photos à venir — pour l’instant, des placeholders.",
+    sub: "Conférences, rings, hackathons, terrain.",
     row1: [
-      { src: null, caption: "Finale IDF — boxe thaï",     tag: "ring · 2024",       size: "a", c1: "#e9d8c1", c2: "#c9ac82" },
-      { src: null, caption: "VivaTech — stand OVHcloud",  tag: "event · 2025",      size: "b", c1: "#dde3ee", c2: "#b6c2db" },
-      { src: null, caption: "Sparring — entraînement",    tag: "boxe · janv 25",    size: "c", c1: "#efe7d8", c2: "#cbb992" },
-      { src: null, caption: "Workshop IA — client",       tag: "atelier · 2025",    size: "d", c1: "#e8e4d6", c2: "#bcae8a" },
-      { src: null, caption: "Paris Blockchain Week",      tag: "conf · mars 25",    size: "b", c1: "#e2dccb", c2: "#b8ab87" },
-      { src: null, caption: "Trail — semi-marathon",      tag: "sport · 2024",      size: "a", c1: "#eadccb", c2: "#c6a685" },
-      { src: null, caption: "FIC — Lille",                tag: "sécu · 2025",       size: "e", c1: "#dfe5f0", c2: "#b9c5e0" },
-      { src: null, caption: "Hackathon 48h — équipe",     tag: "build · 2025",      size: "d", c1: "#e7e2d2", c2: "#bbac86" },
-      { src: null, caption: "EthCC — Bruxelles",          tag: "event · 2024",      size: "c", c1: "#e3dccb", c2: "#b8a880" },
+      { src: "assets/gallery/boxe-victoire.jpg",    tag: "boxe thaï",         size: "a" },
+      { src: "assets/gallery/aleo-pitch.jpg",       tag: "blockchain · 2025", size: "b" },
+      { src: "assets/gallery/build-laptop.jpg",     tag: "prod · 2025",       size: "c" },
+      { src: "assets/gallery/semi-marathon.jpg",    tag: "running · 2025",    size: "d" },
+      { src: "assets/gallery/talk-micro.jpg",       tag: "conf · 2025",       size: "b" },
+      { src: "assets/gallery/hackathon-pitch.jpg",  tag: "hackathon",         size: "e" },
     ],
     row2: [
-      { src: null, caption: "Entraînement — 6h du mat’",  tag: "boxe · 2025",       size: "b", c1: "#ddd6c4", c2: "#aea072" },
-      { src: null, caption: "Camp scout — SGDF",          tag: "scoutisme · 2023",  size: "a", c1: "#ebd9bf", c2: "#c39d6e" },
-      { src: null, caption: "France Quantum — Paris",     tag: "conf · 2025",       size: "e", c1: "#e0e4ee", c2: "#b1bedc" },
-      { src: null, caption: "Build nocturne — alAin",     tag: "build · 2025",      size: "d", c1: "#e6e1d1", c2: "#b5a77f" },
-      { src: null, caption: "Hackathon Aleo — victoire",  tag: "win · mai 2025",    size: "c", c1: "#e8dcc8", c2: "#c4a578" },
-      { src: null, caption: "Portrait — mur blanc",       tag: "perso · 2025",      size: "b", c1: "#ece6d8", c2: "#cec1a0" },
-      { src: null, caption: "AI fintech — victoire",      tag: "win · avr 2026",    size: "a", c1: "#e5dfd0", c2: "#bab28e" },
-      { src: null, caption: "Démo live — client FSI",     tag: "delivery · 2025",   size: "e", c1: "#dee4f0", c2: "#aebddc" },
-      { src: null, caption: "Trail — forêt de Rambouillet", tag: "sport · 2024",    size: "d", c1: "#e9dcc6", c2: "#c6a87a" },
+      { src: "assets/gallery/hackathon-collab.jpg", tag: "build · 2025",      size: "a" },
+      { src: "assets/gallery/angkor.jpg",           tag: "travel · 2024",     size: "e" },
+      { src: "assets/gallery/triathlon.jpg",        tag: "sport · 2024",      size: "d" },
+      { src: "assets/gallery/trail-montagne.jpg",   tag: "trail",             size: "c" },
+      { src: "assets/gallery/peche.jpg",            tag: "loisirs",           size: "b" },
     ],
   },
 
@@ -1573,20 +1568,24 @@ function useScrollingActive(idleMs = 600) {
 
 function Minimap({ activeSection, onNodeClick }) {
   const data = window.PORTFOLIO;
-  const w = 192, h = 178;
+  const w = 206, h = 190;
   const scrolling = useScrollingActive(650);
   const [hover, setHover] = useState(false);
   const [atTop, setAtTop] = useState(true);
+  const [hoveredNode, setHoveredNode] = useState(null);
+  const asideRef = useRef(null);
+
   useEffect(() => {
     const onScroll = () => setAtTop(window.scrollY < 200);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
   const collapsed = scrolling && !hover;
   const visible = !atTop && activeSection !== "hero";
   const cx = w / 2, cy = h / 2;
-  const radius = Math.min(w, h) * 0.36;
+  const radius = Math.min(w, h) * 0.37;
 
   const positions = useMemo(() => {
     const peers = data.nodes.filter(n => !n.fixed);
@@ -1607,9 +1606,28 @@ function Minimap({ activeSection, onNodeClick }) {
     activeSection === "approche"    ? "03 / approche" :
     activeSection === "contact"     ? "04 / contact" : "";
 
+  // Compute label anchor offset to push label away from center
+  const getLabelAnchor = (p) => {
+    const dx = p.x - cx, dy = p.y - cy;
+    const dist = Math.sqrt(dx*dx + dy*dy) || 1;
+    const ox = (dx / dist) * 12, oy = (dy / dist) * 12;
+    const anchor = dx > 2 ? "start" : dx < -2 ? "end" : "middle";
+    return { x: p.x + ox, y: p.y + oy + (dy > 0 ? 3 : -3), anchor };
+  };
+
+  // Tooltip vertical position — clamp so it doesn't go off the card
+  const tooltipTop = useMemo(() => {
+    if (!hoveredNode) return 30;
+    const p = positions[hoveredNode.id];
+    const pct = p.y / h;
+    return Math.max(10, Math.min(130, Math.round(pct * 190) - 20));
+  }, [hoveredNode]);
+
   return (
-    <aside className={"minimap" + (visible ? " visible" : "") + (collapsed ? " collapsed" : "")}
-      onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
+    <aside ref={asideRef}
+      className={"minimap" + (visible ? " visible" : "") + (collapsed ? " collapsed" : "")}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => { setHover(false); setHoveredNode(null); }}>
       <div className="minimap-head">
         <span className="minimap-title">Carte</span>
         <span className="minimap-current">{sectionLabel}</span>
@@ -1619,17 +1637,56 @@ function Minimap({ activeSection, onNodeClick }) {
           const A = positions[a], B = positions[b];
           if (!A || !B) return null;
           const hot = activeSet.has(a) && activeSet.has(b);
-          return <line key={i} x1={A.x} y1={A.y} x2={B.x} y2={B.y} className={"mini-edge" + (hot ? " hot" : "")} />;
+          const dimmed = hoveredNode && hoveredNode.id !== a && hoveredNode.id !== b;
+          return <line key={i} x1={A.x} y1={A.y} x2={B.x} y2={B.y}
+            className={"mini-edge" + (hot ? " hot" : "")}
+            style={{ opacity: dimmed ? 0.3 : 1, transition: "opacity 0.15s" }} />;
         })}
         {data.nodes.map((n) => {
           const p = positions[n.id];
           const isCenter = n.id === "moi";
           const isActive = activeSet.has(n.id) && !isCenter;
-          return <circle key={n.id} cx={p.x} cy={p.y} r={isCenter ? 4.5 : (isActive ? 4 : 3)}
-            className={"mini-node" + (isCenter ? " center" : "") + (isActive ? " active" : "")}
-            style={{ cursor: "pointer" }} onClick={() => onNodeClick && onNodeClick(n)}><title>{n.label}</title></circle>;
+          const isHov = hoveredNode && hoveredNode.id === n.id;
+          const showLabel = isActive || isHov;
+          const la = getLabelAnchor(p);
+          const baseR = isCenter ? 5 : (isActive ? 4.5 : 3.5);
+          const r = isHov ? baseR + 1.5 : baseR;
+          return (
+            <g key={n.id}>
+              <circle cx={p.x} cy={p.y} r={r}
+                className={"mini-node" + (isCenter ? " center" : "") + (isActive ? " active" : "") + (isHov ? " hovered" : "")}
+                style={{ cursor: "pointer", transition: "r 0.15s ease" }} />
+              {showLabel && !isCenter && (
+                <text x={la.x} y={la.y} textAnchor={la.anchor}
+                  className={"mini-label" + (isActive ? " active" : "")}>
+                  {n.label.length > 12 ? n.label.slice(0, 11) + "…" : n.label}
+                </text>
+              )}
+              {/* Invisible large hit area */}
+              <circle cx={p.x} cy={p.y} r={12}
+                className="mini-node-hit"
+                onMouseEnter={() => setHoveredNode(n)}
+                onMouseLeave={() => setHoveredNode(null)}
+                onClick={() => onNodeClick && onNodeClick(n)} />
+            </g>
+          );
         })}
       </svg>
+      {/* Tooltip card */}
+      {hoveredNode && (
+        <div className={"minimap-tooltip show"} style={{ top: tooltipTop + "px" }}>
+          <div className="minimap-tooltip-label">
+            <span className="tt-dot" />
+            {hoveredNode.label}
+          </div>
+          {hoveredNode.desc && (
+            <div className="minimap-tooltip-desc">{hoveredNode.desc}</div>
+          )}
+          <div className="minimap-tooltip-cta">
+            {hoveredNode.id === "moi" ? "centre du graphe" : "cliquer pour explorer →"}
+          </div>
+        </div>
+      )}
     </aside>
   );
 }
@@ -1641,7 +1698,7 @@ function useReveal() {
     if (!el) return;
     const io = new IntersectionObserver(
       (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }),
-      { threshold: 0.15 }
+      { threshold: 0.12, rootMargin: "0px 0px -8% 0px" }
     );
     el.querySelectorAll(".reveal, .reveal-stagger").forEach((n) => io.observe(n));
     return () => io.disconnect();
@@ -1925,6 +1982,8 @@ function Topbar({ scrolled, onOpenPalette }) {
 function Hero({ onNodeClick }) {
   const id = window.PORTFOLIO.identity;
   const magRef = useRef(null);
+  const selfieRef = useRef(null);
+
   useEffect(() => {
     const el = magRef.current;
     if (!el) return;
@@ -1935,9 +1994,32 @@ function Hero({ onNodeClick }) {
     return () => { el.removeEventListener("mousemove", onMove); el.removeEventListener("mouseleave", onLeave); };
   }, []);
 
+  // Parallax on selfie
+  useEffect(() => {
+    const el = selfieRef.current;
+    if (!el) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let ticking = false;
+    const update = () => {
+      const y = window.scrollY;
+      // Cap effect after hero is out of view
+      const offset = Math.min(y, 800) * 0.18;
+      el.style.setProperty("--parallax-y", `-${offset}px`);
+      ticking = false;
+    };
+    const onScroll = () => {
+      if (!ticking) { requestAnimationFrame(update); ticking = true; }
+    };
+    // Switch to parallax-ready after entry animation completes
+    const t = setTimeout(() => el.classList.add("parallax-ready"), 1500);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    update();
+    return () => { window.removeEventListener("scroll", onScroll); clearTimeout(t); };
+  }, []);
+
   return (
     <section id="hero" className="hero">
-      <img className="hero-selfie" src="assets/selfie.png" alt="Beno&icirc;t &mdash; portrait" loading="eager" decoding="async" />
+      <img ref={selfieRef} className="hero-selfie" src="assets/selfie.png" alt="Beno&icirc;t &mdash; portrait" loading="eager" decoding="async" />
       <KnowledgeGraph activeSection="hero" onNodeClick={onNodeClick} />
       <div className="hero-meta">
         <h1 className="hero-h1 reveal in">
@@ -2037,7 +2119,6 @@ function App() {
   return (
     <React.Fragment>
       <Topbar scrolled={scrolled} onOpenPalette={() => setPaletteOpen(true)} />
-      <Minimap activeSection={active} onNodeClick={onNodeClick} />
       <main>
         <Hero onNodeClick={onNodeClick} />
         <ParcoursSection />
