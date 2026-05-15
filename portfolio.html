@@ -1,0 +1,2064 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<title>Benoit Baillon — Portfolio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="Benoit Baillon — Account Executive Banking & Finance chez OVHcloud le jour, builder IA le soir." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Spectral:ital,wght@1,400;1,500&family=JetBrains+Mono:wght@400;500&family=Caveat:wght@500;600&display=swap" rel="stylesheet" />
+
+<style>
+  :root {
+    --bg: #FAFAF8;
+    --bg-2: #F4F1E9;
+    --bg-3: #EFEBE0;
+    --ink: #0B1426;
+    --ink-70: rgba(11, 20, 38, 0.70);
+    --ink-55: rgba(11, 20, 38, 0.55);
+    --ink-35: rgba(11, 20, 38, 0.35);
+    --ink-20: rgba(11, 20, 38, 0.20);
+    --line: rgba(11, 20, 38, 0.08);
+    --line-2: rgba(11, 20, 38, 0.14);
+    --accent: #0066FF;
+    --accent-2: #0044C2;
+    --accent-soft: rgba(0, 102, 255, 0.08);
+    --accent-mid: rgba(0, 102, 255, 0.35);
+    --glass: rgba(255, 255, 255, 0.55);
+    --glass-stroke: rgba(255, 255, 255, 0.7);
+    --shadow-sm: 0 1px 2px rgba(11, 20, 38, 0.04), 0 0 0 1px rgba(11, 20, 38, 0.04);
+    --shadow-md: 0 4px 16px rgba(11, 20, 38, 0.06), 0 0 0 1px rgba(11, 20, 38, 0.05);
+    --shadow-lg: 0 12px 48px rgba(11, 20, 38, 0.08), 0 0 0 1px rgba(11, 20, 38, 0.06);
+    --r-sm: 8px;
+    --r-md: 14px;
+    --r-lg: 20px;
+    --r-xl: 28px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--bg);
+    background-image:
+      linear-gradient(to right, rgba(11, 20, 38, 0.045) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(11, 20, 38, 0.045) 1px, transparent 1px);
+    background-size: 48px 48px;
+    background-attachment: fixed;
+    background-position: -1px -1px;
+    color: var(--ink);
+    font-family: "Inter", system-ui, sans-serif;
+    font-feature-settings: "ss01", "cv11";
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    line-height: 1.5;
+  }
+
+  #app { position: relative; z-index: 2; }
+
+  ::selection { background: var(--accent); color: white; }
+
+  .italic {
+    font-family: "Spectral", Georgia, serif;
+    font-style: italic;
+    font-weight: 400;
+    letter-spacing: -0.005em;
+  }
+
+  .mono {
+    font-family: "JetBrains Mono", ui-monospace, monospace;
+    font-size: 0.78em;
+    letter-spacing: 0.01em;
+  }
+
+  body::after {
+    content: "";
+    position: fixed;
+    inset: -10vmax;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+      radial-gradient(38vmax 30vmax at 12% 8%, rgba(255, 255, 255, 0.85), transparent 60%),
+      radial-gradient(34vmax 28vmax at 88% 18%, rgba(0, 102, 255, 0.055), transparent 65%),
+      radial-gradient(42vmax 34vmax at 78% 62%, rgba(255, 247, 230, 0.9), transparent 62%),
+      radial-gradient(30vmax 26vmax at 18% 78%, rgba(11, 20, 38, 0.035), transparent 65%),
+      radial-gradient(36vmax 30vmax at 52% 110%, rgba(0, 102, 255, 0.04), transparent 60%);
+    filter: blur(60px) saturate(1.1);
+    mix-blend-mode: normal;
+    opacity: 0.7;
+  }
+
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.25;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.04 0 0 0 0 0.08 0 0 0 0 0.15 0 0 0 0.05 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  /* Topbar */
+  .topbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 50;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    padding: 22px clamp(20px, 4vw, 56px);
+    pointer-events: none;
+    background: transparent;
+    transition: padding 0.3s ease;
+  }
+  .topbar > * { pointer-events: auto; }
+  .topbar.scrolled { padding-top: 16px; }
+  .brand {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 10px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    font-size: 15px;
+    color: var(--ink);
+    text-decoration: none;
+    line-height: 1;
+  }
+  .brand .brand-mark {
+    font-family: "Spectral", Georgia, serif;
+    font-style: italic;
+    font-weight: 500;
+    color: var(--ink-55);
+    font-size: 13.5px;
+    letter-spacing: 0;
+  }
+  .nav-links {
+    display: inline-flex; gap: 22px; align-items: center;
+    padding: 8px 14px;
+    background: rgba(250,250,248,0.7);
+    backdrop-filter: blur(12px) saturate(1.2);
+    -webkit-backdrop-filter: blur(12px) saturate(1.2);
+    border-radius: 999px;
+    border: 1px solid rgba(11,20,38,0.05);
+  }
+  .nav-links a {
+    color: var(--ink-70);
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-cmd {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 10px 6px 12px;
+    border-radius: 8px;
+    background: rgba(11,20,38,0.04);
+    border: 1px solid var(--line);
+    color: var(--ink-55);
+    font-size: 12.5px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  .nav-cmd:hover { background: rgba(11,20,38,0.07); }
+  .nav-cmd kbd {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    background: white;
+    padding: 1px 5px;
+    border-radius: 4px;
+    border: 1px solid var(--line);
+  }
+  @media (max-width: 768px) {
+    .nav-links { display: none; }
+  }
+
+  /* Hero */
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .hero-meta {
+    position: absolute;
+    top: clamp(120px, 14vh, 180px);
+    left: clamp(20px, 4vw, 56px);
+    z-index: 10;
+    max-width: 440px;
+  }
+  @media (min-width: 1100px) {
+    .hero-meta { max-width: 540px; }
+  }
+  .hero-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px 6px 8px;
+    background: var(--glass);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-stroke);
+    border-radius: 999px;
+    font-size: 12.5px;
+    color: var(--ink-70);
+    margin-bottom: 22px;
+    box-shadow: var(--shadow-sm);
+  }
+  .pulse {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #16a34a;
+    box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.5);
+    animation: pulse 2.4s infinite;
+  }
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.5); }
+    70% { box-shadow: 0 0 0 8px rgba(22, 163, 74, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); }
+  }
+  h1.hero-h1 {
+    font-size: clamp(32px, 3.9vw, 56px);
+    font-weight: 500;
+    letter-spacing: -0.032em;
+    line-height: 1.02;
+    margin: 0 0 18px;
+  }
+  .hero-sub {
+    font-size: clamp(14px, 1vw, 15.5px);
+    color: var(--ink-55);
+    max-width: 400px;
+    margin: 0 0 24px;
+    line-height: 1.5;
+  }
+  .hero-cta-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+
+  /* Hero rotator */
+  .hero-rotator {
+    position: absolute;
+    right: clamp(20px, 4vw, 64px);
+    bottom: clamp(48px, 10vh, 110px);
+    z-index: 8;
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    max-width: min(560px, 46vw);
+    pointer-events: none;
+  }
+  .hr-kicker {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-55);
+    white-space: nowrap;
+    flex: 0 0 auto;
+  }
+  .hr-kicker .arrow { color: var(--accent); font-size: 12px; }
+  .hr-frame {
+    position: relative;
+    flex: 1 1 auto;
+    height: 1.35em;
+    font-family: "Caveat", "Spectral", cursive;
+    font-size: clamp(19px, 1.7vw, 23px);
+    line-height: 1.35;
+    overflow: hidden;
+    min-width: 0;
+  }
+  .hr-word {
+    position: absolute;
+    left: 0; top: 0;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 10px;
+    white-space: nowrap;
+    opacity: 0;
+    animation: heroRotate 12s infinite;
+  }
+  .hr-word:nth-child(1) { animation-delay: 0s; }
+  .hr-word:nth-child(2) { animation-delay: 4s; }
+  .hr-word:nth-child(3) { animation-delay: 8s; }
+  .hr-strike {
+    font-size: 0.72em;
+    color: var(--ink-35);
+    text-decoration: line-through;
+    text-decoration-thickness: 1.3px;
+    text-decoration-color: var(--ink-35);
+    font-weight: 500;
+    transform: rotate(-1.2deg);
+    transform-origin: left center;
+  }
+  .hr-keep { color: var(--ink); font-weight: 600; }
+  .hr-keep .accent { color: var(--accent); }
+  @keyframes heroRotate {
+    0%, 1%    { opacity: 0; transform: translateY(8px); }
+    4%, 30%   { opacity: 1; transform: translateY(0); }
+    34%, 100% { opacity: 0; transform: translateY(-8px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .hr-word { animation: none; opacity: 1; position: static; }
+    .hr-frame { height: auto; }
+    .hr-word + .hr-word { margin-top: 4px; }
+  }
+  @media (max-width: 900px) {
+    .hero-rotator {
+      position: static;
+      max-width: 100%;
+      margin: 18px clamp(20px, 4vw, 56px) 0;
+      flex-wrap: wrap;
+      gap: 10px 14px;
+    }
+    .hr-frame { width: 100%; flex-basis: 100%; }
+  }
+
+  /* Selfie */
+  .hero-selfie {
+    position: absolute;
+    left: clamp(-40px, -2vw, -8px);
+    bottom: -40px;
+    width: clamp(440px, 50vw, 820px);
+    height: auto;
+    z-index: 2;
+    pointer-events: none;
+    user-select: none;
+    filter:
+      drop-shadow(-10px 14px 28px rgba(11, 20, 38, 0.12))
+      drop-shadow(0 4px 10px rgba(11, 20, 38, 0.07));
+    opacity: 0;
+    transform: translateY(14px);
+    animation: selfieIn 1.2s cubic-bezier(.2,.7,.2,1) 0.2s forwards;
+  }
+  @keyframes selfieIn {
+    to { opacity: 1; transform: none; }
+  }
+
+  /* Graph stage */
+  .graph-stage {
+    position: absolute;
+    top: 0; bottom: 0;
+    left: 38%; right: 0;
+    z-index: 1;
+    overflow: visible;
+  }
+  .graph-stage canvas { display: block; }
+
+  .brain-label {
+    position: absolute;
+    transform: translate(-50%, calc(-100% - 16px));
+    background: transparent;
+    border: none;
+    padding: 4px 6px;
+    margin: 0;
+    font-family: inherit;
+    font-size: 12.5px;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    color: var(--ink-70);
+    white-space: nowrap;
+    cursor: pointer;
+    user-select: none;
+    will-change: transform, left, top, opacity;
+    transition: color 0.2s, font-weight 0.2s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .brain-label::after {
+    content: "";
+    position: absolute;
+    left: 50%; top: 100%;
+    width: 1px; height: 14px;
+    background: linear-gradient(to bottom, var(--ink-35), transparent);
+    transform: translateX(-0.5px);
+    pointer-events: none;
+  }
+  .brain-label-center { font-size: 14.5px; font-weight: 600; color: var(--ink); }
+  .brain-label-hub, .brain-label-branch { font-weight: 600; color: var(--ink); }
+  .brain-label.is-hover, .brain-label.is-active { color: var(--accent); }
+  .brain-label.is-hover::after, .brain-label.is-active::after {
+    background: linear-gradient(to bottom, var(--accent), rgba(0, 102, 255, 0));
+  }
+  .brain-label.is-back { font-weight: 400; }
+
+  /* Hint */
+  .hero-hint {
+    position: absolute;
+    bottom: 36px; left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    color: var(--ink-55);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .hero-hint-line {
+    width: 1px; height: 36px;
+    background: linear-gradient(to bottom, transparent, var(--ink-35));
+    animation: hint 2.4s ease-in-out infinite;
+  }
+  @keyframes hint { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+
+  /* Minimap */
+  .minimap {
+    position: fixed;
+    top: 96px;
+    left: clamp(20px, 4vw, 56px);
+    z-index: 40;
+    width: 240px; height: 240px;
+    background: var(--glass);
+    backdrop-filter: blur(20px) saturate(1.6);
+    -webkit-backdrop-filter: blur(20px) saturate(1.6);
+    border: 1px solid var(--glass-stroke);
+    border-radius: var(--r-md);
+    box-shadow: var(--shadow-md);
+    padding: 14px;
+    opacity: 0;
+    transform: translateY(-8px) scale(0.96);
+    pointer-events: none;
+    transition: opacity 0.4s ease, transform 0.4s ease,
+                width 0.35s cubic-bezier(.4,.0,.2,1),
+                height 0.35s cubic-bezier(.4,.0,.2,1),
+                padding 0.35s cubic-bezier(.4,.0,.2,1),
+                border-radius 0.35s cubic-bezier(.4,.0,.2,1),
+                background 0.3s ease;
+    overflow: visible;
+    will-change: width, height, opacity;
+  }
+  .minimap.visible {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    pointer-events: auto;
+  }
+  .minimap.collapsed {
+    width: 116px; height: 30px;
+    padding: 7px 12px;
+    border-radius: 999px;
+    opacity: 0.78;
+    background: color-mix(in oklab, var(--glass) 80%, transparent);
+    cursor: pointer;
+    overflow: hidden;
+  }
+  .minimap.collapsed:hover { opacity: 1; }
+  .minimap-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+    transition: margin-bottom 0.25s ease;
+  }
+  .minimap.collapsed .minimap-head { margin-bottom: 0; gap: 8px; }
+  .minimap-title {
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-55);
+    white-space: nowrap;
+  }
+  .minimap.collapsed .minimap-title::before {
+    content: "";
+    display: inline-block;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    margin-right: 6px;
+    vertical-align: middle;
+    animation: pulse-dot 2s ease-in-out infinite;
+  }
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 0.6; transform: scale(1); }
+    50%      { opacity: 1;   transform: scale(1.25); }
+  }
+  .minimap-current {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+  .minimap svg {
+    width: 100%; height: calc(100% - 26px);
+    transition: opacity 0.2s ease;
+    overflow: visible;
+  }
+  .minimap.collapsed svg { opacity: 0; pointer-events: none; }
+  .minimap .mini-edge { stroke: rgba(11,20,38,0.15); stroke-width: 0.7; fill: none; transition: stroke 0.2s ease, stroke-width 0.2s ease; }
+  .minimap .mini-edge.hot { stroke: var(--accent); stroke-width: 1.2; }
+  .minimap .mini-node-hit { fill: transparent; cursor: pointer; }
+  .minimap .mini-node { fill: white; stroke: rgba(11,20,38,0.25); stroke-width: 1; transition: r 0.2s ease, fill 0.2s ease, stroke 0.2s ease, filter 0.2s ease; }
+  .minimap .mini-node.center { fill: var(--ink); stroke: var(--ink); }
+  .minimap .mini-node.active { fill: var(--accent); stroke: var(--accent); }
+  .minimap .mini-node.hovered { filter: drop-shadow(0 0 5px rgba(0,102,255,0.5)); }
+  .minimap .mini-label { font-family: "JetBrains Mono", monospace; font-size: 7.5px; fill: var(--ink-55); pointer-events: none; transition: opacity 0.2s ease; }
+  .minimap .mini-label.active { fill: var(--accent); font-weight: 600; opacity: 1; }
+  .minimap .mini-label.hidden { opacity: 0; }
+
+  /* Node tooltip card */
+  .minimap-tooltip {
+    position: absolute;
+    left: calc(100% + 10px);
+    top: 30px;
+    width: 200px;
+    background: var(--bg);
+    border: 1px solid var(--line-2);
+    border-radius: var(--r-sm);
+    box-shadow: var(--shadow-lg);
+    padding: 10px 12px;
+    pointer-events: none;
+    opacity: 0;
+    transform: translateX(-6px) scale(0.97);
+    transition: opacity 0.18s ease, transform 0.18s ease;
+    z-index: 50;
+  }
+  .minimap-tooltip.show {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+  .minimap-tooltip-label {
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .minimap-tooltip-label .tt-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+  .minimap-tooltip-desc {
+    font-size: 10.5px;
+    color: var(--ink-55);
+    line-height: 1.45;
+    margin-bottom: 6px;
+  }
+  .minimap-tooltip-cta {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 9px;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+  }
+  @media (max-width: 900px) { .minimap { display: none; } }
+
+  /* Buttons */
+  .btn {
+    appearance: none;
+    border: 1px solid transparent;
+    border-radius: 10px;
+    padding: 12px 18px;
+    font-family: inherit;
+    font-size: 14.5px;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: transform 0.2s, background 0.2s, color 0.2s, border-color 0.2s;
+    position: relative;
+  }
+  .btn-primary { background: var(--ink); color: white; }
+  .btn-primary:hover { background: var(--accent); }
+  .btn-ghost { background: transparent; color: var(--ink); border-color: var(--line-2); }
+  .btn-ghost:hover { border-color: var(--ink); }
+  .btn .arrow { transition: transform 0.25s; display: inline-block; }
+  .btn:hover .arrow { transform: translateX(3px); }
+
+  /* Section base */
+  section { position: relative; z-index: 2; }
+  section.sec { background-color: rgba(250, 250, 248, 0.55); }
+  .container {
+    width: 100%;
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 clamp(20px, 4vw, 56px);
+  }
+  .sec {
+    padding: clamp(80px, 12vh, 140px) 0;
+    border-top: 1px solid var(--line);
+  }
+  .sec-head {
+    display: flex;
+    align-items: baseline;
+    gap: 24px;
+    margin-bottom: 56px;
+  }
+  .sec-index {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 13px;
+    color: var(--ink-35);
+    letter-spacing: 0.04em;
+    min-width: 44px;
+  }
+  .sec-title {
+    font-size: clamp(32px, 3.6vw, 52px);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1;
+    margin: 0;
+    flex: 1;
+  }
+  .sec-kicker {
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin: 0 0 12px;
+  }
+
+  /* Parcours grid */
+  .why-grid {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+  .why-lead {
+    font-size: clamp(22px, 2.2vw, 30px);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.25;
+    color: var(--ink);
+    margin: 0 0 28px;
+  }
+  .why-lead .italic { color: var(--ink); }
+  .why-body { color: var(--ink-70); font-size: 16px; max-width: 460px; }
+  .why-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  .why-card {
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    padding: 22px 22px 24px;
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+  }
+  .why-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: var(--line-2); }
+  .why-card-num {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.06em;
+  }
+  .why-card-title {
+    font-size: 18px;
+    font-weight: 600;
+    letter-spacing: -0.015em;
+    margin: 10px 0 8px;
+  }
+  .why-card-body { font-size: 13.5px; color: var(--ink-55); line-height: 1.55; }
+  @media (max-width: 900px) {
+    .why-grid { grid-template-columns: 1fr; gap: 32px; }
+    .why-cards { grid-template-columns: 1fr; }
+  }
+
+  /* Projects */
+  .proj-list { display: flex; flex-direction: column; }
+  .proj {
+    display: grid;
+    grid-template-columns: 60px 200px 1fr 1fr auto;
+    gap: 28px;
+    padding: 28px 0;
+    border-top: 1px solid var(--line);
+    align-items: center;
+    transition: padding 0.3s, background 0.3s;
+    position: relative;
+    text-decoration: none;
+    color: inherit;
+  }
+  .proj:first-child { border-top-color: var(--line-2); }
+  .proj:hover { padding-left: 12px; padding-right: 12px; }
+  .proj::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--accent-soft);
+    opacity: 0;
+    border-radius: var(--r-md);
+    transition: opacity 0.3s;
+    z-index: -1;
+  }
+  .proj:hover::before { opacity: 1; }
+  .proj-num {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12px;
+    color: var(--ink-35);
+  }
+  .proj-name {
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+  }
+  .proj-name .italic { color: var(--accent); }
+  .proj-tag {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    color: var(--ink-55);
+    letter-spacing: 0.04em;
+  }
+  .proj-desc {
+    color: var(--ink-70);
+    font-size: 14.5px;
+    max-width: 360px;
+    line-height: 1.5;
+  }
+  .proj-stats { display: flex; gap: 18px; align-items: baseline; }
+  .proj-stat { font-size: 13.5px; color: var(--ink-55); }
+  .proj-stat b {
+    font-weight: 600;
+    color: var(--ink);
+    font-size: 16px;
+    margin-right: 4px;
+  }
+  .proj-arrow { color: var(--ink-35); transition: transform 0.3s, color 0.3s; }
+  .proj:hover .proj-arrow { color: var(--accent); transform: translateX(4px); }
+  @media (max-width: 1000px) {
+    .proj { grid-template-columns: 40px 1fr auto; }
+    .proj-tag, .proj-stats { display: none; }
+    .proj-desc { grid-column: 2 / -1; }
+  }
+
+  /* Approach */
+  .approach-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+  }
+  .step {
+    padding: 32px 28px 36px;
+    border-right: 1px solid var(--line);
+    position: relative;
+    transition: background 0.3s;
+  }
+  .step:last-child { border-right: none; }
+  .step:hover { background: var(--bg-2); }
+  .step-num {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    margin-bottom: 24px;
+  }
+  .step-title {
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin: 0 0 12px;
+  }
+  .step-body { color: var(--ink-55); font-size: 13.5px; line-height: 1.55; }
+  .step-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 22px; }
+  .step-tags span {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px;
+    padding: 3px 7px;
+    background: var(--bg-2);
+    border-radius: 4px;
+    color: var(--ink-70);
+  }
+  @media (max-width: 900px) {
+    .approach-grid { grid-template-columns: 1fr 1fr; }
+    .step:nth-child(2n) { border-right: none; }
+    .step:not(:nth-last-child(-n+2)) { border-bottom: 1px solid var(--line); }
+  }
+  @media (max-width: 560px) {
+    .approach-grid { grid-template-columns: 1fr; }
+    .step { border-right: none; border-bottom: 1px solid var(--line); }
+    .step:last-child { border-bottom: none; }
+  }
+
+  /* Stack chips */
+  .stack-chips-row {
+    margin-top: 56px;
+    padding-top: 32px;
+    border-top: 1px solid var(--line);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+  }
+  .stack-chips-row .stack-lead {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-55);
+    margin-right: 12px;
+  }
+  .chip {
+    padding: 6px 12px;
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    font-size: 13px;
+    color: var(--ink-70);
+    transition: all 0.2s;
+    cursor: default;
+  }
+  .chip:hover { color: var(--ink); border-color: var(--ink); transform: translateY(-1px); }
+  .chip.strong { background: var(--ink); color: white; border-color: var(--ink); }
+  .chip.strong:hover { background: var(--accent); border-color: var(--accent); }
+
+  /* Experience */
+  .exp-list { display: flex; flex-direction: column; }
+  .exp {
+    display: grid;
+    grid-template-columns: 160px 1fr 1fr;
+    gap: 28px;
+    padding: 26px 0;
+    border-top: 1px solid var(--line);
+    align-items: baseline;
+  }
+  .exp:first-child { border-top-color: var(--line-2); }
+  .exp-date { font-family: "JetBrains Mono", monospace; font-size: 12px; color: var(--ink-55); letter-spacing: 0.04em; }
+  .exp-role { font-size: 19px; font-weight: 500; letter-spacing: -0.015em; }
+  .exp-co { color: var(--ink-55); font-size: 14px; margin-top: 4px; }
+  .exp-body { color: var(--ink-70); font-size: 14px; line-height: 1.55; }
+  @media (max-width: 720px) { .exp { grid-template-columns: 1fr; gap: 6px; } }
+
+  /* Gallery */
+  .gallery {
+    position: relative;
+    padding: clamp(80px, 11vh, 130px) 0;
+    border-top: 1px solid var(--line);
+    overflow: hidden;
+  }
+  .gallery-head {
+    text-align: center;
+    margin: 0 auto clamp(44px, 6vh, 72px);
+    padding: 0 clamp(20px, 4vw, 56px);
+  }
+  .gallery-eyebrow {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12px;
+    color: var(--ink-55);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 18px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .gallery-eyebrow .num { color: var(--accent); }
+  .gallery-h2 {
+    font-size: clamp(32px, 4.4vw, 58px);
+    font-weight: 500;
+    letter-spacing: -0.028em;
+    line-height: 1.04;
+    max-width: 22ch;
+    margin: 0 auto;
+  }
+  .gallery-sub {
+    margin: 18px auto 0;
+    color: var(--ink-55);
+    font-size: 15px;
+    max-width: 56ch;
+    line-height: 1.55;
+  }
+  .marquee {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 7%, black 93%, transparent 100%);
+            mask-image: linear-gradient(90deg, transparent 0%, black 7%, black 93%, transparent 100%);
+  }
+  .marquee + .marquee { margin-top: 22px; }
+  .marquee-track {
+    display: flex;
+    gap: 22px;
+    width: max-content;
+    padding: 6px 0;
+    animation: marquee-left 72s linear infinite;
+    will-change: transform;
+  }
+  .marquee.reverse .marquee-track {
+    animation-name: marquee-right;
+    animation-duration: 84s;
+  }
+  .marquee:hover .marquee-track,
+  .marquee:focus-within .marquee-track { animation-play-state: paused; }
+  @keyframes marquee-left {
+    from { transform: translate3d(0, 0, 0); }
+    to   { transform: translate3d(-50%, 0, 0); }
+  }
+  @keyframes marquee-right {
+    from { transform: translate3d(-50%, 0, 0); }
+    to   { transform: translate3d(0, 0, 0); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .marquee-track { animation: none; transform: translate3d(-12%, 0, 0); }
+  }
+  .gcard {
+    flex: 0 0 auto;
+    position: relative;
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    background: var(--bg-2);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--line);
+    transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1), box-shadow 0.4s ease;
+  }
+  .marquee:hover .gcard { opacity: 0.72; transition: opacity 0.3s ease; }
+  .marquee .gcard:hover { opacity: 1; transform: translateY(-3px); box-shadow: var(--shadow-md); }
+  .gcard.size-a { width: 240px; height: 300px; }
+  .gcard.size-b { width: 280px; height: 220px; }
+  .gcard.size-c { width: 230px; height: 290px; }
+  .gcard.size-d { width: 260px; height: 260px; }
+  .gcard.size-e { width: 320px; height: 240px; }
+  .gcard img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .gcard-fallback {
+    position: absolute; inset: 0;
+    background-image:
+      repeating-linear-gradient(135deg,
+        rgba(11, 20, 38, 0.05) 0 1px,
+        transparent 1px 11px),
+      linear-gradient(180deg, var(--c1, #efe9da) 0%, var(--c2, #d9d0bb) 100%);
+  }
+  .gcard-fallback::after {
+    content: "";
+    position: absolute; inset: 0;
+    background:
+      radial-gradient(120% 90% at 50% 10%, rgba(255,255,255,0.35), transparent 60%),
+      radial-gradient(100% 80% at 50% 110%, rgba(11,20,38,0.18), transparent 60%);
+    pointer-events: none;
+  }
+  .gcard-tag {
+    position: absolute; top: 12px; left: 12px; z-index: 2;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10px;
+    color: var(--ink-70);
+    background: rgba(250, 250, 248, 0.85);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 4px 9px;
+    letter-spacing: 0.04em;
+  }
+  .gcard-meta {
+    position: absolute; left: 12px; right: 12px; bottom: 12px; z-index: 2;
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px;
+    color: var(--ink-70);
+    letter-spacing: 0.03em;
+  }
+  .gcard-meta .gcard-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--accent);
+    box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.15);
+  }
+  .gcard-caption {
+    position: absolute; left: 12px; right: 12px; bottom: 36px; z-index: 2;
+    color: var(--ink);
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.4);
+  }
+  @media (max-width: 720px) {
+    .gcard.size-a { width: 180px; height: 230px; }
+    .gcard.size-b { width: 210px; height: 170px; }
+    .gcard.size-c { width: 175px; height: 220px; }
+    .gcard.size-d { width: 200px; height: 200px; }
+    .gcard.size-e { width: 240px; height: 180px; }
+    .marquee + .marquee { margin-top: 16px; }
+    .marquee-track { gap: 16px; }
+  }
+
+  /* Contact */
+  .contact {
+    text-align: center;
+    padding: clamp(100px, 16vh, 180px) 0 clamp(80px, 12vh, 140px);
+    border-top: 1px solid var(--line);
+  }
+  .contact-eyebrow {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+  .contact-h2 {
+    font-size: clamp(40px, 5.5vw, 88px);
+    font-weight: 500;
+    letter-spacing: -0.035em;
+    line-height: 1;
+    max-width: 920px;
+    margin: 0 auto 36px;
+  }
+  .contact-cta { display: inline-flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+  .contact-side {
+    margin-top: 44px;
+    display: flex; gap: 24px;
+    justify-content: center;
+    color: var(--ink-55);
+    font-size: 13.5px;
+    flex-wrap: wrap;
+  }
+  .contact-side a { color: var(--ink-70); text-decoration: none; border-bottom: 1px solid var(--line-2); padding-bottom: 1px; }
+  .contact-side a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* Footer */
+  footer {
+    border-top: 1px solid var(--line);
+    padding: 32px 0;
+    font-size: 12.5px;
+    color: var(--ink-35);
+  }
+  .footer-row { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .footer-row .mono { font-size: 11px; }
+
+  /* Reveal */
+  .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.8s cubic-bezier(.2,.6,.2,1), transform 0.8s cubic-bezier(.2,.6,.2,1); }
+  .reveal.in { opacity: 1; transform: none; }
+  .reveal-stagger > * { opacity: 0; transform: translateY(14px); transition: opacity 0.6s, transform 0.6s; }
+  .reveal-stagger.in > * { opacity: 1; transform: none; }
+  .reveal-stagger.in > *:nth-child(1) { transition-delay: 0.05s; }
+  .reveal-stagger.in > *:nth-child(2) { transition-delay: 0.12s; }
+  .reveal-stagger.in > *:nth-child(3) { transition-delay: 0.19s; }
+  .reveal-stagger.in > *:nth-child(4) { transition-delay: 0.26s; }
+  .reveal-stagger.in > *:nth-child(5) { transition-delay: 0.33s; }
+  .reveal-stagger.in > *:nth-child(6) { transition-delay: 0.40s; }
+  .reveal-stagger.in > *:nth-child(7) { transition-delay: 0.47s; }
+  .reveal-stagger.in > *:nth-child(8) { transition-delay: 0.54s; }
+
+  /* Command palette */
+  .palette-backdrop {
+    position: fixed; inset: 0; z-index: 100;
+    background: rgba(11,20,38,0.35);
+    backdrop-filter: blur(6px);
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding-top: 14vh;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+  }
+  .palette-backdrop.open { opacity: 1; pointer-events: auto; }
+  .palette {
+    width: min(560px, 92vw);
+    background: white;
+    border-radius: 14px;
+    box-shadow: 0 24px 80px rgba(11,20,38,0.25);
+    overflow: hidden;
+    transform: translateY(-8px) scale(0.98);
+    transition: transform 0.25s cubic-bezier(.2,.7,.2,1.3);
+  }
+  .palette-backdrop.open .palette { transform: none; }
+  .palette input {
+    width: 100%;
+    border: 0;
+    outline: none;
+    padding: 18px 20px;
+    font: inherit;
+    font-size: 15px;
+    border-bottom: 1px solid var(--line);
+  }
+  .palette-list { max-height: 360px; overflow-y: auto; padding: 6px; }
+  .palette-item {
+    display: flex; align-items: center; gap: 12px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  .palette-item.sel { background: var(--accent-soft); color: var(--accent); }
+  .palette-item .mono { color: var(--ink-35); margin-left: auto; font-size: 11px; }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    html { scroll-behavior: auto; }
+    .hero-selfie { opacity: 1 !important; transform: none !important; }
+    .reveal { opacity: 1 !important; transform: none !important; }
+  }
+
+  /* Mobile hero */
+  @media (max-width: 768px) {
+    .hero-meta { position: relative; top: 0; padding: 92px 20px 0; max-width: 100%; }
+    .hero { min-height: auto; }
+    .graph-stage { position: relative; left: auto; right: auto; top: auto; bottom: auto; height: 380px; margin-top: 12px; }
+    .hero-hint { display: none; }
+    .hero-selfie {
+      position: relative;
+      left: auto; bottom: auto;
+      width: 100%;
+      max-width: 460px;
+      margin: -20px auto 0;
+      display: block;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div id="app"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.production.min.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/three@0.158.0/build/three.min.js"></script>
+
+<script>
+window.PORTFOLIO = {
+  identity: {
+    name: "Benoit Baillon",
+    location: "Paris",
+    pitch: "Sales FSI le jour, builder IA le soir.",
+    intro:
+      "Account Manager Financial Services chez OVHcloud. Co-fondateur de l’Agence alAin. Je vends du cloud et de l’IA aux corporates, je build mes propres agents en parallèle.",
+  },
+
+  nodes: [
+    { id: "moi",            label: "Benoît",                   section: "hero",        kind: "center",  fixed: true, desc: "Account Manager FSI chez OVHcloud le jour, builder IA le soir." },
+    { id: "ovh",            label: "OVHcloud",                 section: "parcours",    kind: "hub",               desc: "Portefeuille >2M€ ARR, 10 comptes FSI. Vente cloud souverain + IA." },
+    { id: "reglementation", label: "Réglementation",           section: "parcours",    kind: "branch",            desc: "DORA, MiCA, SecNumCloud, DSP3. Je sais où sont les chausse-trappes." },
+    { id: "souverainete",   label: "Cloud souverain",          section: "parcours",    kind: "branch",            desc: "Infra européenne certifiée. Sujet clé pour les clients FSI sous pression réglementaire." },
+    { id: "approche-client", label: "Approche client",         section: "approche",    kind: "branch",            desc: "Traduction besoin métier → architecture → pricing. L'angle rare." },
+    { id: "side-hustle",    label: "Side Hustle",              section: "side-hustle", kind: "hub",               desc: "Co-fondateur de l'Agence alAin. Voice agents, workflows IA, formation." },
+    { id: "safegpt",        label: "Agence alAin",             section: "side-hustle", kind: "leaf",              desc: "Automatisation IA pour PME. Stack : n8n, Claude API, MCP, HubSpot." },
+    { id: "hermes",         label: "Dashboard on-chain",       section: "side-hustle", kind: "leaf",              desc: "Analytics blockchain. Visualisation de données on-chain en temps réel." },
+    { id: "second-cerveau", label: "Second cerveau",           section: "side-hustle", kind: "leaf",              desc: "Système de gestion des connaissances connecté à mes outils IA." },
+    { id: "zerocode",       label: "Ext. Chrome",              section: "side-hustle", kind: "leaf",              desc: "Extension anti-Shadow AI pour bloquer les usages IA non autorisés." },
+    { id: "hackathons",     label: "Hackathons",               section: "side-hustle", kind: "branch",            desc: "2 victoires sur des hackathons IA & Web3." },
+  ],
+
+  edges: [
+    ["moi","ovh"], ["moi","side-hustle"], ["moi","approche-client"], ["moi","hackathons"],
+    ["ovh","reglementation"], ["ovh","souverainete"],
+    ["reglementation","approche-client"], ["souverainete","approche-client"],
+    ["side-hustle","safegpt"], ["side-hustle","hermes"],
+    ["side-hustle","second-cerveau"], ["side-hustle","zerocode"],
+    ["side-hustle","hackathons"],
+    ["hackathons","safegpt"], ["hackathons","hermes"],
+    ["safegpt","souverainete"],
+  ],
+
+  sectionNodes: {
+    hero:          ["moi"],
+    parcours:      ["moi","ovh","reglementation","souverainete"],
+    "side-hustle": ["moi","side-hustle","safegpt","hermes","second-cerveau","zerocode","hackathons"],
+    approche:      ["moi","approche-client","reglementation","souverainete"],
+    contact:       ["moi"],
+  },
+
+  parcours: {
+    lead: [
+      { t: "Vendre de l’IA quand on ne l’a jamais déployée en prod, c’est " },
+      { t: "fragile", italic: true },
+      { t: ". La vendre quand on a écrit le code soi-même, c’est une autre conversation." },
+    ],
+    body:
+      "Je passe mes journées sur des comptes FSI chez OVHcloud, et mes soirées à automatiser des workflows IA pour des PME. Ça me donne un angle rare : je traduis le besoin métier en architecture, et l’architecture en pricing.",
+    pillars: [
+      { n: "01", t: "Commercial",  b: "Portefeuille >2 M€ ARR sur 10 grands comptes FSI (paiement, assurance). Cycles longs, interlocuteurs du CTO à la DAF." },
+      { n: "02", t: "Builder",     b: "Co-fondateur de l’Agence alAin. Voice agents, workflows HubSpot, formation IA. Stack n8n, Claude API, MCP." },
+      { n: "03", t: "Régulé",      b: "DORA, MiCA, DSP3, SecNumCloud, ACPR, EBA/AMF. Je sais où sont les chausse-trappes — et pourquoi un POC IA finit souvent en projet conformité." },
+      { n: "04", t: "Pédagogue",   b: "Ateliers IA en entreprise. J’explique aux équipes opérationnelles ce qu’aucun slide de cabinet ne dit vraiment." },
+    ],
+    timeline: [
+      { date: "janv. 2025 — auj.", role: "Account Manager · Financial Services", co: "OVHcloud", body: "Portefeuille >2 M€ ARR sur 10 grands comptes FSI (paiement, assurance). Vente cloud + IA + infra blockchain articulée sur la souveraineté européenne et la conformité (DORA, MiCA, SecNumCloud). Représentant OVHcloud FSI : VivaTech, FIC, Paris Blockchain Week, EthCC, France Quantum." },
+      { date: "2024 — auj.", role: "Co-fondateur", co: "Agence alAin", body: "Automatisation IA pour PME : voice agents (Retell, Vapi), workflows HubSpot, formation IA. Stack n8n, Claude API, MCP. Projets clients : Aligner (réceptionniste IA hôtellerie), Henri (formation IA), CS Transitions." },
+      { date: "mai — août 2024", role: "Stagiaire VC Impact", co: "BNP Paribas BCEF — Act For Impact", body: "Suivi de projets d’investissement à impact social, gestion partenaires, communication Label." },
+      { date: "sept. 2023 — 2025", role: "Responsable financier", co: "ETNA EDHEC Télévision", body: "Pilotage de 100 k€ de chiffre d’affaires annuel. Implémentation Sage (conformité e-invoicing)." },
+      { date: "2023 — 2026", role: "Master in Management · Grande École Program", co: "EDHEC Business School", body: "Top 4 mondial Financial Times 2024. Spécialisation Accounting, Finance, Data Analysis, Entrepreneurship." },
+    ],
+  },
+
+  sideHustle: [
+    { n: "01", name: "Agence alAin",               italic: "alAin",    tag: "automatisation IA / 2024→", desc: "Automatisation IA pour PME. Voice agents (Retell, Vapi), workflows HubSpot, formation IA. Projets : Aligner, Henri, CS Transitions.", stats: [{k:"3",v:"clients"}] },
+    { n: "02", name: "Dashboard on-chain",          italic: "on-chain", tag: "data / 2025",               desc: "Parts de marché OVH sur les blockchains publiques majeures via mapping Nodes/ASN et enrichissement.", stats: [] },
+    { n: "03", name: "Second cerveau",              italic: "cerveau",  tag: "notion × claude / 2023→",   desc: "Système personnel piloté par Claude. Capture, retrieval, restitution. Augmente la productivité au quotidien.", stats: [] },
+    { n: "04", name: "Ext. Chrome anti-Shadow AI",  italic: "Shadow",   tag: "open source / 2024",         desc: "Extension Chrome open source pour détecter et limiter le Shadow AI en entreprise.", stats: [] },
+    { n: "05", name: "Hackathons IA & Web3",        italic: "Hack",     tag: "compétitions",               desc: "2 victoires : Privacy blockchain Aleo (mai 2025) et AI fintech (avril 2026). Montée en compétences techniques.", stats: [{k:"2",v:"victoires"}] },
+  ],
+
+  approche: {
+    steps: [
+      { n: "01", t: "Discover",  b: "Une journée sur site. Je parle aux ops, aux commerciaux, aux risques. Je repars avec la liste des frictions chiffrées.", tags: ["entretiens","shadowing","data audit"] },
+      { n: "02", t: "Frame",     b: "Un doc unique : problème, périmètre, KPI, contraintes régulées, budget. Validé en comité avant la première ligne de code.", tags: ["RACI","périmètre","budget"] },
+      { n: "03", t: "Ship",      b: "Sprints d’une semaine. Stack n8n + Claude API, déploiement souverain par défaut, observabilité dès le J1.", tags: ["n8n","Claude","OVH AI"] },
+      { n: "04", t: "Scale",     b: "Documentation, formation, monitoring. Le livrable survit à mon départ — pas de dépendance à un individu.", tags: ["docs","monitoring","handoff"] },
+    ],
+    stack: [
+      { t: "Claude API", strong: true },
+      { t: "n8n", strong: true },
+      { t: "TypeScript", strong: true },
+      { t: "MCP" },
+      { t: "Next.js" },
+      { t: "HubSpot" },
+      { t: "Notion API" },
+      { t: "Vercel" },
+      { t: "Python" },
+      { t: "Retell / Vapi" },
+      { t: "Supabase" },
+    ],
+  },
+
+  gallery: {
+    eyebrow: "Hors écran",
+    h2_parts: [
+      { t: "Le " },
+      { t: "type", italic: true },
+      { t: " derrière le code." },
+    ],
+    sub: "Conférences, rings, hackathons, terrain. Photos à venir — pour l’instant, des placeholders.",
+    row1: [
+      { src: null, caption: "Finale IDF — boxe thaï",     tag: "ring · 2024",       size: "a", c1: "#e9d8c1", c2: "#c9ac82" },
+      { src: null, caption: "VivaTech — stand OVHcloud",  tag: "event · 2025",      size: "b", c1: "#dde3ee", c2: "#b6c2db" },
+      { src: null, caption: "Sparring — entraînement",    tag: "boxe · janv 25",    size: "c", c1: "#efe7d8", c2: "#cbb992" },
+      { src: null, caption: "Workshop IA — client",       tag: "atelier · 2025",    size: "d", c1: "#e8e4d6", c2: "#bcae8a" },
+      { src: null, caption: "Paris Blockchain Week",      tag: "conf · mars 25",    size: "b", c1: "#e2dccb", c2: "#b8ab87" },
+      { src: null, caption: "Trail — semi-marathon",      tag: "sport · 2024",      size: "a", c1: "#eadccb", c2: "#c6a685" },
+      { src: null, caption: "FIC — Lille",                tag: "sécu · 2025",       size: "e", c1: "#dfe5f0", c2: "#b9c5e0" },
+      { src: null, caption: "Hackathon 48h — équipe",     tag: "build · 2025",      size: "d", c1: "#e7e2d2", c2: "#bbac86" },
+      { src: null, caption: "EthCC — Bruxelles",          tag: "event · 2024",      size: "c", c1: "#e3dccb", c2: "#b8a880" },
+    ],
+    row2: [
+      { src: null, caption: "Entraînement — 6h du mat’",  tag: "boxe · 2025",       size: "b", c1: "#ddd6c4", c2: "#aea072" },
+      { src: null, caption: "Camp scout — SGDF",          tag: "scoutisme · 2023",  size: "a", c1: "#ebd9bf", c2: "#c39d6e" },
+      { src: null, caption: "France Quantum — Paris",     tag: "conf · 2025",       size: "e", c1: "#e0e4ee", c2: "#b1bedc" },
+      { src: null, caption: "Build nocturne — alAin",     tag: "build · 2025",      size: "d", c1: "#e6e1d1", c2: "#b5a77f" },
+      { src: null, caption: "Hackathon Aleo — victoire",  tag: "win · mai 2025",    size: "c", c1: "#e8dcc8", c2: "#c4a578" },
+      { src: null, caption: "Portrait — mur blanc",       tag: "perso · 2025",      size: "b", c1: "#ece6d8", c2: "#cec1a0" },
+      { src: null, caption: "AI fintech — victoire",      tag: "win · avr 2026",    size: "a", c1: "#e5dfd0", c2: "#bab28e" },
+      { src: null, caption: "Démo live — client FSI",     tag: "delivery · 2025",   size: "e", c1: "#dee4f0", c2: "#aebddc" },
+      { src: null, caption: "Trail — forêt de Rambouillet", tag: "sport · 2024",    size: "d", c1: "#e9dcc6", c2: "#c6a87a" },
+    ],
+  },
+
+  contact: {
+    eyebrow: "04 / Contact",
+    h2_parts: [
+      { t: "On en " },
+      { t: "parle", italic: true },
+      { t: " ?" },
+    ],
+    email: "benoitbaillon78@gmail.com",
+    linkedin: "linkedin.com/in/benoit-baillon-cloud",
+    github: "github.com/BenoitPro",
+  },
+};
+</script>
+
+<script type="text/babel">
+const { useState, useEffect, useRef, useMemo, useCallback } = React;
+
+function KnowledgeGraph({ activeSection, onNodeClick }) {
+  const data = window.PORTFOLIO;
+  const containerRef = useRef(null);
+  const sceneRef = useRef(null);
+  const [hoverId, setHoverId] = useState(null);
+  const activeNodeIds = useMemo(
+    () => new Set(data.sectionNodes[activeSection] || ["moi"]),
+    [activeSection, data.sectionNodes]
+  );
+
+  const onNodeClickRef = useRef(onNodeClick);
+  useEffect(() => { onNodeClickRef.current = onNodeClick; }, [onNodeClick]);
+  const activeRef = useRef(activeNodeIds);
+  useEffect(() => { activeRef.current = activeNodeIds; }, [activeNodeIds]);
+  const hoverRef = useRef(hoverId);
+  useEffect(() => { hoverRef.current = hoverId; }, [hoverId]);
+
+  const ANCHORS = useMemo(() => ({
+    "moi":              [ 0.00,  0.05,  0.10],
+    "ovh":              [-0.85,  0.10,  0.25],
+    "reglementation":   [-0.95, -0.15,  0.15],
+    "souverainete":     [-0.55,  0.55,  0.20],
+    "hackathons":       [-0.10,  0.78,  0.10],
+    "side-hustle":      [ 0.40,  0.55,  0.20],
+    "safegpt":          [ 1.00,  0.05,  0.05],
+    "zerocode":         [ 0.78, -0.60,  0.15],
+    "approche-client":  [ 0.20, -0.50,  0.55],
+    "hermes":           [-0.35, -0.50,  0.50],
+    "second-cerveau":   [-0.10, -0.20,  0.45],
+  }), []);
+
+  useEffect(() => {
+    if (!window.THREE) return;
+    const THREE = window.THREE;
+    const container = containerRef.current;
+    if (!container) return;
+
+    let width = Math.max(320, container.clientWidth);
+    let height = Math.max(380, container.clientHeight);
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(30, width / height, 0.1, 100);
+    camera.position.set(0, 0, 5.4);
+
+    const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: "high-performance" });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setSize(width, height, false);
+    renderer.setClearColor(0x000000, 0);
+    renderer.domElement.style.position = "absolute";
+    renderer.domElement.style.inset = "0";
+    renderer.domElement.style.width = "100%";
+    renderer.domElement.style.height = "100%";
+    renderer.domElement.style.cursor = "grab";
+    container.appendChild(renderer.domElement);
+
+    const inMain = (x, y, z) => {
+      const ax = x < 0 ? 1.20 : 1.35;
+      const ay = y < 0 ? 0.60 : 0.78;
+      const az = 0.65;
+      return (x / ax) ** 2 + (y / ay) ** 2 + (z / az) ** 2 <= 1;
+    };
+    const inCerebellum = (x, y, z) =>
+      ((x - 0.78) / 0.48) ** 2 + ((y + 0.55) / 0.35) ** 2 + (z / 0.45) ** 2 <= 1;
+    const inNotch = (x, y, z) =>
+      ((x - 0.55) / 0.16) ** 2 + ((y + 0.10) / 0.12) ** 2 + (z / 0.30) ** 2 <= 1;
+    const inBrain = (x, y, z) =>
+      (inMain(x, y, z) || inCerebellum(x, y, z)) && !inNotch(x, y, z);
+
+    const SURFACE_TARGET = 160;
+    const VOLUME_TARGET = 60;
+    const bgPositions = [];
+    let attempts = 0;
+    while (bgPositions.length < SURFACE_TARGET && attempts < 80000) {
+      attempts++;
+      const x = (Math.random() * 2 - 1) * 1.45;
+      const y = (Math.random() * 2 - 1) * 0.95;
+      const z = (Math.random() * 2 - 1) * 0.78;
+      const ax = x < 0 ? 1.20 : 1.35;
+      const ay = y < 0 ? 0.60 : 0.78;
+      const az = 0.65;
+      const m = (x / ax) ** 2 + (y / ay) ** 2 + (z / az) ** 2;
+      const c = ((x - 0.78) / 0.48) ** 2 + ((y + 0.55) / 0.35) ** 2 + (z / 0.45) ** 2;
+      const notch = ((x - 0.55) / 0.16) ** 2 + ((y + 0.10) / 0.12) ** 2 + (z / 0.30) ** 2;
+      if (notch <= 1) continue;
+      const nearMain = Math.abs(m - 1) < 0.07;
+      const nearCereb = Math.abs(c - 1) < 0.10;
+      if ((nearMain && c > 1) || (nearCereb && m > 1)) bgPositions.push([x, y, z]);
+    }
+    attempts = 0;
+    while (bgPositions.length < SURFACE_TARGET + VOLUME_TARGET && attempts < 60000) {
+      attempts++;
+      const x = (Math.random() * 2 - 1) * 1.2;
+      const y = (Math.random() * 2 - 1) * 0.7;
+      const z = (Math.random() * 2 - 1) * 0.55;
+      if (inBrain(x, y, z)) bgPositions.push([x, y, z]);
+    }
+
+    const namedList = Object.entries(ANCHORS).map(([id, pos]) => ({ id, pos, named: true }));
+    const allNodes = [
+      ...namedList,
+      ...bgPositions.map((p, i) => ({ id: "bg-" + i, pos: p, named: false })),
+    ];
+
+    const K = 3;
+    const sqd = (a, b) => {
+      const dx = a[0] - b[0], dy = a[1] - b[1], dz = a[2] - b[2];
+      return dx * dx + dy * dy + dz * dz;
+    };
+    const edgeKeys = new Set();
+    const edges = [];
+    allNodes.forEach((a, i) => {
+      const dists = [];
+      for (let j = 0; j < allNodes.length; j++) {
+        if (j === i) continue;
+        dists.push({ j, d: sqd(a.pos, allNodes[j].pos) });
+      }
+      dists.sort((x, y) => x.d - y.d);
+      const k = a.named ? 5 : K;
+      for (let q = 0; q < k && q < dists.length; q++) {
+        const j = dists[q].j;
+        const key = i < j ? i + "-" + j : j + "-" + i;
+        if (!edgeKeys.has(key)) { edgeKeys.add(key); edges.push([i, j]); }
+      }
+    });
+
+    const root = new THREE.Group();
+    scene.add(root);
+
+    const linePositions = new Float32Array(edges.length * 6);
+    edges.forEach(([i, j], k) => {
+      const a = allNodes[i].pos, b = allNodes[j].pos;
+      linePositions[k * 6] = a[0]; linePositions[k * 6 + 1] = a[1]; linePositions[k * 6 + 2] = a[2];
+      linePositions[k * 6 + 3] = b[0]; linePositions[k * 6 + 4] = b[1]; linePositions[k * 6 + 5] = b[2];
+    });
+    const lineGeo = new THREE.BufferGeometry();
+    lineGeo.setAttribute("position", new THREE.BufferAttribute(linePositions, 3));
+    const lineMat = new THREE.LineBasicMaterial({ color: 0x0B1426, transparent: true, opacity: 0.16, depthWrite: false });
+    root.add(new THREE.LineSegments(lineGeo, lineMat));
+
+    const bgArr = new Float32Array(bgPositions.length * 3);
+    bgPositions.forEach((p, i) => { bgArr[i*3]=p[0]; bgArr[i*3+1]=p[1]; bgArr[i*3+2]=p[2]; });
+    const bgGeo = new THREE.BufferGeometry();
+    bgGeo.setAttribute("position", new THREE.BufferAttribute(bgArr, 3));
+    const bgMat = new THREE.PointsMaterial({ color: 0x0B1426, size: 0.028, transparent: true, opacity: 0.55, depthWrite: false, sizeAttenuation: true });
+    root.add(new THREE.Points(bgGeo, bgMat));
+
+    const namedMeshes = [];
+    const sphereGeoC = new THREE.SphereGeometry(0.075, 28, 28);
+    const sphereGeoH = new THREE.SphereGeometry(0.058, 22, 22);
+    const sphereGeoL = new THREE.SphereGeometry(0.044, 18, 18);
+
+    namedList.forEach((n) => {
+      const node = data.nodes.find((x) => x.id === n.id);
+      const kind = node?.kind || "leaf";
+      const geo = kind === "center" ? sphereGeoC : (kind === "hub" || kind === "branch") ? sphereGeoH : sphereGeoL;
+      const mat = new THREE.MeshBasicMaterial({ color: 0x0B1426, transparent: true, opacity: 0.96 });
+      const m = new THREE.Mesh(geo, mat);
+      m.position.set(n.pos[0], n.pos[1], n.pos[2]);
+      m.userData = { id: n.id, kind, node, baseScale: 1 };
+      root.add(m);
+      namedMeshes.push(m);
+    });
+
+    const labelEls = {};
+    namedList.forEach((n) => {
+      const node = data.nodes.find((x) => x.id === n.id);
+      const el = document.createElement("button");
+      el.type = "button";
+      el.className = "brain-label brain-label-" + (node?.kind || "leaf");
+      el.dataset.nodeId = n.id;
+      el.textContent = node?.label || n.id;
+      el.addEventListener("mouseenter", () => setHoverId(n.id));
+      el.addEventListener("mouseleave", () => setHoverId(null));
+      el.addEventListener("click", (e) => {
+        e.stopPropagation();
+        if (onNodeClickRef.current && node) onNodeClickRef.current(node);
+      });
+      container.appendChild(el);
+      labelEls[n.id] = el;
+    });
+
+    const raycaster = new THREE.Raycaster();
+    const pointer = new THREE.Vector2();
+    let dragging = false, dragX = 0, dragY = 0, suppressClick = false;
+    let userRotY = 0.35, userRotX = -0.05, autoRotY = 0, lastInteract = -Infinity;
+
+    const setHoverFromPointer = (cx, cy) => {
+      const rect = renderer.domElement.getBoundingClientRect();
+      pointer.x = ((cx - rect.left) / rect.width) * 2 - 1;
+      pointer.y = -((cy - rect.top) / rect.height) * 2 + 1;
+      raycaster.setFromCamera(pointer, camera);
+      const hits = raycaster.intersectObjects(namedMeshes, false);
+      if (hits.length > 0) {
+        setHoverId(hits[0].object.userData.id);
+        renderer.domElement.style.cursor = "pointer";
+        return hits[0].object.userData.id;
+      }
+      setHoverId(null);
+      renderer.domElement.style.cursor = dragging ? "grabbing" : "grab";
+      return null;
+    };
+
+    const onPD = (e) => { dragging = true; dragX = e.clientX; dragY = e.clientY; suppressClick = false; lastInteract = performance.now(); renderer.domElement.style.cursor = "grabbing"; try { renderer.domElement.setPointerCapture(e.pointerId); } catch(_){} };
+    const onPM = (e) => {
+      if (dragging) {
+        const dx = e.clientX - dragX, dy = e.clientY - dragY;
+        if (Math.abs(dx)+Math.abs(dy)>3) suppressClick = true;
+        userRotY += dx*0.005; userRotX += dy*0.004;
+        userRotX = Math.max(-0.55, Math.min(0.55, userRotX));
+        dragX = e.clientX; dragY = e.clientY; lastInteract = performance.now();
+      } else { setHoverFromPointer(e.clientX, e.clientY); }
+    };
+    const onPU = (e) => { if (!dragging) return; dragging = false; lastInteract = performance.now(); renderer.domElement.style.cursor = "grab"; try { renderer.domElement.releasePointerCapture(e.pointerId); } catch(_){} };
+    const onCl = (e) => { if (suppressClick) { suppressClick = false; return; } const id = setHoverFromPointer(e.clientX, e.clientY); if (id) { const node = data.nodes.find((x)=>x.id===id); if (node && onNodeClickRef.current) onNodeClickRef.current(node); } };
+
+    renderer.domElement.addEventListener("pointerdown", onPD);
+    renderer.domElement.addEventListener("pointermove", onPM);
+    renderer.domElement.addEventListener("pointerup", onPU);
+    renderer.domElement.addEventListener("pointercancel", onPU);
+    renderer.domElement.addEventListener("pointerleave", () => { if (!dragging) setHoverId(null); });
+    renderer.domElement.addEventListener("click", onCl);
+
+    const onResize = () => {
+      width = Math.max(320, container.clientWidth);
+      height = Math.max(380, container.clientHeight);
+      renderer.setSize(width, height, false);
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+    };
+    const ro = new ResizeObserver(onResize);
+    ro.observe(container);
+
+    const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    const tmpVec = new THREE.Vector3();
+    const tmpScale = new THREE.Vector3();
+    let raf = 0;
+    const animate = () => {
+      const now = performance.now();
+      const idleMs = now - lastInteract;
+      const auto = (!dragging && idleMs > 400 && !reduceMotion) ? 0.0010 : 0.0;
+      autoRotY += auto;
+      root.rotation.y = userRotY + autoRotY;
+      root.rotation.x = userRotX;
+
+      const aSet = activeRef.current;
+      const hId = hoverRef.current;
+      for (let i = 0; i < namedMeshes.length; i++) {
+        const m = namedMeshes[i];
+        m.getWorldPosition(tmpVec);
+        const worldZ = tmpVec.z;
+        const ndc = tmpVec.clone().project(camera);
+        const sx = (ndc.x*0.5+0.5)*width;
+        const sy = (-ndc.y*0.5+0.5)*height;
+        const depthAlpha = Math.max(0, Math.min(1, (worldZ+0.2)/0.9));
+        const isActive = aSet.has(m.userData.id);
+        const isHover = hId === m.userData.id;
+        const el = labelEls[m.userData.id];
+        if (el) {
+          el.style.transform = "translate(-50%, calc(-100% - 16px))";
+          el.style.left = sx + "px";
+          el.style.top = sy + "px";
+          el.style.opacity = String(0.22 + depthAlpha * 0.78);
+          el.style.pointerEvents = depthAlpha > 0.30 ? "auto" : "none";
+          el.classList.toggle("is-active", isActive);
+          el.classList.toggle("is-hover", isHover);
+          el.classList.toggle("is-back", depthAlpha < 0.35);
+        }
+        const targetHex = (isActive || isHover) ? 0x0066FF : 0x0B1426;
+        m.material.color.setHex(targetHex);
+        m.material.opacity = 0.45 + depthAlpha * 0.55;
+        const target = isHover ? 1.45 : isActive ? 1.25 : 1.0;
+        tmpScale.set(target, target, target);
+        m.scale.lerp(tmpScale, 0.18);
+      }
+      renderer.render(scene, camera);
+      raf = requestAnimationFrame(animate);
+    };
+    raf = requestAnimationFrame(animate);
+
+    return () => {
+      cancelAnimationFrame(raf);
+      ro.disconnect();
+      renderer.domElement.removeEventListener("pointerdown", onPD);
+      renderer.domElement.removeEventListener("pointermove", onPM);
+      renderer.domElement.removeEventListener("pointerup", onPU);
+      renderer.domElement.removeEventListener("pointercancel", onPU);
+      renderer.domElement.removeEventListener("click", onCl);
+      Object.values(labelEls).forEach((el) => el.remove());
+      renderer.dispose();
+      lineGeo.dispose(); bgGeo.dispose();
+      sphereGeoC.dispose(); sphereGeoH.dispose(); sphereGeoL.dispose();
+      lineMat.dispose(); bgMat.dispose();
+      namedMeshes.forEach((m) => m.material.dispose());
+      if (renderer.domElement.parentNode) renderer.domElement.parentNode.removeChild(renderer.domElement);
+      sceneRef.current = null;
+    };
+  }, []);
+
+  return <div ref={containerRef} className="graph-stage" aria-label="Cerveau 3D" />;
+}
+
+function useScrollingActive(idleMs = 600) {
+  const [scrolling, setScrolling] = useState(false);
+  useEffect(() => {
+    let t = null;
+    const onScroll = () => { setScrolling(true); if (t) clearTimeout(t); t = setTimeout(() => setScrolling(false), idleMs); };
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => { window.removeEventListener("scroll", onScroll); if (t) clearTimeout(t); };
+  }, [idleMs]);
+  return scrolling;
+}
+
+function Minimap({ activeSection, onNodeClick }) {
+  const data = window.PORTFOLIO;
+  const w = 192, h = 178;
+  const scrolling = useScrollingActive(650);
+  const [hover, setHover] = useState(false);
+  const [atTop, setAtTop] = useState(true);
+  useEffect(() => {
+    const onScroll = () => setAtTop(window.scrollY < 200);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  const collapsed = scrolling && !hover;
+  const visible = !atTop && activeSection !== "hero";
+  const cx = w / 2, cy = h / 2;
+  const radius = Math.min(w, h) * 0.36;
+
+  const positions = useMemo(() => {
+    const peers = data.nodes.filter(n => !n.fixed);
+    const pos = {};
+    pos["moi"] = { x: cx, y: cy };
+    peers.forEach((n, k) => {
+      const a = (k / peers.length) * Math.PI * 2 - Math.PI / 2;
+      pos[n.id] = { x: cx + Math.cos(a) * radius, y: cy + Math.sin(a) * radius };
+    });
+    return pos;
+  }, []);
+
+  const activeSet = new Set(data.sectionNodes[activeSection] || ["moi"]);
+  const sectionLabel =
+    activeSection === "hero"        ? "00 / overview" :
+    activeSection === "parcours"    ? "01 / parcours" :
+    activeSection === "side-hustle" ? "02 / side hustle" :
+    activeSection === "approche"    ? "03 / approche" :
+    activeSection === "contact"     ? "04 / contact" : "";
+
+  return (
+    <aside className={"minimap" + (visible ? " visible" : "") + (collapsed ? " collapsed" : "")}
+      onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
+      <div className="minimap-head">
+        <span className="minimap-title">Carte</span>
+        <span className="minimap-current">{sectionLabel}</span>
+      </div>
+      <svg viewBox={`0 0 ${w} ${h}`}>
+        {data.edges.map(([a, b], i) => {
+          const A = positions[a], B = positions[b];
+          if (!A || !B) return null;
+          const hot = activeSet.has(a) && activeSet.has(b);
+          return <line key={i} x1={A.x} y1={A.y} x2={B.x} y2={B.y} className={"mini-edge" + (hot ? " hot" : "")} />;
+        })}
+        {data.nodes.map((n) => {
+          const p = positions[n.id];
+          const isCenter = n.id === "moi";
+          const isActive = activeSet.has(n.id) && !isCenter;
+          return <circle key={n.id} cx={p.x} cy={p.y} r={isCenter ? 4.5 : (isActive ? 4 : 3)}
+            className={"mini-node" + (isCenter ? " center" : "") + (isActive ? " active" : "")}
+            style={{ cursor: "pointer" }} onClick={() => onNodeClick && onNodeClick(n)}><title>{n.label}</title></circle>;
+        })}
+      </svg>
+    </aside>
+  );
+}
+
+function useReveal() {
+  const ref = useRef(null);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach((e) => { if (e.isIntersecting) { e.target.classList.add("in"); io.unobserve(e.target); } }),
+      { threshold: 0.15 }
+    );
+    el.querySelectorAll(".reveal, .reveal-stagger").forEach((n) => io.observe(n));
+    return () => io.disconnect();
+  }, []);
+  return ref;
+}
+
+function SectionHead({ idx, kicker, title }) {
+  return (
+    <div className="sec-head reveal">
+      <div className="sec-index">{idx}</div>
+      <div style={{ flex: 1 }}>
+        {kicker && <div className="sec-kicker">{kicker}</div>}
+        <h2 className="sec-title" dangerouslySetInnerHTML={{ __html: title }} />
+      </div>
+    </div>
+  );
+}
+
+function ParcoursSection() {
+  const ref = useReveal();
+  const d = window.PORTFOLIO.parcours;
+  return (
+    <section id="parcours" className="sec" ref={ref}>
+      <div className="container">
+        <SectionHead idx="01 /" kicker="Parcours" title='Le commercial qui <span class="italic">code</span>.' />
+        <div className="why-grid">
+          <div className="reveal">
+            <p className="why-lead">
+              {d.lead.map((p, i) => p.italic ? <span key={i} className="italic">{p.t}</span> : <span key={i}>{p.t}</span>)}
+            </p>
+            <p className="why-body">{d.body}</p>
+          </div>
+          <div className="why-cards reveal-stagger">
+            {d.pillars.map((c) => (
+              <div key={c.n} className="why-card">
+                <div className="why-card-num">{c.n}</div>
+                <div className="why-card-title">{c.t}</div>
+                <div className="why-card-body">{c.b}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+        <div className="exp-list reveal-stagger" style={{ marginTop: 72 }}>
+          {d.timeline.map((e, i) => (
+            <div key={i} className="exp">
+              <div className="exp-date">{e.date}</div>
+              <div><div className="exp-role">{e.role}</div><div className="exp-co">{e.co}</div></div>
+              <div className="exp-body">{e.body}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function SideHustleSection() {
+  const ref = useReveal();
+  const items = window.PORTFOLIO.sideHustle;
+  return (
+    <section id="side-hustle" className="sec" ref={ref}>
+      <div className="container">
+        <SectionHead idx="02 /" kicker="Side hustle" title='Ce que je construis <span class="italic">le soir</span>.' />
+        <div className="proj-list reveal-stagger">
+          {items.map((p) => {
+            const parts = p.name.split(p.italic);
+            return (
+              <a key={p.n} href="#" className="proj" onClick={(e)=>e.preventDefault()}>
+                <div className="proj-num">{p.n}</div>
+                <div className="proj-name">
+                  {parts[0]}<span className="italic">{p.italic}</span>{parts[1] || ""}
+                  <div className="proj-tag mono" style={{ marginTop: 6 }}>{p.tag}</div>
+                </div>
+                <div className="proj-desc">{p.desc}</div>
+                <div className="proj-stats">
+                  {p.stats.map((s, i) => <div key={i} className="proj-stat"><b>{s.k}</b>{s.v}</div>)}
+                </div>
+                <svg className="proj-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path d="M6 12h12M12 6l6 6-6 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </a>
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ApprocheSection() {
+  const ref = useReveal();
+  const a = window.PORTFOLIO.approche;
+  return (
+    <section id="approche" className="sec" ref={ref}>
+      <div className="container">
+        <SectionHead idx="03 /" kicker="Approche" title='Quatre &eacute;tapes, <span class="italic">opinion&eacute;es</span>.' />
+        <div className="approach-grid reveal-stagger">
+          {a.steps.map((s) => (
+            <div key={s.n} className="step">
+              <div className="step-num">/ {s.n}</div>
+              <h3 className="step-title">{s.t}</h3>
+              <p className="step-body">{s.b}</p>
+              <div className="step-tags">{s.tags.map((t) => <span key={t}>{t}</span>)}</div>
+            </div>
+          ))}
+        </div>
+        <div className="stack-chips-row reveal">
+          <span className="stack-lead">Stack</span>
+          {a.stack.map((c, i) => <span key={i} className={"chip" + (c.strong ? " strong" : "")}>{c.t}</span>)}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function GallerySection() {
+  const ref = useReveal();
+  const g = window.PORTFOLIO.gallery;
+  const renderTrack = (items) => {
+    const doubled = items.concat(items);
+    return doubled.map((it, i) => (
+      <figure key={i} className={"gcard size-" + (it.size || "a")} style={{ "--c1": it.c1, "--c2": it.c2 }}
+        aria-hidden={i >= items.length ? "true" : undefined}>
+        {it.src ? <img src={it.src} alt={it.caption} loading="lazy" decoding="async" />
+                 : <span className="gcard-fallback" aria-hidden="true"></span>}
+        <span className="gcard-tag">{it.tag}</span>
+        <figcaption className="gcard-caption">{it.caption}</figcaption>
+        <span className="gcard-meta" aria-hidden="true">
+          <span>{String(((i % items.length) + 1)).padStart(2, "0")} / {String(items.length).padStart(2, "0")}</span>
+          <span className="gcard-dot"></span>
+        </span>
+      </figure>
+    ));
+  };
+  return (
+    <section id="galerie" className="gallery" ref={ref}>
+      <div className="gallery-head">
+        <div className="gallery-eyebrow reveal">
+          <span className="num">{String(g.row1.length + g.row2.length).padStart(2, "0")}</span>
+          <span>{g.eyebrow}</span>
+        </div>
+        <h2 className="gallery-h2 reveal">
+          {g.h2_parts.map((p, i) => p.italic ? <span key={i} className="italic">{p.t}</span> : <span key={i}>{p.t}</span>)}
+        </h2>
+        <p className="gallery-sub reveal">{g.sub}</p>
+      </div>
+      <div className="marquee"><div className="marquee-track">{renderTrack(g.row1)}</div></div>
+      <div className="marquee reverse"><div className="marquee-track">{renderTrack(g.row2)}</div></div>
+    </section>
+  );
+}
+
+function ContactSection() {
+  const ref = useReveal();
+  const c = window.PORTFOLIO.contact;
+  const magRef = useRef(null);
+  useEffect(() => {
+    const el = magRef.current;
+    if (!el) return;
+    const onMove = (e) => { const r = el.getBoundingClientRect(); el.style.transform = `translate(${(e.clientX-(r.left+r.width/2))*0.18}px, ${(e.clientY-(r.top+r.height/2))*0.18}px)`; };
+    const onLeave = () => { el.style.transform = ""; };
+    el.addEventListener("mousemove", onMove);
+    el.addEventListener("mouseleave", onLeave);
+    return () => { el.removeEventListener("mousemove", onMove); el.removeEventListener("mouseleave", onLeave); };
+  }, []);
+  return (
+    <section id="contact" ref={ref}>
+      <div className="container contact">
+        <div className="contact-eyebrow reveal">{c.eyebrow}</div>
+        <h2 className="contact-h2 reveal">
+          {c.h2_parts.map((p, i) => p.italic ? <span key={i} className="italic">{p.t}</span> : <span key={i}>{p.t}</span>)}
+        </h2>
+        <div className="contact-cta reveal">
+          <a ref={magRef} className="btn btn-primary" href="https://cal.com/bnt-bln-rkvvhg/15min" target="_blank" rel="noopener">Programmer un call <span className="arrow">&rarr;</span></a>
+          <a className="btn btn-ghost" href={`mailto:${c.email}`}>{c.email}</a>
+        </div>
+        <div className="contact-side reveal">
+          <a href={`https://${c.linkedin}`} target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style={{verticalAlign:"middle",marginRight:"6px"}}><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            {c.linkedin}
+          </a>
+          <span>&middot;</span>
+          <a href={`https://${c.github}`} target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style={{verticalAlign:"middle",marginRight:"6px"}}><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/></svg>
+            {c.github}
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function useActiveSection(ids) {
+  const [active, setActive] = useState(ids[0]);
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      (entries) => {
+        const visible = entries.filter((e) => e.isIntersecting);
+        if (visible.length === 0) return;
+        visible.sort((a, b) => Math.abs(a.boundingClientRect.top) - Math.abs(b.boundingClientRect.top));
+        setActive(visible[0].target.id);
+      },
+      { rootMargin: "-30% 0px -55% 0px", threshold: [0, 0.1, 0.5] }
+    );
+    ids.forEach((id) => { const el = document.getElementById(id); if (el) obs.observe(el); });
+    return () => obs.disconnect();
+  }, [ids.join(",")]);
+  return active;
+}
+
+function useScrolled() {
+  const [s, setS] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setS(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  return s;
+}
+
+function CommandPalette({ open, onClose, items }) {
+  const [q, setQ] = useState("");
+  const [sel, setSel] = useState(0);
+  const inputRef = useRef(null);
+  useEffect(() => { if (open) { setQ(""); setSel(0); setTimeout(() => inputRef.current?.focus(), 30); } }, [open]);
+  const filtered = useMemo(() => {
+    if (!q.trim()) return items;
+    const Q = q.toLowerCase();
+    return items.filter((it) => it.label.toLowerCase().includes(Q) || (it.hint || "").toLowerCase().includes(Q));
+  }, [q, items]);
+  const onKey = (e) => {
+    if (e.key === "ArrowDown") { e.preventDefault(); setSel((s) => Math.min(filtered.length - 1, s + 1)); }
+    else if (e.key === "ArrowUp") { e.preventDefault(); setSel((s) => Math.max(0, s - 1)); }
+    else if (e.key === "Enter") { e.preventDefault(); const it = filtered[sel]; if (it) { it.action(); onClose(); } }
+    else if (e.key === "Escape") onClose();
+  };
+  return (
+    <div className={"palette-backdrop" + (open ? " open" : "")} onClick={onClose} role="dialog" aria-modal="true">
+      <div className="palette" onClick={(e) => e.stopPropagation()}>
+        <input ref={inputRef} value={q} onChange={(e) => { setQ(e.target.value); setSel(0); }} onKeyDown={onKey}
+          placeholder="Aller à une section, un projet, un contact…" />
+        <div className="palette-list">
+          {filtered.length === 0 && <div className="palette-item" style={{ color: "var(--ink-35)" }}>Aucun r&eacute;sultat</div>}
+          {filtered.map((it, i) => (
+            <div key={it.id} className={"palette-item" + (i === sel ? " sel" : "")}
+              onMouseEnter={() => setSel(i)} onClick={() => { it.action(); onClose(); }}>
+              <span>{it.label}</span>
+              {it.hint && <span className="mono">{it.hint}</span>}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function Topbar({ scrolled, onOpenPalette }) {
+  const id = window.PORTFOLIO.identity;
+  return (
+    <header className={"topbar" + (scrolled ? " scrolled" : "")}>
+      <a href="#hero" className="brand">
+        <span>{id.name}</span>
+        <span className="brand-mark">&mdash; Paris</span>
+      </a>
+      <nav className="nav-links">
+        <a href="#parcours">Parcours</a>
+        <a href="#side-hustle">Side hustle</a>
+        <a href="#approche">Approche</a>
+        <a href="#contact">Contact</a>
+        <button className="nav-cmd" onClick={onOpenPalette} aria-label="Ouvrir la palette de commandes">
+          <span>Naviguer</span>
+          <kbd>⌘K</kbd>
+        </button>
+      </nav>
+    </header>
+  );
+}
+
+function Hero({ onNodeClick }) {
+  const id = window.PORTFOLIO.identity;
+  const magRef = useRef(null);
+  useEffect(() => {
+    const el = magRef.current;
+    if (!el) return;
+    const onMove = (e) => { const r = el.getBoundingClientRect(); el.style.transform = `translate(${(e.clientX-(r.left+r.width/2))*0.18}px, ${(e.clientY-(r.top+r.height/2))*0.18}px)`; };
+    const onLeave = () => { el.style.transform = ""; };
+    el.addEventListener("mousemove", onMove);
+    el.addEventListener("mouseleave", onLeave);
+    return () => { el.removeEventListener("mousemove", onMove); el.removeEventListener("mouseleave", onLeave); };
+  }, []);
+
+  return (
+    <section id="hero" className="hero">
+      <img className="hero-selfie" src="assets/selfie.png" alt="Beno&icirc;t &mdash; portrait" loading="eager" decoding="async" />
+      <KnowledgeGraph activeSection="hero" onNodeClick={onNodeClick} />
+      <div className="hero-meta">
+        <h1 className="hero-h1 reveal in">
+          Je connecte la <span className="italic">finance r&eacute;gul&eacute;e</span> &agrave; l&rsquo;IA op&eacute;rationnelle.
+        </h1>
+        <p className="hero-sub reveal in">{id.intro}</p>
+        <div className="hero-cta-row reveal in">
+          <a ref={magRef} className="btn btn-primary" href="#contact">Programmer un call <span className="arrow">&rarr;</span></a>
+          <a className="btn btn-ghost" href="#side-hustle">Voir ce que je construis</a>
+        </div>
+      </div>
+      <div className="hero-rotator reveal in" aria-label="Principes de travail">
+        <span className="hr-kicker">
+          <span>// principe de travail</span>
+          <span className="arrow" aria-hidden="true">&rarr;</span>
+        </span>
+        <span className="hr-frame">
+          <span className="hr-word">
+            <span className="hr-strike">slide-driven</span>
+            <span className="hr-keep">data-driven.</span>
+          </span>
+          <span className="hr-word">
+            <span className="hr-strike">stakeholder-pleasing</span>
+            <span className="hr-keep">customer-centric.</span>
+          </span>
+          <span className="hr-word">
+            <span className="hr-strike">prompt-engineered</span>
+            <span className="hr-keep">augment&eacute; par <span className="accent">Claude</span>.</span>
+          </span>
+        </span>
+      </div>
+      <div className="hero-hint">
+        <div className="hero-hint-line"></div>
+        <span>scroll</span>
+      </div>
+    </section>
+  );
+}
+
+function App() {
+  const data = window.PORTFOLIO;
+  const sectionIds = ["hero", "parcours", "side-hustle", "approche", "contact"];
+  const active = useActiveSection(sectionIds);
+  const scrolled = useScrolled();
+  const [paletteOpen, setPaletteOpen] = useState(false);
+
+  const scrollTo = useCallback((id) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    const top = el.getBoundingClientRect().top + window.scrollY - (id === "hero" ? 0 : 24);
+    window.scrollTo({ top, behavior: "smooth" });
+  }, []);
+
+  const onNodeClick = useCallback((node) => {
+    if (!node || !node.section) return;
+    scrollTo(node.section);
+  }, [scrollTo]);
+
+  useEffect(() => {
+    const onKey = (e) => {
+      if ((e.metaKey || e.ctrlKey) && (e.key === "k" || e.key === "K")) {
+        e.preventDefault();
+        setPaletteOpen((o) => !o);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
+  useEffect(() => {
+    const name = window.PORTFOLIO.identity.name;
+    const styleHead = "background:#0B1426;color:#FAFAF8;font:600 13px/1.4 Inter,sans-serif;padding:6px 12px;border-radius:4px 4px 0 0;";
+    const styleBody = "background:#FAFAF8;color:#0B1426;font:400 12px/1.5 Inter,sans-serif;padding:10px 12px;border-radius:0 0 4px 4px;border:1px solid #e6e3da;border-top:0;";
+    console.log("%cHey, curieux 👋%c\n" +
+      "Tu lis la console. Bon réflexe.\n" +
+      "→ " + name + " — Paris\n" +
+      "→ " + window.PORTFOLIO.contact.email + "\n\n" +
+      "Stack du site : Next.js 14 · TypeScript strict · Tailwind · Framer Motion.\n" +
+      "Code sans abstraction inutile. Tape `__portfolio` pour fouiller la data.",
+      styleHead, styleBody);
+    window.__portfolio = window.PORTFOLIO;
+  }, []);
+
+  const paletteItems = useMemo(() => {
+    const out = [];
+    sectionIds.forEach((id) => {
+      out.push({ id: "sec-" + id, label: "Aller à " + id.charAt(0).toUpperCase() + id.slice(1), hint: id, action: () => scrollTo(id) });
+    });
+    data.sideHustle.forEach((p) => {
+      out.push({ id: "proj-" + p.n, label: "Projet : " + p.name, hint: p.tag.split(" / ")[0], action: () => scrollTo("side-hustle") });
+    });
+    out.push({ id: "email", label: "Envoyer un email", hint: data.contact.email, action: () => window.location.href = "mailto:" + data.contact.email });
+    out.push({ id: "linkedin", label: "Ouvrir LinkedIn", hint: data.contact.linkedin, action: () => window.open("https://" + data.contact.linkedin, "_blank") });
+    return out;
+  }, []);
+
+  return (
+    <React.Fragment>
+      <Topbar scrolled={scrolled} onOpenPalette={() => setPaletteOpen(true)} />
+      <Minimap activeSection={active} onNodeClick={onNodeClick} />
+      <main>
+        <Hero onNodeClick={onNodeClick} />
+        <ParcoursSection />
+        <SideHustleSection />
+        <ApprocheSection />
+        <GallerySection />
+        <ContactSection />
+        <footer>
+          <div className="container footer-row">
+            <span className="mono">&copy; 2026 &mdash; {data.identity.name}</span>
+            <span className="mono">build_ref: portfolio.v1 &middot; paris</span>
+          </div>
+        </footer>
+      </main>
+      <CommandPalette open={paletteOpen} onClose={() => setPaletteOpen(false)} items={paletteItems} />
+    </React.Fragment>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById("app")).render(<App />);
+</script>
+
+</body>
+</html>
