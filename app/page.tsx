@@ -10,6 +10,7 @@ import { Approche } from "@/components/sections/Approche";
 import { Stack } from "@/components/sections/Stack";
 import { Experience } from "@/components/sections/Experience";
 import { Cta } from "@/components/sections/Cta";
+import { ClaudeContextSection } from "@/components/sections/ClaudeContextSection";
 import { Footer } from "@/components/sections/Footer";
 import { MiniMap } from "@/components/graph/MiniMap";
 import { CommandPalette } from "@/components/CommandPalette";
@@ -70,6 +71,7 @@ export default function Home() {
       <Stack />
       <Experience />
       <Cta />
+      <ClaudeContextSection />
       <Footer />
       <MiniMap
         activeSection={activeSection}

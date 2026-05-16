@@ -3,12 +3,25 @@
 
 export type NodeTier = 1 | 2 | 3 | 4;
 
+export interface GraphConceptProof {
+  label: string;
+  href?: string;
+}
+
+export interface GraphConcept {
+  title: string;
+  caption: string;
+  body: string;
+  proofs: GraphConceptProof[];
+}
+
 export interface GraphNode {
   id: string;
   label: string;
   tier: NodeTier;
   size: number;
   sectionAnchor?: string;
+  concept?: GraphConcept;
   initialX: number;
   initialY: number;
 }
@@ -147,6 +160,82 @@ export const graphNodes: GraphNode[] = [
     sectionAnchor: "#stack",
     initialX: 260,
     initialY: 30
+  },
+  {
+    id: "concept-gtm",
+    label: "Go-to-market B2B",
+    tier: 3,
+    size: 7,
+    initialX: 450,
+    initialY: 220,
+    concept: {
+      title: "Go-to-market B2B",
+      caption: "Comment j'ai éprouvé ce concept",
+      body:
+        "Le GTM, je l'ai vécu des deux côtés. Côté corporate chez OVHcloud, je porte la stratégie commerciale FSI : segmentation des comptes (PSP, assureurs, blockchain institutionnels), construction des messages selon le persona (RSSI, CTO, DPO), orchestration multi-équipes (pre-sales, partner managers, intégrateurs Capgemini). Côté builder à l'Agence alAin, on définit notre GTM SMB : positionnement voice agents, pricing par usage, séquences outbound HubSpot.",
+      proofs: [
+        { label: "OVHcloud FSI — 10 grands comptes, >2 M€ ARR" },
+        { label: "Agence alAin — GTM voice agents pour PME" },
+        { label: "Présence terrain : VivaTech, FIC, Paris Blockchain Week, EthCC" }
+      ]
+    }
+  },
+  {
+    id: "concept-vente",
+    label: "Vente Enterprise",
+    tier: 3,
+    size: 7,
+    initialX: 700,
+    initialY: 200,
+    concept: {
+      title: "Vente Enterprise & RFP",
+      caption: "Cycles longs, multi-stakeholders, conformité",
+      body:
+        "Sur les comptes FSI, un cycle de vente, c'est 6 à 18 mois, 8 à 15 interlocuteurs côté client, des NDA, des PoCs techniques, des RFP de 80+ pages avec questionnaires DORA / MiCA / SecNumCloud. Je sais piloter ça : qualification BANT/MEDDIC, négociation avec achats, escalade C-level, contractualisation avec legal. Et surtout, je sais traduire la stack tech OVHcloud en valeur métier pour le métier régulé.",
+      proofs: [
+        { label: "Pilotage >2 M€ ARR sur portefeuille FSI" },
+        { label: "Réponses RFP — DORA, MiCA, SecNumCloud, ISO 27001" },
+        { label: "Représentant OVHcloud auprès de Capgemini" }
+      ]
+    }
+  },
+  {
+    id: "concept-vulgar",
+    label: "Vulgarisation tech",
+    tier: 3,
+    size: 7,
+    initialX: 320,
+    initialY: 400,
+    concept: {
+      title: "Vulgarisation tech & pédagogie",
+      caption: "Traduire la complexité en valeur",
+      body:
+        "Mon rôle naturel, c'est de faire comprendre la tech sans l'édulcorer. Sur YouTube (ZeroCode_Benoit), je produis des formats long-form (5 actes) une fois par mois pour une audience FR 20-40 ans, sur des sujets IA / blockchain / finance. À l'Agence alAin, je forme directement les PME à l'IA générative. Chez OVHcloud, je traduis les specs SecNumCloud en argument commercial pour des DAF qui ne parlent pas cloud.",
+      proofs: [
+        { label: "YouTube ZeroCode_Benoit — vidéos long-form mensuelles" },
+        { label: "Formation IA pour PME via Agence alAin" },
+        { label: "1 000+ followers LinkedIn, audience B2B FSI/tech" }
+      ]
+    }
+  },
+  {
+    id: "concept-meta",
+    label: "Méta-apprentissage",
+    tier: 3,
+    size: 7,
+    initialX: 250,
+    initialY: 130,
+    concept: {
+      title: "Méta-apprentissage & pensée en réseau",
+      caption: "Apprendre à apprendre, vite",
+      body:
+        "Mon second cerveau Obsidian, c'est 430 notes interconnectées qui couvrent IA, finance régulée, blockchain, ventes B2B. C'est pas un wiki passif : chaque note est connectée à au moins 3 autres, ce qui force la mise en relation entre domaines. Quand je dois absorber un nouveau dossier client (genre un PSP qui passe sous MiCA), j'ai déjà les concepts adjacents prêts à activer. C'est ce qui me permet de tenir un job FSI exigeant tout en buildant en parallèle.",
+      proofs: [
+        { label: "Obsidian — 430 notes en réseau" },
+        { label: "Matière première des vidéos ZeroCode_Benoit" },
+        { label: "Activable en quelques minutes sur un nouveau dossier" }
+      ]
+    }
   }
 ];
 
@@ -168,7 +257,17 @@ export const graphEdges: GraphEdge[] = [
   { from: "safegpt", to: "cloud" },
   { from: "safegpt", to: "yt" },
   { from: "hacks", to: "stable" },
-  { from: "hermes", to: "stack" }
+  { from: "hermes", to: "stack" },
+  { from: "me", to: "concept-gtm" },
+  { from: "concept-gtm", to: "ovh" },
+  { from: "concept-gtm", to: "alain" },
+  { from: "ovh", to: "concept-vente" },
+  { from: "concept-vente", to: "regul" },
+  { from: "me", to: "concept-vulgar" },
+  { from: "concept-vulgar", to: "yt" },
+  { from: "concept-vulgar", to: "alain" },
+  { from: "sb", to: "concept-meta" },
+  { from: "concept-meta", to: "me" }
 ];
 
 export const whyMe = [

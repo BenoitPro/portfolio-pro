@@ -3,9 +3,10 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronRight } from "lucide-react";
-import { profile } from "@/data/portfolio";
+import { profile, type GraphConcept } from "@/data/portfolio";
 import { KnowledgeGraph } from "@/components/graph/KnowledgeGraph";
 import { MagneticButton } from "@/components/ui/MagneticButton";
+import { ConceptPopup } from "@/components/ui/ConceptPopup";
 
 function useGraphSize(containerRef: React.RefObject<HTMLDivElement>) {
   const [size, setSize] = useState({ width: 0, height: 0 });
@@ -30,6 +31,7 @@ export function Hero() {
   const { width, height } = useGraphSize(containerRef);
   const [isMobile, setIsMobile] = useState(false);
   const [showHint, setShowHint] = useState(true);
+  const [activeConcept, setActiveConcept] = useState<GraphConcept | null>(null);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
@@ -89,6 +91,7 @@ export function Hero() {
         {width > 0 && (
           <KnowledgeGraph
             onNodeClick={handleNodeClick}
+            onConceptClick={setActiveConcept}
             width={width}
             height={height}
             isStatic={isMobile}
@@ -165,10 +168,12 @@ export function Hero() {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.4 }}
           >
-            Bouge la souris dans le graph · Clique un node pour explorer
+            Bouge la souris dans le graph · Clique un node pour explorer (concepts en blanc)
           </motion.p>
         )}
       </AnimatePresence>
+
+      <ConceptPopup concept={activeConcept} onClose={() => setActiveConcept(null)} />
     </section>
   );
 }

@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState, useCallback } from "react";
-import { graphNodes, graphEdges } from "@/data/portfolio";
+import { graphNodes, graphEdges, type GraphConcept } from "@/data/portfolio";
 import {
   initSimulation,
   tickSimulation,
@@ -17,6 +17,7 @@ const NODE_COLORS: Record<number, string> = {
 
 interface KnowledgeGraphProps {
   onNodeClick?: (anchor: string) => void;
+  onConceptClick?: (concept: GraphConcept) => void;
   width: number;
   height: number;
   isStatic?: boolean; // mobile
@@ -24,6 +25,7 @@ interface KnowledgeGraphProps {
 
 export function KnowledgeGraph({
   onNodeClick,
+  onConceptClick,
   width,
   height,
   isStatic = false,
@@ -172,6 +174,20 @@ export function KnowledgeGraph({
           const r = node.size;
           const scale = isHovered ? 1.3 : 1;
 
+          const isInteractive = !!node.sectionAnchor || !!node.concept;
+          const handleActivate = () => {
+            if (node.sectionAnchor) {
+              onNodeClick?.(node.sectionAnchor);
+            } else if (node.concept) {
+              onConceptClick?.(node.concept);
+            }
+          };
+          const ariaSuffix = node.sectionAnchor
+            ? " : cliquer pour voir la section"
+            : node.concept
+            ? " : cliquer pour voir le contexte"
+            : "";
+
           return (
             <g
               key={node.id}
@@ -181,26 +197,41 @@ export function KnowledgeGraph({
                 transform: `translate(${node.x}px, ${node.y}px) scale(${visible ? scale : 0.6})`,
                 transformOrigin: `${node.x}px ${node.y}px`,
                 transition: "opacity 300ms ease, transform 200ms ease",
-                cursor: node.sectionAnchor ? "pointer" : "default",
+                cursor: isInteractive ? "pointer" : "default",
               }}
               onMouseEnter={() => setHoveredNode(node.id)}
               onMouseLeave={() => setHoveredNode(null)}
-              onClick={() => node.sectionAnchor && onNodeClick?.(node.sectionAnchor)}
-              tabIndex={node.sectionAnchor ? 0 : -1}
+              onClick={handleActivate}
+              tabIndex={isInteractive ? 0 : -1}
               onKeyDown={(e) => {
-                if (e.key === "Enter" && node.sectionAnchor) {
-                  onNodeClick?.(node.sectionAnchor);
+                if (e.key === "Enter" && isInteractive) {
+                  handleActivate();
                 }
               }}
-              aria-label={`Node ${node.label}${node.sectionAnchor ? " : cliquer pour voir la section" : ""}`}
-              role={node.sectionAnchor ? "button" : undefined}
+              aria-label={`Node ${node.label}${ariaSuffix}`}
+              role={isInteractive ? "button" : undefined}
             >
               {/* Halo sur le node central */}
               {node.tier === 1 && (
                 <circle r={r + 8} fill="rgba(0,102,255,0.18)" />
               )}
+              {/* Halo subtil sur les nodes concept pour les distinguer */}
+              {node.concept && (
+                <circle
+                  r={r + 5}
+                  fill="none"
+                  stroke="rgba(0,102,255,0.35)"
+                  strokeWidth={1}
+                  strokeDasharray="2 3"
+                />
+              )}
               {/* Node principal */}
-              <circle r={r} fill={color} />
+              <circle
+                r={r}
+                fill={node.concept ? "#FFFFFF" : color}
+                stroke={node.concept ? color : "none"}
+                strokeWidth={node.concept ? 2 : 0}
+              />
               {/* Tooltip label au hover */}
               {isHovered && (
                 <foreignObject
