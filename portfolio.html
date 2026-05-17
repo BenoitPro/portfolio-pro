@@ -254,13 +254,13 @@
   /* Hero rotator */
   .hero-rotator {
     position: absolute;
-    left: clamp(380px, 38vw, 620px);
-    bottom: clamp(60px, 8vh, 100px);
+    right: clamp(20px, 4vw, 64px);
+    bottom: clamp(48px, 10vh, 110px);
     z-index: 8;
     display: flex;
     align-items: baseline;
     gap: 14px;
-    max-width: min(480px, 40vw);
+    max-width: min(560px, 46vw);
     pointer-events: none;
   }
   .hr-kicker {
@@ -276,13 +276,13 @@
   .hr-kicker .arrow { color: var(--accent); font-size: 12px; }
   .hr-frame {
     position: relative;
-    flex: 1 1 auto;
-    height: 1.35em;
+    flex: 0 0 auto;
+    width: clamp(260px, 26vw, 360px);
+    height: 1.6em;
     font-family: "Caveat", "Spectral", cursive;
     font-size: clamp(19px, 1.7vw, 23px);
     line-height: 1.35;
     overflow: hidden;
-    min-width: 0;
   }
   .hr-word {
     position: absolute;
