@@ -254,13 +254,13 @@
   /* Hero rotator */
   .hero-rotator {
     position: absolute;
-    right: clamp(20px, 4vw, 64px);
-    bottom: clamp(48px, 10vh, 110px);
+    left: clamp(380px, 38vw, 620px);
+    bottom: clamp(60px, 8vh, 100px);
     z-index: 8;
     display: flex;
     align-items: baseline;
     gap: 14px;
-    max-width: min(560px, 46vw);
+    max-width: min(480px, 40vw);
     pointer-events: none;
   }
   .hr-kicker {
@@ -333,9 +333,9 @@
   /* Selfie */
   .hero-selfie {
     position: absolute;
-    left: clamp(-40px, -2vw, -8px);
-    bottom: -40px;
-    width: clamp(440px, 50vw, 820px);
+    left: clamp(40px, 6vw, 100px);
+    bottom: -80px;
+    width: clamp(360px, 40vw, 660px);
     height: auto;
     z-index: 2;
     pointer-events: none;
@@ -2297,10 +2297,6 @@ function Hero({ onNodeClick }) {
         </div>
       </div>
       <div className="hero-rotator reveal in" aria-label="Principes de travail">
-        <span className="hr-kicker">
-          <span>// principe de travail</span>
-          <span className="arrow" aria-hidden="true">&rarr;</span>
-        </span>
         <span className="hr-frame">
           <span className="hr-word">
             <span className="hr-strike">slide-driven</span>
