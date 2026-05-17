@@ -823,6 +823,9 @@
   .btn-ghost:hover { border-color: var(--ink); }
   .btn .arrow { transition: transform 0.25s; display: inline-block; }
   .btn:hover .arrow { transform: translateX(3px); }
+  .btn-cv { display: inline-flex; align-items: center; gap: 7px; }
+  .btn-cv .cv-icon { transition: transform 0.25s; flex-shrink: 0; }
+  .btn-cv:hover .cv-icon { transform: translateY(2px); }
 
   /* Section base */
   section { position: relative; z-index: 2; }
@@ -2293,7 +2296,10 @@ function Hero({ onNodeClick }) {
         <p className="hero-sub reveal in">{id.intro}</p>
         <div className="hero-cta-row reveal in">
           <a ref={magRef} className="btn btn-primary" href="#contact">Programmer un call <span className="arrow">&rarr;</span></a>
-          <a className="btn btn-ghost" href="#side-hustle">Voir ce que je construis</a>
+          <a className="btn btn-ghost btn-cv" href="assets/CV-Benoit-Baillon.pdf" download="CV-Benoit-Baillon.pdf">
+            <svg className="cv-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 18 15 15"/></svg>
+            <span>Télécharger mon CV</span>
+          </a>
         </div>
       </div>
       <div className="hero-rotator reveal in" aria-label="Principes de travail">
