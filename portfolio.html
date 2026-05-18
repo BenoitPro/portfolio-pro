@@ -108,7 +108,7 @@
     top: 0; left: 0; right: 0;
     z-index: 50;
     display: flex;
-    align-items: flex-start;
+    align-items: center;
     justify-content: space-between;
     padding: 22px clamp(20px, 4vw, 56px);
     pointer-events: none;
@@ -159,14 +159,21 @@
     border-radius: 999px;
     border: 1px solid rgba(11,20,38,0.05);
   }
-  .nav-links a {
+  .nav-links a, .nav-links .nav-link-btn {
     color: var(--ink-70);
     text-decoration: none;
     font-size: 14px;
     font-weight: 500;
     transition: color 0.2s;
   }
-  .nav-links a:hover { color: var(--ink); }
+  .nav-links a:hover, .nav-links .nav-link-btn:hover { color: var(--ink); }
+  .nav-links .nav-link-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    padding: 0;
+  }
   .nav-cmd {
     display: inline-flex; align-items: center; gap: 8px;
     padding: 6px 10px 6px 12px;
@@ -445,6 +452,8 @@
     position: relative;
     width: 100%;
     max-width: 600px;
+    max-height: calc(100vh - 48px);
+    overflow-y: auto;
     background: rgba(255, 255, 255, 0.88);
     backdrop-filter: blur(28px) saturate(1.6);
     -webkit-backdrop-filter: blur(28px) saturate(1.6);
@@ -1363,13 +1372,14 @@ window.PORTFOLIO = {
     { id: "ovh",            label: "OVHcloud",                 section: "parcours",    kind: "hub",               desc: "Portefeuille >2M€ ARR, 10 comptes FSI. Vente cloud souverain + IA." },
     { id: "reglementation", label: "Réglementation",           section: "parcours",    kind: "branch",            desc: "DORA, MiCA, SecNumCloud, DSP3. Je sais où sont les chausse-trappes." },
     { id: "souverainete",   label: "Cloud souverain",          section: "parcours",    kind: "branch",            desc: "Infra européenne certifiée. Sujet clé pour les clients FSI sous pression réglementaire." },
-    { id: "approche-client", label: "Approche client",         section: "approche",    kind: "branch",            desc: "Traduction besoin métier → architecture → pricing. L'angle rare." },
-    { id: "side-hustle",    label: "Side Hustle",              section: "side-hustle", kind: "hub",               desc: "Co-fondateur de l'Agence alAin. Voice agents, workflows IA, formation." },
-    { id: "safegpt",        label: "Agence alAin",             section: "side-hustle", kind: "leaf",              desc: "Automatisation IA pour PME. Stack : n8n, Claude API, MCP, HubSpot." },
-    { id: "hermes",         label: "Dashboard on-chain",       section: "side-hustle", kind: "leaf",              desc: "Analytics blockchain. Visualisation de données on-chain en temps réel." },
-    { id: "second-cerveau", label: "Second cerveau",           section: "side-hustle", kind: "leaf",              desc: "Système de gestion des connaissances connecté à mes outils IA." },
-    { id: "zerocode",       label: "Ext. Chrome",              section: "side-hustle", kind: "leaf",              desc: "Extension anti-Shadow AI pour bloquer les usages IA non autorisés." },
-    { id: "hackathons",     label: "Hackathons",               section: "side-hustle", kind: "branch",            desc: "2 victoires sur des hackathons IA & Web3." },
+    { id: "approche-client", label: "Approche client",         kind: "branch",            desc: "Traduction besoin métier → architecture → pricing. L'angle rare." },
+    { id: "side-hustle",    label: "Side Hustle",              kind: "hub",               desc: "Co-fondateur de l'Agence alAin. Voice agents, workflows IA, formation.",
+      concept: { badge: "Side Hustle", title: "Ce que je construis", caption: "le soir, en dehors d'OVHcloud", body: "5 projets actifs qui sont autant de preuves de ce que je vends le jour. Je build des agents IA, des outils data, des systèmes de connaissance — avec la même stack que je recommande à mes clients.", proofs: ["Agence alAin — Automatisation IA pour PME. Voice agents (Retell, Vapi), workflows HubSpot. 3 clients actifs.", "Dashboard on-chain — Parts de marché OVH sur les blockchains publiques majeures via mapping Nodes/ASN.", "Second cerveau — Système piloté par Claude. Capture, retrieval, restitution. 430 notes connectées.", "Ext. Chrome anti-Shadow AI — Extension open source pour détecter et limiter le Shadow AI en entreprise.", "Hackathons IA & Web3 — 2 victoires : Privacy blockchain Aleo (mai 2025) et AI fintech (avril 2026)."] } },
+    { id: "safegpt",        label: "Agence alAin",             kind: "leaf",              desc: "Automatisation IA pour PME. Stack : n8n, Claude API, MCP, HubSpot." },
+    { id: "hermes",         label: "Dashboard on-chain",       kind: "leaf",              desc: "Analytics blockchain. Visualisation de données on-chain en temps réel." },
+    { id: "second-cerveau", label: "Second cerveau",           kind: "leaf",              desc: "Système de gestion des connaissances connecté à mes outils IA." },
+    { id: "zerocode",       label: "Ext. Chrome",              kind: "leaf",              desc: "Extension anti-Shadow AI pour bloquer les usages IA non autorisés." },
+    { id: "hackathons",     label: "Hackathons",               kind: "branch",            desc: "2 victoires sur des hackathons IA & Web3." },
     { id: "concept-gtm",         label: "Go-to-market B2B",      kind: "concept", concept: { title: "Go-to-market B2B", caption: "Comment j'ai éprouvé ce concept", body: "Le GTM, je l'ai vécu des deux côtés. Côté corporate chez OVHcloud, je porte la stratégie commerciale FSI : segmentation des comptes (PSP, assureurs, blockchain institutionnels), construction des messages selon le persona (RSSI, CTO, DPO), orchestration multi-équipes (pre-sales, partner managers, intégrateurs Capgemini). Côté builder à l'Agence alAin, on définit notre GTM SMB : positionnement voice agents, pricing par usage, séquences outbound HubSpot.", proofs: ["OVHcloud FSI — 10 grands comptes, >2 M€ ARR","Agence alAin — GTM voice agents pour PME","Présence terrain : VivaTech, FIC, Paris Blockchain Week, EthCC"] } },
     { id: "concept-rfp",         label: "Vente Enterprise & RFP", kind: "concept", concept: { title: "Vente Enterprise & RFP", caption: "Comment j'ai éprouvé ce concept", body: "Cycles 6–18 mois, 8–15 interlocuteurs, NDA, PoCs, RFP 80+ pages (DORA/MiCA/SecNumCloud/ISO27001), qualification BANT/MEDDIC, négociation achats, escalade C-level.", proofs: [">2 M€ ARR portefeuille OVHcloud","RFP 80+ pages traitées sur des comptes FSI régulés","Cycles jusqu'à 18 mois, 15 interlocuteurs simultanés"] } },
     { id: "concept-vulga",       label: "Vulgarisation tech",     kind: "concept", concept: { title: "Vulgarisation tech", caption: "Comment j'ai éprouvé ce concept", body: "Traduire des specs techniques (SecNumCloud, zk-SNARKs, MiCA) en argument business pour des non-techs : DAF, RSSI, DG. YouTube long-form mensuel, formation IA PME via Agence alAin.", proofs: ["ZeroCode_Benoit YouTube — vulgarisation IA/finance/blockchain","Formation IA pour PME via Agence alAin","156 réactions LinkedIn sur le retex zLegacy (zk-SNARKs expliqués)"] } },
@@ -2225,18 +2235,17 @@ function CommandPalette({ open, onClose, items }) {
   );
 }
 
-function Topbar({ scrolled, onOpenPalette }) {
+function Topbar({ scrolled, onOpenPalette, onOpenSideHustle }) {
   const id = window.PORTFOLIO.identity;
   return (
     <header className={"topbar" + (scrolled ? " scrolled" : "")}>
       <a href="#hero" className="brand">
         <span>{id.name}</span>
-        <span className="brand-mark">&mdash; Paris</span>
+        <span className="brand-mark">Paris</span>
       </a>
       <nav className="nav-links">
         <a href="#parcours">Parcours</a>
-        <a href="#side-hustle">Side hustle</a>
-        <a href="#approche">Approche</a>
+        <button className="nav-link-btn" onClick={onOpenSideHustle}>Side hustle</button>
         <a href="#contact">Contact</a>
         <button className="nav-cmd" onClick={onOpenPalette} aria-label="Ouvrir la palette de commandes">
           <span>Naviguer</span>
@@ -2271,7 +2280,7 @@ function Hero({ onNodeClick }) {
     const update = () => {
       const y = window.scrollY;
       // Cap effect after hero is out of view
-      const offset = Math.min(y, 800) * 0.18;
+      const offset = Math.min(y * 0.14, 68);
       el.style.setProperty("--parallax-y", `-${offset}px`);
       ticking = false;
     };
@@ -2339,7 +2348,7 @@ function ConceptPopup({ concept, onClose }) {
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
       <div className="concept-popup">
         <button className="concept-popup-close" onClick={onClose} aria-label="Fermer">&#x2715;</button>
-        <div className="concept-badge">Concept &eacute;prouv&eacute;</div>
+        <div className="concept-badge">{concept.badge || "Concept éprouvé"}</div>
         <h2>{concept.title}</h2>
         <p className="concept-caption">{concept.caption}</p>
         <p className="concept-body">{concept.body}</p>
@@ -2410,7 +2419,7 @@ function ClaudeContextSection() {
 
 function App() {
   const data = window.PORTFOLIO;
-  const sectionIds = ["hero", "parcours", "side-hustle", "approche", "contact"];
+  const sectionIds = ["hero", "parcours", "contact"];
   const active = useActiveSection(sectionIds);
   const scrolled = useScrolled();
   const [paletteOpen, setPaletteOpen] = useState(false);
@@ -2428,6 +2437,11 @@ function App() {
     if (node.concept) { setOpenConcept(node.concept); return; }
     if (node.section) scrollTo(node.section);
   }, [scrollTo]);
+
+  const onOpenSideHustle = useCallback(() => {
+    const node = window.PORTFOLIO.nodes.find(n => n.id === "side-hustle");
+    if (node?.concept) setOpenConcept(node.concept);
+  }, []);
 
   useEffect(() => {
     const onKey = (e) => {
@@ -2459,8 +2473,9 @@ function App() {
     sectionIds.forEach((id) => {
       out.push({ id: "sec-" + id, label: "Aller à " + id.charAt(0).toUpperCase() + id.slice(1), hint: id, action: () => scrollTo(id) });
     });
+    const shNode = data.nodes.find(n => n.id === "side-hustle");
     data.sideHustle.forEach((p) => {
-      out.push({ id: "proj-" + p.n, label: "Projet : " + p.name, hint: p.tag.split(" / ")[0], action: () => scrollTo("side-hustle") });
+      out.push({ id: "proj-" + p.n, label: "Projet : " + p.name, hint: p.tag.split(" / ")[0], action: () => { if (shNode?.concept) setOpenConcept(shNode.concept); } });
     });
     out.push({ id: "email", label: "Envoyer un email", hint: data.contact.email, action: () => window.location.href = "mailto:" + data.contact.email });
     out.push({ id: "linkedin", label: "Ouvrir LinkedIn", hint: data.contact.linkedin, action: () => window.open("https://" + data.contact.linkedin, "_blank") });
@@ -2469,12 +2484,10 @@ function App() {
 
   return (
     <React.Fragment>
-      <Topbar scrolled={scrolled} onOpenPalette={() => setPaletteOpen(true)} />
+      <Topbar scrolled={scrolled} onOpenPalette={() => setPaletteOpen(true)} onOpenSideHustle={onOpenSideHustle} />
       <main>
         <Hero onNodeClick={onNodeClick} />
         <ParcoursSection />
-        <SideHustleSection />
-        <ApprocheSection />
         <GallerySection />
         <ContactSection />
         <ClaudeContextSection />
