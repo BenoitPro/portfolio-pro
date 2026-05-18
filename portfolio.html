@@ -2099,16 +2099,11 @@ function GallerySection() {
   const renderTrack = (items) => {
     const doubled = items.concat(items);
     return doubled.map((it, i) => (
-      <figure key={i} className={"gcard size-" + (it.size || "a")} style={{ "--c1": it.c1, "--c2": it.c2 }}
+      <figure key={i} className={"gcard size-" + (it.size || "a")}
         aria-hidden={i >= items.length ? "true" : undefined}>
-        {it.src ? <img src={it.src} alt={it.caption} loading="lazy" decoding="async" />
+        {it.src ? <img src={it.src} alt={it.tag || ""} loading="lazy" decoding="async" />
                  : <span className="gcard-fallback" aria-hidden="true"></span>}
         <span className="gcard-tag">{it.tag}</span>
-        <figcaption className="gcard-caption">{it.caption}</figcaption>
-        <span className="gcard-meta" aria-hidden="true">
-          <span>{String(((i % items.length) + 1)).padStart(2, "0")} / {String(items.length).padStart(2, "0")}</span>
-          <span className="gcard-dot"></span>
-        </span>
       </figure>
     ));
   };
