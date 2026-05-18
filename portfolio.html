@@ -2099,11 +2099,16 @@ function GallerySection() {
   const renderTrack = (items) => {
     const doubled = items.concat(items);
     return doubled.map((it, i) => (
-      <figure key={i} className={"gcard size-" + (it.size || "a")}
+      <figure key={i} className={"gcard size-" + (it.size || "a")} style={{ "--c1": it.c1, "--c2": it.c2 }}
         aria-hidden={i >= items.length ? "true" : undefined}>
-        {it.src ? <img src={it.src} alt={it.tag || ""} loading="lazy" decoding="async" />
+        {it.src ? <img src={it.src} alt={it.caption} loading="lazy" decoding="async" />
                  : <span className="gcard-fallback" aria-hidden="true"></span>}
         <span className="gcard-tag">{it.tag}</span>
+        <figcaption className="gcard-caption">{it.caption}</figcaption>
+        <span className="gcard-meta" aria-hidden="true">
+          <span>{String(((i % items.length) + 1)).padStart(2, "0")} / {String(items.length).padStart(2, "0")}</span>
+          <span className="gcard-dot"></span>
+        </span>
       </figure>
     ));
   };
@@ -2295,7 +2300,7 @@ function Hero({ onNodeClick }) {
       <KnowledgeGraph activeSection="hero" onNodeClick={onNodeClick} />
       <div className="hero-meta">
         <h1 className="hero-h1 reveal in">
-          Je connecte la <span className="italic">finance r&eacute;gul&eacute;e</span> &agrave; l&rsquo;IA op&eacute;rationnelle.
+          Sales <span className="italic">finance r&eacute;gul&eacute;e</span> le jour. Builder IA le soir.
         </h1>
         <p className="hero-sub reveal in">{id.intro}</p>
         <div className="hero-cta-row reveal in">
