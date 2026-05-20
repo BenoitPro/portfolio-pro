@@ -1368,42 +1368,54 @@ window.PORTFOLIO = {
   },
 
   nodes: [
-    { id: "moi",            label: "Benoît",                   section: "hero",        kind: "center",  fixed: true, desc: "Account Manager FSI chez OVHcloud le jour, builder IA le soir." },
-    { id: "ovh",            label: "OVHcloud",                 section: "parcours",    kind: "hub",               desc: "Portefeuille >2M€ ARR, 10 comptes FSI. Vente cloud souverain + IA." },
-    { id: "reglementation", label: "Réglementation",           section: "parcours",    kind: "branch",            desc: "DORA, MiCA, SecNumCloud, DSP3. Je sais où sont les chausse-trappes." },
-    { id: "souverainete",   label: "Cloud souverain",          section: "parcours",    kind: "branch",            desc: "Infra européenne certifiée. Sujet clé pour les clients FSI sous pression réglementaire." },
-    { id: "approche-client", label: "Approche client",         kind: "branch",            desc: "Traduction besoin métier → architecture → pricing. L'angle rare." },
-    { id: "side-hustle",    label: "Side Hustle",              kind: "hub",               desc: "Co-fondateur de l'Agence alAin. Voice agents, workflows IA, formation.",
-      concept: { badge: "Side Hustle", title: "Ce que je construis", caption: "le soir, en dehors d'OVHcloud", body: "5 projets actifs qui sont autant de preuves de ce que je vends le jour. Je build des agents IA, des outils data, des systèmes de connaissance — avec la même stack que je recommande à mes clients.", proofs: ["Agence alAin — Automatisation IA pour PME. Voice agents (Retell, Vapi), workflows HubSpot. 3 clients actifs.", "Dashboard on-chain — Parts de marché OVH sur les blockchains publiques majeures via mapping Nodes/ASN.", "Second cerveau — Système piloté par Claude. Capture, retrieval, restitution. 430 notes connectées.", "Ext. Chrome anti-Shadow AI — Extension open source pour détecter et limiter le Shadow AI en entreprise.", "Hackathons IA & Web3 — 2 victoires : Privacy blockchain Aleo (mai 2025) et AI fintech (avril 2026)."] } },
-    { id: "safegpt",        label: "Agence alAin",             kind: "leaf",              desc: "Automatisation IA pour PME. Stack : n8n, Claude API, MCP, HubSpot." },
-    { id: "hermes",         label: "Dashboard on-chain",       kind: "leaf",              desc: "Analytics blockchain. Visualisation de données on-chain en temps réel." },
-    { id: "second-cerveau", label: "Second cerveau",           kind: "leaf",              desc: "Système de gestion des connaissances connecté à mes outils IA." },
-    { id: "zerocode",       label: "Ext. Chrome",              kind: "leaf",              desc: "Extension anti-Shadow AI pour bloquer les usages IA non autorisés." },
-    { id: "hackathons",     label: "Hackathons",               kind: "branch",            desc: "2 victoires sur des hackathons IA & Web3." },
-    { id: "concept-gtm",         label: "Go-to-market B2B",      kind: "concept", concept: { title: "Go-to-market B2B", caption: "Comment j'ai éprouvé ce concept", body: "Le GTM, je l'ai vécu des deux côtés. Côté corporate chez OVHcloud, je porte la stratégie commerciale FSI : segmentation des comptes (PSP, assureurs, blockchain institutionnels), construction des messages selon le persona (RSSI, CTO, DPO), orchestration multi-équipes (pre-sales, partner managers, intégrateurs Capgemini). Côté builder à l'Agence alAin, on définit notre GTM SMB : positionnement voice agents, pricing par usage, séquences outbound HubSpot.", proofs: ["OVHcloud FSI — 10 grands comptes, >2 M€ ARR","Agence alAin — GTM voice agents pour PME","Présence terrain : VivaTech, FIC, Paris Blockchain Week, EthCC"] } },
-    { id: "concept-rfp",         label: "Vente Enterprise & RFP", kind: "concept", concept: { title: "Vente Enterprise & RFP", caption: "Comment j'ai éprouvé ce concept", body: "Cycles 6–18 mois, 8–15 interlocuteurs, NDA, PoCs, RFP 80+ pages (DORA/MiCA/SecNumCloud/ISO27001), qualification BANT/MEDDIC, négociation achats, escalade C-level.", proofs: [">2 M€ ARR portefeuille OVHcloud","RFP 80+ pages traitées sur des comptes FSI régulés","Cycles jusqu'à 18 mois, 15 interlocuteurs simultanés"] } },
-    { id: "concept-vulga",       label: "Vulgarisation tech",     kind: "concept", concept: { title: "Vulgarisation tech", caption: "Comment j'ai éprouvé ce concept", body: "Traduire des specs techniques (SecNumCloud, zk-SNARKs, MiCA) en argument business pour des non-techs : DAF, RSSI, DG. YouTube long-form mensuel, formation IA PME via Agence alAin.", proofs: ["ZeroCode_Benoit YouTube — vulgarisation IA/finance/blockchain","Formation IA pour PME via Agence alAin","156 réactions LinkedIn sur le retex zLegacy (zk-SNARKs expliqués)"] } },
-    { id: "concept-meta",        label: "Méta-apprentissage",     kind: "concept", concept: { title: "Méta-apprentissage", caption: "Comment j'ai éprouvé ce concept", body: "430 notes Obsidian interconnectées (IA, finance régulée, blockchain, ventes B2B), chacune liée à au moins 3 autres. Activable en minutes sur un nouveau dossier client.", proofs: ["430 pages Obsidian second cerveau","Hackathon Aleo gagné après 48h d'apprentissage zk-SNARKs","Polyvalence démontrée : FSI → IA → blockchain → pédagogie"] } },
+    { id: "ovh",               label: "OVHcloud",              section: "parcours", kind: "hub",
+      concept: { badge: "Expérience", title: "OVHcloud", caption: "Account Manager FSI · janv. 2025 →",
+        body: "Portefeuille >2M€ ARR sur 10 grands comptes Finance 500+ (PSP, paiements, crypto/blockchain institutionnels, assureurs, banques). Vente de cloud souverain qualifié SecNumCloud sur dossiers sous contrainte [→Réglementation]. Tandem opérationnel : pre-sales, légal, finance, tech, partenaire intégrateur, C-level. Mon vrai angle : [→Approche client] et [→Vente B2B Enterprise].",
+        proofs: ["Portefeuille >2M€ ARR, 10 grands comptes FSI", "Initiative interne : enrichissement CRM, automatisation de process, Dashboard on-chain (OVHcloud4blockchain.com)", "Dossiers sectoriels : initiative stablecoin européen, solutions de paiement, assurance tier one"] } },
+    { id: "reglementation",    label: "Réglementation",        section: "parcours", kind: "branch", desc: "DORA, MiCA, SecNumCloud, DSP3. Je sais où sont les chausse-trappes." },
+    { id: "souverainete",      label: "Cloud souverain",       section: "parcours", kind: "branch", desc: "Infra européenne certifiée. Sujet clé pour les clients FSI sous pression réglementaire." },
+    { id: "ia-operationnelle", label: "IA opérationnelle",     kind: "branch", desc: "Enrichissement CRM, automatisation d'outreach, account mapping, agents vocaux, systèmes d'agents." },
+    { id: "finance-blockchain",label: "Finance & blockchain",  kind: "branch", desc: "Stablecoins, paiements, crypto institutionnel, DeFi, blockchain publique, MiCA." },
+    { id: "approche-client",   label: "Approche client",       kind: "concept",
+      concept: { badge: "Signature", title: "Approche client", caption: "Traduction besoin métier → architecture → pricing",
+        body: "L'angle rare : partir du problème métier pour construire une architecture, puis traduire en pricing. Pas l'inverse. Applicable côté vente cloud ([→OVHcloud]) comme côté delivery IA ([→Agence alAin]).",
+        proofs: [] } },
+    { id: "side-hustle",       label: "Side Hustle",           kind: "hub",
+      concept: { badge: "Expérience", title: "Side Hustle", caption: "Ce que je construis en dehors d'OVHcloud",
+        body: "Co-fondateur avec Raph et Louis de [→Agence alAin]. Mémoire EDHEC sur les stablecoins (cf. [→Finance & blockchain]).\n\nOutils construits pour moi-même : Second cerveau (~930 notes personnelles interconnectées formant un réseau de connaissances activable en minutes), Ext. Chrome anti-Shadow AI (open source). Terrain Web3 : EthCC, Paris Blockchain Week, side events, [→Hackathons].",
+        proofs: ["[→Agence alAin] — 3 clients actifs, voice agents, workflows HubSpot", "Second cerveau — ~930 notes interconnectées, activable sur n'importe quel dossier", "Ext. Chrome anti-Shadow AI — déploiement entreprise, open source"] } },
+    { id: "safegpt",           label: "Agence alAin",          kind: "leaf",
+      concept: { badge: "Preuve", title: "Agence alAin", caption: "Co-fondateur · automatisation IA pour PME",
+        body: "Agence fondée avec Raph et Louis. On conçoit et déploie des systèmes d'automatisation IA pour des PME : voice agents, workflows HubSpot, onboarding automatisé. Stack : n8n, Claude API, MCP, Retell/Vapi.\n\nMes projets : Aligner (réceptionniste IA hôtellerie), Henri (formation IA interne), CS Transitions.",
+        proofs: ["3 clients actifs en production", "Stack souveraine : n8n self-hosted + Claude API + OVH AI Deploy", "Cas d'usage cross avec [→OVHcloud] : positioning cloud souverain pour clients PME réglementés"] } },
+    { id: "hackathons",        label: "Hackathons",            kind: "leaf",
+      concept: { badge: "Preuve", title: "Hackathons", caption: "2 victoires · IA & Web3",
+        body: "Hackathons comme terrain d'apprentissage accéléré : 24–48h pour aller de zéro à un prototype présentable. Chaque hackathon est un stress-test de [→Approche client] appliqué à la vitesse.",
+        proofs: ["🏆 Hackathon Aleo (mai 2025) — Legacium · Privacy-preserving inheritance protocol sur zk-SNARKs (Aleo/Arcium). Victoire catégorie Privacy.", "🏆 AI Fintech (avril 2026) — Victoire. Système IA appliqué à la finance.", "Hackathon AI Voice (fév. 2026) — Mark · Gestionnaire vocal de messages pro (Gmail/LinkedIn/Instagram) via OpenAI GPT-4o + Speechmatics.", "Hackathon LLM — SiteManager · Agent LLM de gestion de site e-commerce.", "Présence terrain : EthCC, Paris Blockchain Week, side events Web3."] } },
+    { id: "vente-b2b",         label: "Vente B2B Enterprise",  kind: "concept",
+      concept: { badge: "Signature", title: "Vente B2B Enterprise", caption: "GTM · cycles complexes · RFP",
+        body: "Cycles 6–18 mois, 8–15 interlocuteurs simultanés, BANT/MEDDIC, négociation achats, escalade C-level. RFP 80+ pages sous contrainte [→Réglementation]. Segmentation par persona (RSSI, CTO, DPO) et par contrainte (PSP, assureurs, blockchain institutionnels). Orchestration multi-équipes : pre-sales, légal, finance, technique, intégrateurs partenaires.",
+        proofs: ["Portefeuille >2M€ ARR chez [→OVHcloud], 10 grands comptes FSI", "Co-structuration du GTM Finance Corporate : stratégie partenaires, segmentation, Sales Play, slides (from scratch)", "Spécialisation paiement comme angle GTM FSI", "RFP 80+ pages traitées sur dossiers SecNumCloud/DORA", "GTM SMB en parallèle via [→Agence alAin]"] } },
+    { id: "concept-vulga",     label: "Vulgarisation tech",    kind: "concept",
+      concept: { badge: "Signature", title: "Vulgarisation tech", caption: "Complexité technique → décision business",
+        body: "Souveraineté numérique, IA, Cloud public/privé, Blockchain, DORA... → argument digestible pour DAF, RSSI, DG. Pédagogie de sujets tech complexes pour décideurs non-techs.",
+        proofs: ["Formation IA dispensée à des PME via [→Agence alAin]", "Pitchs RFP traduisant des contraintes [→Réglementation] complexes en décisions business", "Retex hackathon zLegacy : zk-SNARKs expliqués pour audience non-tech (cf. [→Hackathons])"] } },
   ],
 
   edges: [
-    ["moi","ovh"], ["moi","side-hustle"], ["moi","approche-client"], ["moi","hackathons"],
-    ["ovh","reglementation"], ["ovh","souverainete"],
+    ["ovh","reglementation"], ["ovh","souverainete"], ["ovh","ia-operationnelle"],
     ["reglementation","approche-client"], ["souverainete","approche-client"],
-    ["side-hustle","safegpt"], ["side-hustle","hermes"],
-    ["side-hustle","second-cerveau"], ["side-hustle","zerocode"],
-    ["side-hustle","hackathons"],
-    ["hackathons","safegpt"], ["hackathons","hermes"],
-    ["safegpt","souverainete"],
-    ["moi","concept-gtm"], ["moi","concept-rfp"], ["moi","concept-vulga"], ["moi","concept-meta"],
+    ["side-hustle","safegpt"], ["side-hustle","hackathons"], ["side-hustle","finance-blockchain"],
+    ["safegpt","ia-operationnelle"],
+    ["finance-blockchain","reglementation"],
   ],
 
   sectionNodes: {
-    hero:          ["moi"],
-    parcours:      ["moi","ovh","reglementation","souverainete"],
-    "side-hustle": ["moi","side-hustle","safegpt","hermes","second-cerveau","zerocode","hackathons"],
-    approche:      ["moi","approche-client","reglementation","souverainete"],
-    contact:       ["moi"],
+    hero:          [],
+    parcours:      ["ovh","reglementation","souverainete","ia-operationnelle"],
+    "side-hustle": ["side-hustle","safegpt","hackathons","finance-blockchain"],
+    approche:      ["approche-client","reglementation","souverainete","vente-b2b","concept-vulga"],
+    contact:       [],
   },
 
   parcours: {
@@ -1519,21 +1531,17 @@ function KnowledgeGraph({ activeSection, onNodeClick }) {
   useEffect(() => { hoverRef.current = hoverId; }, [hoverId]);
 
   const ANCHORS = useMemo(() => ({
-    "moi":              [ 0.00,  0.05,  0.10],
-    "ovh":              [-0.85,  0.10,  0.25],
-    "reglementation":   [-0.95, -0.15,  0.15],
-    "souverainete":     [-0.55,  0.55,  0.20],
-    "hackathons":       [-0.10,  0.78,  0.10],
-    "side-hustle":      [ 0.40,  0.55,  0.20],
-    "safegpt":          [ 1.00,  0.05,  0.05],
-    "zerocode":         [ 0.78, -0.60,  0.15],
-    "approche-client":  [ 0.20, -0.50,  0.55],
-    "hermes":           [-0.35, -0.50,  0.50],
-    "second-cerveau":   [-0.10, -0.20,  0.45],
-    "concept-gtm":      [-0.48, -0.26,  0.30],
-    "concept-rfp":      [ 0.55, -0.26,  0.26],
-    "concept-vulga":    [ 0.48,  0.38, -0.26],
-    "concept-meta":     [-0.36,  0.38, -0.26],
+    "ovh":               [-0.7225,  0.085,   0.2125],
+    "reglementation":    [-0.8075, -0.1275,  0.1275],
+    "souverainete":      [-0.4675,  0.4675,  0.17],
+    "hackathons":        [-0.085,   0.663,   0.085],
+    "side-hustle":       [ 0.34,    0.4675,  0.17],
+    "safegpt":           [ 0.85,    0.0425,  0.0425],
+    "approche-client":   [ 0.17,   -0.425,   0.4675],
+    "vente-b2b":         [-0.408,  -0.221,   0.255],
+    "ia-operationnelle": [ 0.4675, -0.221,   0.221],
+    "concept-vulga":     [ 0.408,   0.323,  -0.221],
+    "finance-blockchain":[-0.306,   0.323,  -0.221],
   }), []);
 
   useEffect(() => {
@@ -1547,7 +1555,7 @@ function KnowledgeGraph({ activeSection, onNodeClick }) {
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(30, width / height, 0.1, 100);
-    camera.position.set(0, 0, 5.4);
+    camera.position.set(0, 0, 6.35);
 
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: "high-performance" });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
@@ -1653,37 +1661,55 @@ function KnowledgeGraph({ activeSection, onNodeClick }) {
 
     const namedMeshes = [];
     const conceptHalos = [];
-    const sphereGeoC = new THREE.SphereGeometry(0.075, 28, 28);
-    const sphereGeoH = new THREE.SphereGeometry(0.058, 22, 22);
-    const sphereGeoL = new THREE.SphereGeometry(0.044, 18, 18);
-    const sphereGeoConcept = new THREE.SphereGeometry(0.050, 20, 20);
-    const sphereGeoConceptHalo = new THREE.SphereGeometry(0.065, 20, 20);
+    const glowSprites = [];
 
+    const makeGlowTexture = () => {
+      const size = 128;
+      const cv = document.createElement("canvas");
+      cv.width = cv.height = size;
+      const ctx = cv.getContext("2d");
+      const grad = ctx.createRadialGradient(size/2, size/2, 0, size/2, size/2, size/2);
+      grad.addColorStop(0.00, "rgba(255,255,255,1.00)");
+      grad.addColorStop(0.18, "rgba(255,255,255,0.55)");
+      grad.addColorStop(0.45, "rgba(255,255,255,0.16)");
+      grad.addColorStop(1.00, "rgba(255,255,255,0.00)");
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, size, size);
+      const tex = new THREE.CanvasTexture(cv);
+      tex.needsUpdate = true;
+      return tex;
+    };
+    const glowTex = makeGlowTexture();
+
+    const sphereGeoC = new THREE.SphereGeometry(0.06375, 28, 28);
+    const sphereGeoH = new THREE.SphereGeometry(0.0493, 22, 22);
+    const sphereGeoL = new THREE.SphereGeometry(0.0374, 18, 18);
+    const sphereGeoConcept = new THREE.SphereGeometry(0.0425, 20, 20);
+    const sphereGeoConceptHalo = new THREE.SphereGeometry(0.05525, 20, 20);
+
+    const DARK_IDS = ["ovh", "side-hustle", "safegpt", "hackathons"];
     namedList.forEach((n) => {
       const node = data.nodes.find((x) => x.id === n.id);
       const kind = node?.kind || "leaf";
-      if (kind === "concept") {
-        const haloMat = new THREE.MeshBasicMaterial({ color: 0x0066FF, transparent: true, opacity: 0.18, side: THREE.BackSide });
-        const haloMesh = new THREE.Mesh(sphereGeoConceptHalo, haloMat);
-        haloMesh.position.set(n.pos[0], n.pos[1], n.pos[2]);
-        root.add(haloMesh);
-        conceptHalos.push({ id: n.id, mesh: haloMesh });
+      const geo = kind === "hub" ? sphereGeoH : (kind === "branch" || kind === "concept") ? sphereGeoH : sphereGeoL;
+      const defaultColor = DARK_IDS.includes(n.id) ? 0x0B1426 : 0x163D78;
+      const mat = new THREE.MeshBasicMaterial({ color: defaultColor, transparent: true, opacity: 0.96 });
+      const m = new THREE.Mesh(geo, mat);
+      m.position.set(n.pos[0], n.pos[1], n.pos[2]);
+      m.userData = { id: n.id, kind, node, baseScale: 1 };
+      root.add(m);
+      namedMeshes.push(m);
 
-        const mat = new THREE.MeshBasicMaterial({ color: 0xFFFFFF, transparent: true, opacity: 0.96 });
-        const m = new THREE.Mesh(sphereGeoConcept, mat);
-        m.position.set(n.pos[0], n.pos[1], n.pos[2]);
-        m.userData = { id: n.id, kind, node, baseScale: 1 };
-        root.add(m);
-        namedMeshes.push(m);
-      } else {
-        const geo = kind === "center" ? sphereGeoC : (kind === "hub" || kind === "branch") ? sphereGeoH : sphereGeoL;
-        const mat = new THREE.MeshBasicMaterial({ color: 0x0B1426, transparent: true, opacity: 0.96 });
-        const m = new THREE.Mesh(geo, mat);
-        m.position.set(n.pos[0], n.pos[1], n.pos[2]);
-        m.userData = { id: n.id, kind, node, baseScale: 1 };
-        root.add(m);
-        namedMeshes.push(m);
-      }
+      const glowDefault = DARK_IDS.includes(n.id) ? 0x0B1426 : 0x163D78;
+      const baseGlow = kind === "hub" ? 0.32 : (kind === "branch" || kind === "concept") ? 0.27 : 0.22;
+      const glowMat = new THREE.SpriteMaterial({
+        map: glowTex, color: glowDefault, transparent: true, depthWrite: false, opacity: 0.45,
+      });
+      const sprite = new THREE.Sprite(glowMat);
+      sprite.position.set(n.pos[0], n.pos[1], n.pos[2]);
+      sprite.scale.set(baseGlow, baseGlow, 1);
+      root.add(sprite);
+      glowSprites.push({ id: n.id, sprite, baseSize: baseGlow, defaultHex: glowDefault, phase: Math.random() * Math.PI * 2 });
     });
 
     const labelEls = {};
@@ -1691,7 +1717,8 @@ function KnowledgeGraph({ activeSection, onNodeClick }) {
       const node = data.nodes.find((x) => x.id === n.id);
       const el = document.createElement("button");
       el.type = "button";
-      el.className = "brain-label brain-label-" + (node?.kind || "leaf");
+      const DARK_NODES = ["ovh", "side-hustle", "safegpt", "hackathons"];
+      el.className = "brain-label " + (DARK_NODES.includes(n.id) ? "brain-label-dark" : "brain-label-light");
       el.dataset.nodeId = n.id;
       el.textContent = node?.label || n.id;
       el.addEventListener("mouseenter", () => setHoverId(n.id));
@@ -1756,6 +1783,15 @@ function KnowledgeGraph({ activeSection, onNodeClick }) {
     ro.observe(container);
 
     const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+
+    const CONCEPT_CYCLE = namedList.map(n => n.id);
+    let thinkingIdx = 0;
+    let thinkingId = CONCEPT_CYCLE[0];
+    const thinkingTimer = reduceMotion ? null : setInterval(() => {
+      thinkingIdx = (thinkingIdx + 1) % CONCEPT_CYCLE.length;
+      thinkingId = CONCEPT_CYCLE[thinkingIdx];
+    }, 2800);
+
     const tmpVec = new THREE.Vector3();
     const tmpScale = new THREE.Vector3();
     let raf = 0;
@@ -1780,6 +1816,7 @@ function KnowledgeGraph({ activeSection, onNodeClick }) {
         const isActive = aSet.has(m.userData.id);
         const isHover = hId === m.userData.id;
         const isConcept = m.userData.kind === "concept";
+        const isThinking = thinkingId === m.userData.id;
         const el = labelEls[m.userData.id];
         if (el) {
           el.style.transform = "translate(-50%, calc(-100% - 16px))";
@@ -1789,21 +1826,38 @@ function KnowledgeGraph({ activeSection, onNodeClick }) {
           el.style.pointerEvents = depthAlpha > 0.30 ? "auto" : "none";
           el.classList.toggle("is-active", isActive);
           el.classList.toggle("is-hover", isHover);
+          el.classList.toggle("is-thinking", isThinking && !isHover);
           el.classList.toggle("is-back", depthAlpha < 0.35);
         }
-        const targetHex = isConcept
-          ? (isHover ? 0x0066FF : 0xFFFFFF)
-          : ((isActive || isHover) ? 0x0066FF : 0x0B1426);
+        const DARK_IDS_ANIM = ["ovh", "side-hustle", "safegpt", "hackathons"];
+        const defaultHex = DARK_IDS_ANIM.includes(m.userData.id) ? 0x0B1426 : 0x163D78;
+        const targetHex = (isActive || isHover) ? 0x0055E9 : defaultHex;
         m.material.color.setHex(targetHex);
         m.material.opacity = 0.45 + depthAlpha * 0.55;
-        const target = isHover ? 1.45 : isActive ? 1.25 : 1.0;
+        let target = isHover ? 1.45 : isActive ? 1.25 : 1.0;
+        if (isThinking) target = Math.max(target, 1.18 + 0.22 * Math.sin(now * 0.008));
         tmpScale.set(target, target, target);
         m.scale.lerp(tmpScale, 0.18);
       }
-      conceptHalos.forEach(({ id, mesh }) => {
-        const isHov = hoverRef.current === id;
-        mesh.material.opacity = isHov ? 0.38 + 0.18 * Math.sin(now * 0.004) : 0.18;
-      });
+
+      for (let k = 0; k < glowSprites.length; k++) {
+        const g = glowSprites[k];
+        const isActive = activeRef.current.has(g.id);
+        const isHover = hoverRef.current === g.id;
+        const isThinking = thinkingId === g.id;
+        const pulse = 0.5 + 0.5 * Math.sin(now * 0.002 + g.phase);
+        let opacity = 0.32 + 0.12 * pulse;
+        let sizeMul = 1.0 + 0.08 * pulse;
+        let colorHex = g.defaultHex;
+        if (isThinking) { opacity = 0.55 + 0.18 * pulse; sizeMul = 1.18 + 0.10 * pulse; colorHex = 0x0055E9; }
+        if (isActive)   { opacity = Math.max(opacity, 0.60); sizeMul = Math.max(sizeMul, 1.22); colorHex = 0x0055E9; }
+        if (isHover)    { opacity = 0.75; sizeMul = 1.45; colorHex = 0x0066FF; }
+        g.sprite.material.opacity = opacity;
+        g.sprite.material.color.setHex(colorHex);
+        const s = g.baseSize * sizeMul;
+        g.sprite.scale.set(s, s, 1);
+      }
+
       renderer.render(scene, camera);
       raf = requestAnimationFrame(animate);
     };
@@ -1811,6 +1865,7 @@ function KnowledgeGraph({ activeSection, onNodeClick }) {
 
     return () => {
       cancelAnimationFrame(raf);
+      if (thinkingTimer) clearInterval(thinkingTimer);
       ro.disconnect();
       renderer.domElement.removeEventListener("pointerdown", onPD);
       renderer.domElement.removeEventListener("pointermove", onPM);
@@ -1823,6 +1878,8 @@ function KnowledgeGraph({ activeSection, onNodeClick }) {
       sphereGeoC.dispose(); sphereGeoH.dispose(); sphereGeoL.dispose();
       sphereGeoConcept.dispose(); sphereGeoConceptHalo.dispose();
       conceptHalos.forEach(({ mesh }) => { mesh.material.dispose(); });
+      glowSprites.forEach(({ sprite }) => { sprite.material.dispose(); });
+      glowTex.dispose();
       lineMat.dispose(); bgMat.dispose();
       namedMeshes.forEach((m) => m.material.dispose());
       if (renderer.domElement.parentNode) renderer.domElement.parentNode.removeChild(renderer.domElement);
