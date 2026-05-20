@@ -145,13 +145,34 @@ export default async function handler(req, res) {
       for (const line of lines) {
         if (line.startsWith("data: ")) {
           const raw = line.slice(6).trim();
-          if (raw === "[DONE]") { res.write("data: [DONE]\n\n"); continue; }
+          if (raw === "[DONE]") {
+            res.write("data: [DONE]\n\n");
+            if (typeof res.flush === "function") res.flush();
+            continue;
+          }
           try {
             const parsed = JSON.parse(raw);
             const delta = parsed?.choices?.[0]?.delta?.content;
-            if (delta) res.write(`data: ${JSON.stringify({ delta })}\n\n`);
+            if (delta) {
+              res.write(`data: ${JSON.stringify({ delta })}\n\n`);
+              if (typeof res.flush === "function") res.flush();
+            }
           } catch { /* skip malformed chunk */ }
         }
+      }
+    }
+    buffer += decoder.decode(); // flush remaining bytes
+    if (buffer.trim().startsWith("data: ")) {
+      const raw = buffer.trim().slice(6).trim();
+      if (raw && raw !== "[DONE]") {
+        try {
+          const parsed = JSON.parse(raw);
+          const delta = parsed?.choices?.[0]?.delta?.content;
+          if (delta) {
+            res.write(`data: ${JSON.stringify({ delta })}\n\n`);
+            if (typeof res.flush === "function") res.flush();
+          }
+        } catch { /* skip */ }
       }
     }
     res.end();
