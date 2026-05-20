@@ -83,9 +83,9 @@ export default async function handler(req, res) {
     return res.status(429).json({ error: "Trop de messages, reviens dans une heure." });
   }
 
-  const apiKey = process.env.OPENCODE_API_KEY;
+  const apiKey = process.env.OPENCODE_GO_API_KEY || process.env.OPENCODE_API_KEY;
   if (!apiKey) {
-    return res.status(500).json({ error: "OPENCODE_API_KEY non configurée côté serveur." });
+    return res.status(500).json({ error: "OPENCODE_GO_API_KEY non configurée côté serveur." });
   }
 
   let body = req.body;
