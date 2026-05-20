@@ -1449,18 +1449,13 @@ window.PORTFOLIO = {
   },
 
   parcours: {
-    lead: [
-      { t: "Vendre de l’IA, de la tech, quand on ne comprend pas vraiment comment ça marche, c’est " },
-      { t: "fragile", italic: true },
-      { t: ". La vendre quand on l’a déployée soi-même, c’est une autre conversation." },
-    ],
+    lead: [],
     body:
       "Je passe mes journées sur des comptes FSI chez OVHcloud à parler d’enjeux IT, et mes soirées à automatiser des workflows IA pour des PME. Ça me donne un angle rare : je comprends le besoin métier et les enjeux de la direction.",
     pillars: [
-      { n: "01", t: "Commercial",  b: "Portefeuille >2 M€ ARR sur 10 grands comptes FSI (paiement, assurance). Cycles longs, interlocuteurs du CTO à la DAF." },
-      { n: "02", t: "Builder",     b: "Co-fondateur de l’Agence alAin. Voice agents, workflows HubSpot, formation IA. Stack n8n, Claude API, MCP." },
-      { n: "03", t: "Régulé",      b: "DORA, MiCA, DSP3, SecNumCloud, ACPR, EBA/AMF. Je sais où sont les chausse-trappes — et pourquoi un POC IA finit souvent en projet conformité." },
-      { n: "04", t: "Pédagogue",   b: "Ateliers IA en entreprise. J’explique aux équipes opérationnelles ce qu’aucun slide de cabinet ne dit vraiment." },
+      { n: "01", t: "Commercial",  b: "Account management sur un portefeuille >2 M€ ARR (10 grands comptes corporate régulés) et business development : 2 deals structurants signés sur le paiement. Interlocuteurs du CTO à la DAF." },
+      { n: "02", t: "Expertise",   b: "Co-fondateur de l’Agence alAin. J’accompagne des PME multi-secteurs sur leurs enjeux IA : régulation, transformation IT, besoins métier. Je build pour comprendre le terrain." },
+      { n: "03", t: "Pédagogue",   b: "Référent IA en interne chez OVHcloud, ateliers IA en entreprise. J’adapte mon discours à l’audience — du COMEX aux équipes opérationnelles — avec un format formation déjà éprouvé." },
     ],
     timeline: [
       { date: "janv. 2025 — auj.", role: "Account Manager · Financial Services", co: "OVHcloud", body: "Portefeuille >2 M€ ARR sur 10 grands comptes FSI (paiement, assurance). Vente cloud + IA + infra blockchain articulée sur la souveraineté européenne et la conformité (DORA, MiCA, SecNumCloud). Représentant OVHcloud FSI : VivaTech, FIC, Paris Blockchain Week, EthCC, France Quantum." },
@@ -2047,9 +2042,11 @@ function ParcoursSection() {
         <SectionHead idx="01 /" kicker="Parcours" title='Le commercial qui <span class="italic">code</span>.' />
         <div className="why-grid">
           <div className="reveal">
-            <p className="why-lead">
-              {d.lead.map((p, i) => p.italic ? <span key={i} className="italic">{p.t}</span> : <span key={i}>{p.t}</span>)}
-            </p>
+            {d.lead.length > 0 && (
+              <p className="why-lead">
+                {d.lead.map((p, i) => p.italic ? <span key={i} className="italic">{p.t}</span> : <span key={i}>{p.t}</span>)}
+              </p>
+            )}
             <p className="why-body">{d.body}</p>
           </div>
           <div className="why-cards reveal-stagger">
