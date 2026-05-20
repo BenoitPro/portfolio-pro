@@ -2484,29 +2484,61 @@ function ChatWidget() {
     if (open) setTimeout(() => inputRef.current?.focus(), 80);
   }, [open]);
 
-  const send = async () => {
-    const text = input.trim();
+  const sendText = async (text) => {
     if (!text || loading) return;
     setError(null);
     const next = [...messages, { role: "user", content: text }];
     setMessages(next);
     setInput("");
     setLoading(true);
+    setMessages((m) => [...m, { role: "assistant", content: "" }]);
     try {
       const r = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ messages: next }),
       });
-      const data = await r.json();
-      if (!r.ok) throw new Error(data?.error || "Erreur " + r.status);
-      setMessages((m) => [...m, { role: "assistant", content: data.content }]);
+      if (!r.ok) {
+        const data = await r.json();
+        throw new Error(data?.error || "Erreur " + r.status);
+      }
+      const reader = r.body.getReader();
+      const decoder = new TextDecoder();
+      let buf = "";
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buf += decoder.decode(value, { stream: true });
+        const lines = buf.split("\n");
+        buf = lines.pop();
+        for (const line of lines) {
+          if (!line.startsWith("data: ")) continue;
+          const raw = line.slice(6).trim();
+          if (raw === "[DONE]") break;
+          try {
+            const { delta } = JSON.parse(raw);
+            if (delta) {
+              setMessages((m) => {
+                const copy = [...m];
+                copy[copy.length - 1] = {
+                  ...copy[copy.length - 1],
+                  content: copy[copy.length - 1].content + delta,
+                };
+                return copy;
+              });
+            }
+          } catch { /* skip */ }
+        }
+      }
     } catch (e) {
+      setMessages((m) => m.slice(0, -1));
       setError(e.message || "Erreur réseau");
     } finally {
       setLoading(false);
     }
   };
+
+  const send = () => sendText(input.trim());
 
   const onKey = (e) => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); send(); } };
 
@@ -2533,7 +2565,7 @@ function ChatWidget() {
           {messages.map((m, i) => (
             <div key={i} className={"chat-msg " + (m.role === "user" ? "user" : "bot")}>{m.content}</div>
           ))}
-          {loading && (
+          {loading && messages[messages.length - 1]?.content === "" && (
             <div className="chat-typing"><span></span><span></span><span></span></div>
           )}
           {error && <div className="chat-msg err">{error}</div>}
