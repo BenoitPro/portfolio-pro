@@ -536,6 +536,14 @@
     color: var(--ink-70);
     line-height: 1.45;
   }
+  .proof-link {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid currentColor;
+    opacity: 0.85;
+    transition: opacity 0.15s;
+  }
+  .proof-link:hover { opacity: 1; }
   .concept-proofs li::before {
     content: "";
     flex-shrink: 0;
@@ -1383,7 +1391,7 @@ window.PORTFOLIO = {
     { id: "side-hustle",       label: "Side Hustle",           kind: "hub",
       concept: { badge: "Expérience", title: "Side Hustle", caption: "Ce que je construis en dehors d'OVHcloud",
         body: "Co-fondateur avec Raph et Louis de [→Agence alAin]. Mémoire EDHEC sur les stablecoins (cf. [→Finance & blockchain]).\n\nOutils construits pour moi-même : Second cerveau (~930 notes personnelles interconnectées formant un réseau de connaissances activable en minutes), Ext. Chrome anti-Shadow AI (open source). Terrain Web3 : EthCC, Paris Blockchain Week, side events, [→Hackathons].",
-        proofs: ["[→Agence alAin] — 3 clients actifs, voice agents, workflows HubSpot", "Second cerveau — ~930 notes interconnectées, activable sur n'importe quel dossier", "Ext. Chrome anti-Shadow AI — déploiement entreprise, open source"] } },
+        proofs: ["[→Agence alAin] — 3 clients actifs, voice agents, workflows HubSpot", "Second cerveau — ~930 notes interconnectées, activable sur n'importe quel dossier", "Ext. Chrome anti-Shadow AI — [voir sur Chrome Web Store](https://chromewebstore.google.com/detail/safegpt/cokleemccppaigbeofpnpdjknemehjkc)", "Dashboard on-chain — [ovhcloud4blockchain.com](https://www.ovhcloud4blockchain.com/)"] } },
     { id: "safegpt",           label: "Agence alAin",          kind: "leaf",
       concept: { badge: "Preuve", title: "Agence alAin", caption: "Co-fondateur · automatisation IA pour PME",
         body: "Agence fondée avec Raph et Louis. On conçoit et déploie des systèmes d'automatisation IA pour des PME : voice agents, workflows HubSpot, onboarding automatisé. Stack : n8n, Claude API, MCP, Retell/Vapi.\n\nMes projets : Aligner (réceptionniste IA hôtellerie), Henri (formation IA interne), CS Transitions.",
@@ -1391,7 +1399,7 @@ window.PORTFOLIO = {
     { id: "hackathons",        label: "Hackathons",            kind: "leaf",
       concept: { badge: "Preuve", title: "Hackathons", caption: "2 victoires · IA & Web3",
         body: "Hackathons comme terrain d'apprentissage accéléré : 24–48h pour aller de zéro à un prototype présentable. Chaque hackathon est un stress-test de [→Approche client] appliqué à la vitesse.",
-        proofs: ["🏆 Hackathon Aleo (mai 2025) — Legacium · Privacy-preserving inheritance protocol sur zk-SNARKs (Aleo/Arcium). Victoire catégorie Privacy.", "🏆 AI Fintech (avril 2026) — Victoire. Système IA appliqué à la finance.", "Hackathon AI Voice (fév. 2026) — Mark · Gestionnaire vocal de messages pro (Gmail/LinkedIn/Instagram) via OpenAI GPT-4o + Speechmatics.", "Hackathon LLM — SiteManager · Agent LLM de gestion de site e-commerce.", "Présence terrain : EthCC, Paris Blockchain Week, side events Web3."] } },
+        proofs: ["🏆 Hackathon Aleo (mai 2025) — Legacium · Privacy-preserving inheritance protocol sur zk-SNARKs (Aleo/Arcium). Victoire catégorie Privacy.", "🏆 AI Fintech (avril 2026) — Victoire. [hedgenhackfintech.vercel.app](https://hedgenhackfintech.vercel.app/)", "Hackathon AI Voice (fév. 2026) — Mark · Gestionnaire vocal de messages pro (Gmail/LinkedIn/Instagram) via OpenAI GPT-4o + Speechmatics.", "Hackathon LLM — SiteManager · Agent LLM de gestion de site e-commerce.", "Présence terrain : EthCC, Paris Blockchain Week, side events Web3."] } },
     { id: "vente-b2b",         label: "Vente B2B Enterprise",  kind: "concept",
       concept: { badge: "Signature", title: "Vente B2B Enterprise", caption: "GTM · cycles complexes · RFP",
         body: "Cycles 6–18 mois, 8–15 interlocuteurs simultanés, BANT/MEDDIC, négociation achats, escalade C-level. RFP 80+ pages sous contrainte [→Réglementation]. Segmentation par persona (RSSI, CTO, DPO) et par contrainte (PSP, assureurs, blockchain institutionnels). Orchestration multi-équipes : pre-sales, légal, finance, technique, intégrateurs partenaires.",
@@ -2380,7 +2388,7 @@ function Hero({ onNodeClick }) {
           </span>
           <span className="hr-word">
             <span className="hr-strike">prompt-engineered</span>
-            <span className="hr-keep">augment&eacute; par <span className="accent">Claude</span>.</span>
+            <span className="hr-keep">augment&eacute; par <span className="accent">Mistral</span>.</span>
           </span>
         </span>
       </div>
@@ -2411,7 +2419,18 @@ function ConceptPopup({ concept, onClose }) {
         <p className="concept-body">{concept.body}</p>
         <div className="concept-proofs-label">Preuves</div>
         <ul className="concept-proofs">
-          {concept.proofs.map((p, i) => <li key={i}>{p}</li>)}
+          {concept.proofs.map((p, i) => {
+            const parts = [];
+            const re = /\[([^\]]+)\]\((https?:\/\/[^)]+)\)/g;
+            let last = 0, m;
+            while ((m = re.exec(p)) !== null) {
+              if (m.index > last) parts.push(p.slice(last, m.index));
+              parts.push(<a key={m.index} href={m[2]} target="_blank" rel="noopener noreferrer" className="proof-link">{m[1]}</a>);
+              last = re.lastIndex;
+            }
+            if (last < p.length) parts.push(p.slice(last));
+            return <li key={i}>{parts.length ? parts : p}</li>;
+          })}
         </ul>
       </div>
     </div>
