@@ -2047,15 +2047,6 @@ function ParcoursSection() {
             )}
             <p className="why-body">{d.body}</p>
           </div>
-          <div className="why-cards reveal-stagger">
-            {d.pillars.map((c) => (
-              <div key={c.n} className="why-card">
-                <div className="why-card-num">{c.n}</div>
-                <div className="why-card-title">{c.t}</div>
-                <div className="why-card-body">{c.b}</div>
-              </div>
-            ))}
-          </div>
         </div>
         <div className="exp-list reveal-stagger" style={{ marginTop: 72 }}>
           {d.timeline.map((e, i) => (
