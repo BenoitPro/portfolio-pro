@@ -186,20 +186,15 @@
     font-family: inherit;
   }
   .nav-cmd:hover { background: rgba(11,20,38,0.07); }
-  .nav-cta {
+  .nav-link-icon {
     display: inline-flex; align-items: center; gap: 6px;
-    padding: 6px 11px;
-    border-radius: 8px;
-    border: 1px solid var(--line-2);
-    color: var(--ink);
-    font-size: 13px;
+    color: var(--ink-70);
+    font-size: 14px;
     font-weight: 500;
     text-decoration: none;
-    transition: background 0.2s, border-color 0.2s;
+    transition: color 0.2s;
   }
-  .nav-cta:hover { background: rgba(11,20,38,0.05); border-color: var(--ink); }
-  .nav-cta-call { background: var(--ink); color: white; border-color: var(--ink); }
-  .nav-cta-call:hover { background: var(--accent); border-color: var(--accent); color: white; }
+  .nav-link-icon:hover { color: var(--ink); }
   .nav-cmd kbd {
     font-family: "JetBrains Mono", monospace;
     font-size: 11px;
@@ -2286,14 +2281,11 @@ function Topbar({ scrolled, onOpenPalette, onOpenSideHustle }) {
         <span className="brand-mark">Paris</span>
       </a>
       <nav className="nav-links">
-        <a href="#parcours">Parcours</a>
-        <button className="nav-link-btn" onClick={onOpenSideHustle}>Side hustle</button>
-        <a href="#contact">Contact</a>
-        <a className="nav-cta nav-cta-call" href="https://cal.com/bnt-bln-rkvvhg/15min" target="_blank" rel="noopener" aria-label="Programmer un call 15 min">
+        <a className="nav-link-icon" href="https://cal.com/bnt-bln-rkvvhg/15min" target="_blank" rel="noopener" aria-label="Programmer un call 15 min">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.27h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.82a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
           <span>15 min</span>
         </a>
-        <a className="nav-cta nav-cta-cv" href="assets/CV-Benoit-Baillon.pdf" download="CV-Benoit-Baillon.pdf" aria-label="Télécharger le CV">
+        <a className="nav-link-icon" href="assets/CV-Benoit-Baillon.pdf" download="CV-Benoit-Baillon.pdf" aria-label="Télécharger le CV">
           <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 18 15 15"/></svg>
           <span>CV</span>
         </a>
