@@ -243,14 +243,14 @@
     100% { box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); }
   }
   h1.hero-h1 {
-    font-size: clamp(32px, 3.9vw, 56px);
+    font-size: clamp(37px, 4.5vw, 64px);
     font-weight: 500;
     letter-spacing: -0.032em;
     line-height: 1.02;
     margin: 0 0 18px;
   }
   .hero-sub {
-    font-size: clamp(14px, 1vw, 15.5px);
+    font-size: clamp(16px, 1.15vw, 18px);
     color: var(--ink-55);
     max-width: 400px;
     margin: 0 0 24px;
@@ -342,7 +342,7 @@
     position: absolute;
     left: clamp(40px, 6vw, 100px);
     bottom: -80px;
-    width: clamp(360px, 40vw, 660px);
+    width: clamp(414px, 46vw, 759px);
     height: auto;
     z-index: 2;
     pointer-events: none;
@@ -1420,12 +1420,12 @@ window.PORTFOLIO = {
 
   parcours: {
     lead: [
-      { t: "Vendre de l’IA quand on ne l’a jamais déployée en prod, c’est " },
+      { t: "Vendre de l’IA, de la tech, quand on ne comprend pas vraiment comment ça marche, c’est " },
       { t: "fragile", italic: true },
-      { t: ". La vendre quand on a écrit le code soi-même, c’est une autre conversation." },
+      { t: ". La vendre quand on l’a déployée soi-même, c’est une autre conversation." },
     ],
     body:
-      "Je passe mes journées sur des comptes FSI chez OVHcloud, et mes soirées à automatiser des workflows IA pour des PME. Ça me donne un angle rare : je traduis le besoin métier en architecture, et l’architecture en pricing.",
+      "Je passe mes journées sur des comptes FSI chez OVHcloud à parler d’enjeux IT, et mes soirées à automatiser des workflows IA pour des PME. Ça me donne un angle rare : je comprends le besoin métier et les enjeux de la direction.",
     pillars: [
       { n: "01", t: "Commercial",  b: "Portefeuille >2 M€ ARR sur 10 grands comptes FSI (paiement, assurance). Cycles longs, interlocuteurs du CTO à la DAF." },
       { n: "02", t: "Builder",     b: "Co-fondateur de l’Agence alAin. Voice agents, workflows HubSpot, formation IA. Stack n8n, Claude API, MCP." },
@@ -1474,9 +1474,9 @@ window.PORTFOLIO = {
   gallery: {
     eyebrow: "Hors écran",
     h2_parts: [
-      { t: "Le " },
-      { t: "type", italic: true },
-      { t: " derrière le code." },
+      { t: "En dehors " },
+      { t: "du travail", italic: true },
+      { t: "." },
     ],
     sub: "Conférences, rings, hackathons, terrain.",
     row1: [
@@ -1497,7 +1497,7 @@ window.PORTFOLIO = {
   },
 
   contact: {
-    eyebrow: "04 / Contact",
+    eyebrow: "03 / Contact",
     h2_parts: [
       { t: "On en " },
       { t: "parle", italic: true },
@@ -1555,7 +1555,7 @@ function KnowledgeGraph({ activeSection, onNodeClick }) {
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(30, width / height, 0.1, 100);
-    camera.position.set(0, 0, 6.35);
+    camera.position.set(0, 0, 5.7);
 
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: "high-performance" });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
@@ -2357,7 +2357,7 @@ function Hero({ onNodeClick }) {
       <KnowledgeGraph activeSection="hero" onNodeClick={onNodeClick} />
       <div className="hero-meta">
         <h1 className="hero-h1 reveal in">
-          Je connecte la <span className="italic">finance r&eacute;gul&eacute;e</span> &agrave; l&rsquo;IA op&eacute;rationnelle.
+          Sales <span className="italic">finance r&eacute;gul&eacute;e</span> le jour. Builder IA le soir.
         </h1>
         <p className="hero-sub reveal in">{id.intro}</p>
         <div className="hero-cta-row reveal in">
@@ -2551,7 +2551,6 @@ function App() {
         <footer>
           <div className="container footer-row">
             <span className="mono">&copy; 2026 &mdash; {data.identity.name}</span>
-            <span className="mono">build_ref: portfolio.v1 &middot; paris</span>
           </div>
         </footer>
       </main>
