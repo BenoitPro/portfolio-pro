@@ -2664,12 +2664,15 @@ function ChatWidget() {
             ) : (
               <div key={i} className="chat-msg-row">
                 <span className="chat-msg-avatar"><img src="assets/Benoit Baillon LinkedIn.png" alt="Beno&icirc;t" /></span>
-                <div
-                  className="chat-msg bot"
-                  dangerouslySetInnerHTML={{
-                    __html: DOMPurify.sanitize(marked.parse(m.content || ""))
-                  }}
-                />
+                {m.content === "" && loading
+                  ? <div className="chat-typing"><span></span><span></span><span></span></div>
+                  : <div
+                      className="chat-msg bot"
+                      dangerouslySetInnerHTML={{
+                        __html: DOMPurify.sanitize(marked.parse(m.content || ""))
+                      }}
+                    />
+                }
               </div>
             )
           )}
@@ -2685,12 +2688,6 @@ function ChatWidget() {
                   {chip}
                 </button>
               ))}
-            </div>
-          )}
-          {loading && messages[messages.length - 1]?.content === "" && (
-            <div className="chat-msg-row">
-              <span className="chat-msg-avatar"><img src="assets/Benoit Baillon LinkedIn.png" alt="Beno&icirc;t" /></span>
-              <div className="chat-typing"><span></span><span></span><span></span></div>
             </div>
           )}
           {error && <div className="chat-msg err">{error}</div>}
