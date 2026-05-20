@@ -267,32 +267,44 @@
   }
   .hero-cta-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
 
-  /* Hero rotator */
-  .hero-rotator {
-    position: absolute;
-    right: clamp(20px, 4vw, 64px);
-    bottom: clamp(48px, 10vh, 110px);
-    z-index: 8;
+  /* Parcours section rotator */
+  .sec-title-row {
     display: flex;
-    align-items: baseline;
-    gap: 14px;
-    max-width: min(560px, 46vw);
+    align-items: center;
+    flex-wrap: wrap;
+    gap: clamp(10px, 1.4vw, 22px);
+    column-gap: clamp(14px, 1.6vw, 26px);
+  }
+  .sec-title-row .sec-title { flex: 0 0 auto; width: max-content; }
+  .sec-rotator {
+    display: inline-flex;
+    align-items: center;
+    gap: clamp(8px, 0.8vw, 14px);
+    flex: 0 1 auto;
+    min-width: 0;
     pointer-events: none;
   }
-  .hr-frame {
-    position: relative;
+  .sr-arrow {
+    color: var(--accent);
+    font-size: clamp(16px, 1.6vw, 22px);
+    line-height: 1;
     flex: 0 0 auto;
-    width: clamp(260px, 26vw, 360px);
-    height: 1.6em;
+  }
+  .hr-frame {
+    display: grid;
+    align-items: center;
+    flex: 0 0 auto;
+    width: clamp(290px, 30vw, 390px);
+    height: 1.2em;
     font-family: "Caveat", "Spectral", cursive;
-    font-size: clamp(19px, 1.7vw, 23px);
-    line-height: 1.35;
+    font-size: clamp(22px, 2.4vw, 30px);
+    font-weight: 600;
+    line-height: 1.2;
     overflow: hidden;
   }
   .hr-word {
-    position: absolute;
-    left: 0; top: 0;
-    display: inline-flex;
+    grid-area: 1 / 1;
+    display: flex;
     align-items: baseline;
     gap: 10px;
     white-space: nowrap;
@@ -320,19 +332,13 @@
     34%, 100% { opacity: 0; transform: translateY(-8px); }
   }
   @media (prefers-reduced-motion: reduce) {
-    .hr-word { animation: none; opacity: 1; position: static; }
+    .hr-word { animation: none; opacity: 1; }
     .hr-frame { height: auto; }
     .hr-word + .hr-word { margin-top: 4px; }
   }
   @media (max-width: 900px) {
-    .hero-rotator {
-      position: static;
-      max-width: 100%;
-      margin: 18px clamp(20px, 4vw, 56px) 0;
-      flex-wrap: wrap;
-      gap: 10px 14px;
-    }
-    .hr-frame { width: 100%; flex-basis: 100%; }
+    .hr-frame { width: 100%; }
+    .sec-rotator { flex-basis: 100%; }
   }
 
   /* Selfie */
@@ -2049,7 +2055,32 @@ function ParcoursSection() {
   return (
     <section id="parcours" className="sec" ref={ref}>
       <div className="container">
-        <SectionHead idx="01 /" kicker="Parcours" title='Le commercial qui <span class="italic">code</span>.' />
+        <div className="sec-head reveal">
+          <div className="sec-index">01 /</div>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div className="sec-kicker">Parcours</div>
+            <div className="sec-title-row">
+              <h2 className="sec-title">Le commercial qui <span className="italic">code</span>.</h2>
+              <span className="sec-rotator" aria-label="Principes de travail">
+                <span className="sr-arrow" aria-hidden="true">&rarr;</span>
+                <span className="hr-frame">
+                  <span className="hr-word">
+                    <span className="hr-strike">slide-driven</span>
+                    <span className="hr-keep">data-driven.</span>
+                  </span>
+                  <span className="hr-word">
+                    <span className="hr-strike">stakeholder-pleasing</span>
+                    <span className="hr-keep">customer-centric.</span>
+                  </span>
+                  <span className="hr-word">
+                    <span className="hr-strike">prompt-engineered</span>
+                    <span className="hr-keep">augment&eacute; par <span className="accent">Claude</span>.</span>
+                  </span>
+                </span>
+              </span>
+            </div>
+          </div>
+        </div>
         <div className="why-grid">
           <div className="reveal">
             {d.lead.length > 0 && (
@@ -2348,26 +2379,6 @@ function Hero({ onNodeClick }) {
           Sales <span className="italic">finance r&eacute;gul&eacute;e</span> le jour. Builder IA le soir.
         </h1>
         <p className="hero-sub reveal in">{id.intro}</p>
-      </div>
-      <div className="hero-rotator reveal in" aria-label="Principes de travail">
-        <span className="hr-kicker">
-          <span>// principe de travail</span>
-          <span className="arrow" aria-hidden="true">&rarr;</span>
-        </span>
-        <span className="hr-frame">
-          <span className="hr-word">
-            <span className="hr-strike">slide-driven</span>
-            <span className="hr-keep">data-driven.</span>
-          </span>
-          <span className="hr-word">
-            <span className="hr-strike">stakeholder-pleasing</span>
-            <span className="hr-keep">customer-centric.</span>
-          </span>
-          <span className="hr-word">
-            <span className="hr-strike">prompt-engineered</span>
-            <span className="hr-keep">augment&eacute; par <span className="accent">Claude</span>.</span>
-          </span>
-        </span>
       </div>
       <div className="hero-hint">
         <div className="hero-hint-line"></div>
