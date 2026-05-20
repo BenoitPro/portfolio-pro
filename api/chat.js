@@ -117,17 +117,47 @@ export default async function handler(req, res) {
         "Content-Type": "application/json",
         Authorization: `Bearer ${apiKey}`,
       },
-      body: JSON.stringify(payload),
+      body: JSON.stringify({ ...payload, stream: true }),
     });
-    const data = await upstream.json();
+
     if (!upstream.ok) {
+      const data = await upstream.json();
       return res.status(upstream.status).json({
         error: data?.error?.message || data?.message || "Upstream error",
       });
     }
-    const content = data?.choices?.[0]?.message?.content || "(réponse vide)";
-    return res.status(200).json({ content, remaining: rl.remaining });
+
+    res.setHeader("Content-Type", "text/event-stream");
+    res.setHeader("Cache-Control", "no-cache");
+    res.setHeader("Connection", "keep-alive");
+    res.setHeader("X-RateLimit-Remaining", String(rl.remaining));
+
+    const reader = upstream.body.getReader();
+    const decoder = new TextDecoder();
+    let buffer = "";
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buffer += decoder.decode(value, { stream: true });
+      const lines = buffer.split("\n");
+      buffer = lines.pop();
+      for (const line of lines) {
+        if (line.startsWith("data: ")) {
+          const raw = line.slice(6).trim();
+          if (raw === "[DONE]") { res.write("data: [DONE]\n\n"); continue; }
+          try {
+            const parsed = JSON.parse(raw);
+            const delta = parsed?.choices?.[0]?.delta?.content;
+            if (delta) res.write(`data: ${JSON.stringify({ delta })}\n\n`);
+          } catch { /* skip malformed chunk */ }
+        }
+      }
+    }
+    res.end();
   } catch (err) {
-    return res.status(502).json({ error: "Échec d'appel à l'IA: " + (err?.message || "unknown") });
+    if (!res.headersSent) {
+      res.status(502).json({ error: "Échec d'appel à l'IA: " + (err?.message || "unknown") });
+    }
   }
 }
