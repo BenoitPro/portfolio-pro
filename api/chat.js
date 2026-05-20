@@ -64,7 +64,7 @@ STYLE
 CONTEXTE — second cerveau (extraits du repo public) :
 ${brain}
 
-Si la question dépasse ce contexte, reste fidèle à la personnalité ci-dessus et propose un call.`;
+Si une question dépasse ce que tu sais ou n'est pas dans le contexte ci-dessus, ne l'invente pas. Dis franchement : "Je n'ai pas cette info précise — Benoît pourra t'en parler mieux que moi. Prends 15 min sur Cal.com ou écris à benoitbaillon78@gmail.com." Reste bref, reste toi.`;
 }
 
 export default async function handler(req, res) {
