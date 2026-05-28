@@ -36,6 +36,101 @@ async function getBrainContext() {
   return brainCache.text;
 }
 
+// --- Site knowledge: single source of truth = window.PORTFOLIO in the live page ---
+const SITE_URL = "https://raw.githubusercontent.com/BenoitPro/portfolio-pro/main/portfolio.html";
+let siteCache = { text: null, fetchedAt: 0 };
+const SITE_TTL_MS = 60 * 60 * 1000;
+
+// String-aware scanner: extract the balanced { ... } literal after `window.PORTFOLIO =`
+function extractPortfolioObject(html) {
+  const mi = html.indexOf("window.PORTFOLIO");
+  if (mi === -1) return null;
+  let i = html.indexOf("{", html.indexOf("=", mi));
+  if (i === -1) return null;
+  const start = i;
+  let depth = 0, inStr = false, quote = "", esc = false;
+  for (; i < html.length; i++) {
+    const c = html[i];
+    if (inStr) {
+      if (esc) esc = false;
+      else if (c === "\\") esc = true;
+      else if (c === quote) inStr = false;
+      continue;
+    }
+    if (c === '"' || c === "'" || c === "`") { inStr = true; quote = c; }
+    else if (c === "{") depth++;
+    else if (c === "}") { if (--depth === 0) return html.slice(start, i + 1); }
+  }
+  return null;
+}
+
+const clean = (s) => String(s || "").replace(/\[→([^\]]+)\]/g, "$1");
+
+function formatSiteKnowledge(p) {
+  if (!p) return "";
+  const L = ["# Connaissances du site (source de vérité — données affichées sur le portfolio)"];
+  if (p.identity) {
+    L.push(`\n## Identité\n${p.identity.name} — ${p.identity.location}. ${clean(p.identity.pitch)}\n${clean(p.identity.intro)}`);
+  }
+  if (p.parcours?.timeline?.length) {
+    L.push("\n## Parcours / CV (chronologie)");
+    p.parcours.timeline.forEach((t) => L.push(`- **${t.date}** — ${t.role} @ ${t.co} : ${clean(t.body)}`));
+  }
+  if (p.parcours?.pillars?.length) {
+    L.push("\n## Piliers du profil");
+    p.parcours.pillars.forEach((pl) => L.push(`- **${pl.t}** : ${clean(pl.b)}`));
+  }
+  if (Array.isArray(p.nodes)) {
+    L.push("\n## Second cerveau — nœuds détaillés");
+    p.nodes.forEach((n) => {
+      if (n.concept) {
+        const c = n.concept;
+        L.push(`\n### ${c.title}${c.badge ? ` (${c.badge})` : ""}`);
+        if (c.caption) L.push(`_${clean(c.caption)}_`);
+        if (c.body) L.push(clean(c.body));
+        if (c.proofs?.length) { L.push("Preuves :"); c.proofs.forEach((pr) => L.push(`- ${clean(pr)}`)); }
+      } else if (n.desc) {
+        L.push(`\n### ${n.label}\n${clean(n.desc)}`);
+      }
+    });
+  }
+  if (p.sideHustle?.length) {
+    L.push("\n## Side hustle / projets");
+    p.sideHustle.forEach((s) => L.push(`- **${s.name}** (${clean(s.tag)}) : ${clean(s.desc)}`));
+  }
+  if (p.approche?.steps?.length) {
+    L.push("\n## Méthode d'intervention");
+    p.approche.steps.forEach((st) => L.push(`- **${st.t}** : ${clean(st.b)}`));
+    if (p.approche.stack?.length) L.push("Stack : " + p.approche.stack.map((x) => x.t).join(", "));
+  }
+  if (p.contact) {
+    L.push(`\n## Contact\nEmail : ${p.contact.email} · LinkedIn : ${p.contact.linkedin} · GitHub : ${p.contact.github}`);
+  }
+  return L.join("\n");
+}
+
+async function getSiteKnowledge() {
+  const now = Date.now();
+  if (siteCache.text && now - siteCache.fetchedAt < SITE_TTL_MS) return siteCache.text;
+  let text = "";
+  try {
+    const r = await fetch(SITE_URL);
+    if (r.ok) {
+      const html = await r.text();
+      const objStr = extractPortfolioObject(html);
+      if (objStr) {
+        // Trusted: our own data-only object literal from main. No functions inside.
+        const data = new Function("return (" + objStr + ");")();
+        text = formatSiteKnowledge(data);
+      }
+    }
+  } catch {
+    text = "";
+  }
+  siteCache = { text: text || "", fetchedAt: now };
+  return siteCache.text;
+}
+
 const rateLimitMap = new Map();
 const RL_WINDOW_MS = 60 * 60 * 1000;
 const RL_MAX = 20;
@@ -52,7 +147,7 @@ function rateLimit(ip) {
   return { allowed: entry.count <= RL_MAX, remaining: Math.max(0, RL_MAX - entry.count) };
 }
 
-function buildSystemPrompt(brain) {
+function buildSystemPrompt(brain, site) {
   return `Tu es le "second cerveau" de Benoît Baillon — un avatar conversationnel qui répond comme lui, à la première personne, en français, sur son portfolio public.
 
 IDENTITÉ
@@ -65,7 +160,12 @@ STYLE
 - Si tu ne sais pas, dis-le et propose qu'on en parle par email (benoitbaillon78@gmail.com) ou Cal.com.
 - Tu n'es pas un chatbot générique : tu parles de Benoît, de son parcours, de ses opinions, de sa stack. Refuse poliment hors-sujet (genre "code-moi un truc", "explique la blockchain") et redirige.
 
-CONTEXTE — second cerveau (extraits du repo public) :
+CONTEXTE — second cerveau. Ta base de connaissances. Appuie-toi dessus pour répondre précisément (parcours, hackathons, projets, expériences, stack, convictions). Quand on te pose une question factuelle (ex. "tes hackathons", "ton expérience chez OVHcloud", "Agence alAin"), cite les éléments concrets qui sont ici (noms de projets, résultats, dates).
+
+=== Données du site (source de vérité) ===
+${site}
+
+=== Notes du repo public ===
 ${brain}
 
 Si une question dépasse ce que tu sais ou n'est pas dans le contexte ci-dessus, ne l'invente pas. Dis franchement : "Je n'ai pas cette info précise — Benoît pourra t'en parler mieux que moi. Prends 15 min sur Cal.com ou écris à benoitbaillon78@gmail.com." Reste bref, reste toi.`;
@@ -106,10 +206,10 @@ export default async function handler(req, res) {
     content: String(m.content || "").slice(0, 2000),
   }));
 
-  const brain = await getBrainContext();
+  const [brain, site] = await Promise.all([getBrainContext(), getSiteKnowledge()]);
   const payload = {
     model: MODEL,
-    messages: [{ role: "system", content: buildSystemPrompt(brain) }, ...trimmed],
+    messages: [{ role: "system", content: buildSystemPrompt(brain, site) }, ...trimmed],
     temperature: 0.6,
     max_tokens: 600,
   };
