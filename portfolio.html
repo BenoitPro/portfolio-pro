@@ -516,7 +516,28 @@
     line-height: 1.65;
     color: var(--ink-70);
     margin: 0 0 28px;
+    white-space: pre-line;
   }
+  .concept-link {
+    appearance: none;
+    background: var(--accent-soft);
+    border: 1px solid rgba(0, 102, 255, 0.18);
+    color: var(--accent);
+    font: inherit;
+    font-weight: 500;
+    padding: 1px 7px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, color 0.15s, transform 0.15s;
+    white-space: nowrap;
+  }
+  .concept-link::before { content: "→ "; opacity: 0.7; }
+  .concept-link:hover {
+    background: rgba(0, 102, 255, 0.14);
+    border-color: var(--accent-mid);
+    color: var(--accent-2);
+  }
+  .concept-link:active { transform: translateY(1px); }
   .concept-proofs-label {
     font-family: "JetBrains Mono", monospace;
     font-size: 10px;
@@ -2450,27 +2471,55 @@ function Hero({ onNodeClick }) {
   );
 }
 
-function ConceptPopup({ concept, onClose }) {
+function renderConceptText(text, onLinkClick) {
+  if (!text) return null;
+  const out = [];
+  const re = /\[→([^\]]+)\]/g;
+  let last = 0, m, k = 0;
+  while ((m = re.exec(text)) !== null) {
+    if (m.index > last) out.push(text.slice(last, m.index));
+    const label = m[1];
+    out.push(
+      <button key={"cl-" + (k++)} type="button" className="concept-link"
+        onClick={(e) => { e.stopPropagation(); onLinkClick && onLinkClick(label); }}>
+        {label}
+      </button>
+    );
+    last = m.index + m[0].length;
+  }
+  if (last < text.length) out.push(text.slice(last));
+  return out;
+}
+
+function ConceptPopup({ concept, onClose, onLinkClick }) {
+  const scrollRef = useRef(null);
   useEffect(() => {
     const onKey = (e) => { if (e.key === "Escape") onClose(); };
     window.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
     return () => { window.removeEventListener("keydown", onKey); document.body.style.overflow = ""; };
   }, [onClose]);
+  useEffect(() => {
+    if (scrollRef.current) scrollRef.current.scrollTop = 0;
+  }, [concept]);
 
   return (
     <div className="concept-backdrop" role="dialog" aria-modal="true" aria-label={concept.title}
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}>
-      <div className="concept-popup">
+      <div className="concept-popup" ref={scrollRef}>
         <button className="concept-popup-close" onClick={onClose} aria-label="Fermer">&#x2715;</button>
         <div className="concept-badge">{concept.badge || "Concept éprouvé"}</div>
         <h2>{concept.title}</h2>
         <p className="concept-caption">{concept.caption}</p>
-        <p className="concept-body">{concept.body}</p>
-        <div className="concept-proofs-label">Preuves</div>
-        <ul className="concept-proofs">
-          {concept.proofs.map((p, i) => <li key={i}>{p}</li>)}
-        </ul>
+        <p className="concept-body">{renderConceptText(concept.body, onLinkClick)}</p>
+        {concept.proofs && concept.proofs.length > 0 && (
+          <React.Fragment>
+            <div className="concept-proofs-label">Preuves</div>
+            <ul className="concept-proofs">
+              {concept.proofs.map((p, i) => <li key={i}>{renderConceptText(p, onLinkClick)}</li>)}
+            </ul>
+          </React.Fragment>
+        )}
       </div>
     </div>
   );
@@ -2648,6 +2697,17 @@ function App() {
     if (node.section) scrollTo(node.section);
   }, [scrollTo]);
 
+  const openConceptByLabel = useCallback((rawLabel) => {
+    const norm = (s) => (s || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim();
+    const target = norm(rawLabel);
+    const nodes = window.PORTFOLIO.nodes;
+    const hit =
+      nodes.find((n) => norm(n.label) === target) ||
+      nodes.find((n) => n.concept && norm(n.concept.title) === target) ||
+      nodes.find((n) => norm(n.label).includes(target) || target.includes(norm(n.label)));
+    if (hit && hit.concept) setOpenConcept(hit.concept);
+  }, []);
+
   const onOpenSideHustle = useCallback(() => {
     const node = window.PORTFOLIO.nodes.find(n => n.id === "side-hustle");
     if (node?.concept) setOpenConcept(node.concept);
@@ -2708,7 +2768,7 @@ function App() {
       </main>
       <CommandPalette open={paletteOpen} onClose={() => setPaletteOpen(false)} items={paletteItems} />
       <ChatWidget />
-      {openConcept && <ConceptPopup concept={openConcept} onClose={() => setOpenConcept(null)} />}
+      {openConcept && <ConceptPopup concept={openConcept} onClose={() => setOpenConcept(null)} onLinkClick={openConceptByLabel} />}
     </React.Fragment>
   );
 }
