@@ -1,4 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="OVHcloud">
-  <rect width="100" height="100" rx="24" fill="#123F6D"/>
-  <text x="50" y="50" dy=".35em" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-weight="800" font-size="34" letter-spacing="-1" fill="#fff">ovh</text>
-</svg>
+<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-label="OVHcloud"><title>OVHcloud</title><path fill="#123F6D" d="M19.881 10.095l2.563-4.45C23.434 7.389 24 9.404 24 11.555c0 2.88-1.017 5.523-2.71 7.594h-6.62l2.04-3.541h-2.696l3.176-5.513h2.691zm-2.32-5.243L9.333 19.14l.003.009H2.709C1.014 17.077 0 14.435 0 11.555c0-2.152.57-4.17 1.561-5.918L5.855 13.1 10.6 4.852h6.961z"/></svg>
