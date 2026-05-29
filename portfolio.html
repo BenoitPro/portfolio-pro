@@ -1016,19 +1016,18 @@
   .exp:first-child { border-top-color: var(--line-2); }
   .exp-date { font-family: "JetBrains Mono", monospace; font-size: 12px; color: var(--ink-55); letter-spacing: 0.04em; }
   .exp-id { display: flex; gap: 16px; align-items: flex-start; }
-  /* Logo officiel — pastille uniforme : tous les logos au même format, monochromes au repos, couleur au survol */
+  /* Logo officiel — sans encadré : gabarit invisible pour l'alignement, logo monochrome au repos, couleur au survol */
   .exp-logo-chip {
-    flex: 0 0 auto; width: 50px; height: 50px; border-radius: 13px;
+    flex: 0 0 auto; width: 52px; height: 52px;
     display: inline-flex; align-items: center; justify-content: center;
-    background: rgba(11, 20, 38, 0.035); border: 1px solid var(--line);
-    transition: transform .4s cubic-bezier(.2, .7, .2, 1), box-shadow .4s cubic-bezier(.2, .7, .2, 1), border-color .3s ease, background .3s ease;
+    transition: transform .4s cubic-bezier(.2, .7, .2, 1);
   }
   .exp-logo {
-    width: 30px; height: 30px; object-fit: contain; display: block;
-    filter: grayscale(1) opacity(0.45);
+    width: 42px; height: 42px; object-fit: contain; display: block;
+    filter: grayscale(1) opacity(0.5);
     transition: filter .4s cubic-bezier(.2, .7, .2, 1);
   }
-  .exp:hover .exp-logo-chip { transform: translateY(-2px); border-color: var(--line-2); background: #fff; box-shadow: 0 8px 20px rgba(11, 20, 38, 0.10); }
+  .exp:hover .exp-logo-chip { transform: translateY(-2px); }
   .exp:hover .exp-logo { filter: grayscale(0) opacity(1); }
   @media (prefers-reduced-motion: reduce) { .exp-logo, .exp-logo-chip { transition: none; } .exp:hover .exp-logo-chip { transform: none; } }
   .exp-role { font-size: 19px; font-weight: 500; letter-spacing: -0.015em; }
