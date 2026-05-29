@@ -1052,6 +1052,61 @@
     .exp.is-academic { margin: 0 -12px; padding: 18px 12px; }
   }
 
+  /* Frise chronologique horizontale (prototype) */
+  .frise { max-width: 1000px; }
+  .frise-rail {
+    position: relative; display: flex; justify-content: space-between; align-items: flex-end;
+    padding-top: 6px;
+  }
+  .frise-line {
+    position: absolute; left: 6px; right: 6px; bottom: 36px; height: 2px;
+    background: var(--line-2); z-index: 0;
+  }
+  .frise-stop {
+    position: relative; z-index: 1; flex: 1 1 0; min-width: 0;
+    display: flex; flex-direction: column; align-items: center;
+    background: none; border: 0; cursor: pointer; padding: 0; font: inherit; color: inherit;
+  }
+  .frise-logo-wrap { height: 46px; display: flex; align-items: flex-end; justify-content: center; margin-bottom: 12px; }
+  .frise-logo {
+    width: 42px; height: 42px; object-fit: contain;
+    filter: grayscale(1) opacity(0.4);
+    transition: filter .35s cubic-bezier(.2, .7, .2, 1), transform .35s cubic-bezier(.2, .7, .2, 1);
+  }
+  .frise-dot {
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--bg); border: 2px solid var(--line-2);
+    margin-bottom: 14px; transition: background .35s ease, border-color .35s ease, box-shadow .35s ease;
+  }
+  .frise-year {
+    font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--ink-55);
+    letter-spacing: 0.04em; transition: color .35s ease;
+  }
+  .frise-stop:hover .frise-logo { filter: grayscale(0) opacity(0.9); transform: translateY(-2px); }
+  .frise-stop:hover .frise-dot { border-color: var(--accent-mid); }
+  .frise-stop.is-active .frise-logo { filter: grayscale(0) opacity(1); transform: translateY(-3px); }
+  .frise-stop.is-active .frise-dot { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 0 5px var(--accent-soft); }
+  .frise-stop.is-active .frise-year { color: var(--accent); font-weight: 600; }
+  .frise-stop.is-academic.is-active .frise-dot { background: var(--academic); border-color: var(--academic); box-shadow: 0 0 0 5px rgba(124, 58, 237, 0.12); }
+  .frise-stop.is-academic.is-active .frise-year { color: var(--academic); }
+  .frise-panel {
+    margin-top: 38px; padding: 28px 32px; border-radius: 16px;
+    background: rgba(11, 20, 38, 0.025); border: 1px solid var(--line);
+    animation: friseIn .45s cubic-bezier(.2, .7, .2, 1);
+  }
+  @keyframes friseIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  .frise-panel-date { font-family: "JetBrains Mono", monospace; font-size: 12px; color: var(--ink-55); letter-spacing: 0.04em; }
+  .frise-panel-role { font-size: 23px; font-weight: 600; letter-spacing: -0.015em; margin: 6px 0 2px; }
+  .frise-panel-co { color: var(--ink-55); font-size: 15px; }
+  .frise-panel-body { color: var(--ink-70); font-size: 15px; line-height: 1.6; margin-top: 14px; max-width: 680px; }
+  @media (max-width: 720px) {
+    .frise-rail { overflow-x: auto; gap: 30px; justify-content: flex-start; padding-bottom: 8px; -webkit-overflow-scrolling: touch; }
+    .frise-line { display: none; }
+    .frise-stop { flex: 0 0 60px; }
+    .frise-panel { padding: 22px; }
+  }
+  @media (prefers-reduced-motion: reduce) { .frise-panel { animation: none; } .frise-logo, .frise-dot { transition: none; } }
+
   /* Gallery */
   .gallery {
     position: relative;
@@ -2175,6 +2230,9 @@ function SectionHead({ idx, kicker, title }) {
 function ParcoursSection() {
   const ref = useReveal();
   const d = window.PORTFOLIO.parcours;
+  const [sel, setSel] = useState(0);
+  const order = d.timeline.map((_, i) => i).reverse();
+  const a = d.timeline[sel];
   return (
     <section id="parcours" className="sec" ref={ref}>
       <div className="container">
@@ -2214,32 +2272,42 @@ function ParcoursSection() {
             <p className="why-body">{d.body}</p>
           </div>
         </div>
-        <div className="exp-list reveal-stagger" style={{ marginTop: 72 }}>
-          {d.timeline.map((e, i) => (
-            <div key={i} className={"exp" + (e.academic ? " is-academic" : "")}>
-              <div className="exp-date">{e.date}</div>
-              <div className="exp-id">
-                {e.logo && (
-                  <span className="exp-logo-chip">
-                    <img className="exp-logo" src={"assets/logos/" + e.logo + ".svg"} alt={e.co} loading="lazy" decoding="async"
+        <div className="frise reveal" style={{ marginTop: 72 }}>
+          <div className="frise-rail">
+            <div className="frise-line" />
+            {order.map((idx) => {
+              const e = d.timeline[idx];
+              const active = sel === idx;
+              const yr = (e.date.match(/\d{4}/) || ["•"])[0];
+              return (
+                <button key={idx} type="button"
+                  className={"frise-stop" + (active ? " is-active" : "") + (e.academic ? " is-academic" : "")}
+                  onClick={() => setSel(idx)} aria-label={e.role + " — " + e.co} aria-pressed={active}>
+                  <span className="frise-logo-wrap">
+                    {e.logo && <img className="frise-logo" src={"assets/logos/" + e.logo + ".svg"} alt={e.co} loading="lazy" decoding="async"
                       onError={(ev) => {
                         const t = ev.currentTarget;
                         const exts = ["png", "jpg", "jpeg", "webp"];
                         const n = +(t.dataset.try || 0);
                         if (n < exts.length) { t.dataset.try = n + 1; t.src = "assets/logos/" + e.logo + "." + exts[n]; }
-                        else { t.closest(".exp-logo-chip").style.display = "none"; }
-                      }} />
+                        else { t.style.visibility = "hidden"; }
+                      }} />}
                   </span>
-                )}
-                <div>
-                  <div className="exp-role">{e.role}</div>
-                  <div className="exp-co">{e.co}</div>
-                  {e.academic && <span className="exp-tag">Académique</span>}
-                </div>
-              </div>
-              <div className="exp-body">{e.body}</div>
+                  <span className="frise-dot" />
+                  <span className="frise-year">{yr}</span>
+                </button>
+              );
+            })}
+          </div>
+          <div className="frise-panel" key={sel}>
+            <div className="frise-panel-date">{a.date}</div>
+            <h3 className="frise-panel-role">{a.role}</h3>
+            <div className="frise-panel-co">
+              {a.co}
+              {a.academic && <span className="exp-tag" style={{ marginLeft: 10 }}>Académique</span>}
             </div>
-          ))}
+            <p className="frise-panel-body">{a.body}</p>
+          </div>
         </div>
       </div>
     </section>
