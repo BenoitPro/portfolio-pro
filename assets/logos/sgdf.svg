@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Scouts et Guides de France">
-  <rect width="100" height="100" fill="#123E5E"/>
-  <g fill="none" stroke="#fff" stroke-width="7" stroke-linejoin="miter" stroke-linecap="butt">
-    <path d="M34 44 L50 28 L66 44"/>
-    <path d="M14 70 L31 52 L48 70"/>
-    <path d="M52 70 L69 52 L86 70"/>
-  </g>
-  <path fill="#fff" d="M50 53 L56 60 L50 67 L44 60 Z"/>
-</svg>
