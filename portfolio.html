@@ -25,6 +25,9 @@
     --accent-2: #0044C2;
     --accent-soft: rgba(0, 102, 255, 0.08);
     --accent-mid: rgba(0, 102, 255, 0.35);
+    --academic: #6B4E9E;
+    --academic-soft: rgba(107, 78, 158, 0.06);
+    --academic-mid: rgba(107, 78, 158, 0.30);
     --glass: rgba(255, 255, 255, 0.55);
     --glass-stroke: rgba(255, 255, 255, 0.7);
     --shadow-sm: 0 1px 2px rgba(11, 20, 38, 0.04), 0 0 0 1px rgba(11, 20, 38, 0.04);
@@ -1008,14 +1011,46 @@
     gap: 28px;
     padding: 26px 0;
     border-top: 1px solid var(--line);
-    align-items: baseline;
+    align-items: start;
   }
   .exp:first-child { border-top-color: var(--line-2); }
   .exp-date { font-family: "JetBrains Mono", monospace; font-size: 12px; color: var(--ink-55); letter-spacing: 0.04em; }
+  .exp-id { display: flex; gap: 16px; align-items: flex-start; }
+  /* Logo officiel — sans encadré : gabarit invisible pour l'alignement, logo monochrome au repos, couleur au survol */
+  .exp-logo-chip {
+    flex: 0 0 auto; width: 52px; height: 52px;
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: transform .4s cubic-bezier(.2, .7, .2, 1);
+  }
+  .exp-logo {
+    width: 42px; height: 42px; object-fit: contain; display: block;
+    filter: grayscale(1) opacity(0.5);
+    transition: filter .4s cubic-bezier(.2, .7, .2, 1);
+  }
+  .exp:hover .exp-logo-chip { transform: translateY(-2px); }
+  .exp:hover .exp-logo { filter: grayscale(0) opacity(1); }
+  @media (prefers-reduced-motion: reduce) { .exp-logo, .exp-logo-chip { transition: none; } .exp:hover .exp-logo-chip { transform: none; } }
   .exp-role { font-size: 19px; font-weight: 500; letter-spacing: -0.015em; }
   .exp-co { color: var(--ink-55); font-size: 14px; margin-top: 4px; }
+  .exp-tag {
+    display: inline-block; margin-top: 8px; padding: 2px 9px; border-radius: 999px;
+    font-family: "JetBrains Mono", monospace; font-size: 10px; letter-spacing: 0.10em;
+    text-transform: uppercase; color: var(--academic);
+    background: var(--academic-soft); border: 1px solid var(--academic-mid);
+  }
+  /* Expériences académiques — couleur légèrement différente */
+  .exp.is-academic {
+    background: var(--academic-soft);
+    box-shadow: inset 3px 0 0 var(--academic);
+    border-radius: 0 12px 12px 0;
+    margin: 0 -18px; padding: 26px 18px;
+  }
+  .exp.is-academic .exp-date { color: var(--academic); }
   .exp-body { color: var(--ink-70); font-size: 14px; line-height: 1.55; }
-  @media (max-width: 720px) { .exp { grid-template-columns: 1fr; gap: 6px; } }
+  @media (max-width: 720px) {
+    .exp { grid-template-columns: 1fr; gap: 6px; }
+    .exp.is-academic { margin: 0 -12px; padding: 18px 12px; }
+  }
 
   /* Gallery */
   .gallery {
@@ -1455,7 +1490,10 @@ window.PORTFOLIO = {
       concept: { badge: "Expérience", title: "OVHcloud", caption: "Account Manager FSI · janv. 2025 →",
         body: "Portefeuille >2M€ ARR sur 10 grands comptes Finance 500+ (PSP, paiements, crypto/blockchain institutionnels, assureurs, banques). Vente de cloud souverain qualifié SecNumCloud sur dossiers sous contrainte [→Réglementation]. Tandem opérationnel : pre-sales, légal, finance, tech, partenaire intégrateur, C-level. Mon vrai angle : [→Approche client] et [→Vente B2B Enterprise].",
         proofs: ["Portefeuille >2M€ ARR, 10 grands comptes FSI", "Initiative interne : enrichissement CRM, automatisation de process, Dashboard on-chain (OVHcloud4blockchain.com)", "Dossiers sectoriels : initiative stablecoin européen, solutions de paiement, assurance tier one"] } },
-    { id: "reglementation",    label: "Réglementation",        section: "parcours", kind: "branch", desc: "DORA, MiCA, SecNumCloud, DSP3. Je sais où sont les chausse-trappes." },
+    { id: "reglementation",    label: "Réglementation",        section: "parcours", kind: "branch", desc: "DORA, MiCA, SecNumCloud, DSP3. Je sais où sont les chausse-trappes.",
+      concept: { badge: "Expertise", title: "Réglementation FSI", caption: "DORA · MiCA · SecNumCloud · DSP3 · ACPR",
+        body: "Le terrain réglementaire est mon angle de vente sur les comptes Finance : je traduis la contrainte en architecture. DORA (UE 2022/2554, en application depuis janv. 2025) qualifie le cloud de prestataire ICT critique (TPICT) → clauses contractuelles art. 30, droits d'audit régulateur, registre TPICT. MiCA encadre les PSCA et stablecoins (ART/EMT), DSP3/PSD3 les paiements, et SecNumCloud porte la souveraineté. Côté français, l'ACPR octroie les agréments (EME, PSCA) et contrôle l'application de DORA. Je relie tout ça au [→Cloud souverain] et à la [→Vente B2B Enterprise].",
+        proofs: ["DORA présent dans la quasi-totalité des deals FSI actifs — levier contractuel universel (clauses art. 30, registre TPICT, droits d'audit)", "RFP 80+ pages traitées sous contrainte SecNumCloud / DORA chez [→OVHcloud]", "Tandem avec les équipes risk/compliance des candidats à l'agrément ACPR (EME, PSCA)", "Vulgarisation des contraintes MiCA / DSP3 en décisions business pour RSSI, DPO et DAF"] } },
     { id: "souverainete",      label: "Cloud souverain",       section: "parcours", kind: "branch", desc: "Infra européenne certifiée. Sujet clé pour les clients FSI sous pression réglementaire." },
     { id: "ia-operationnelle", label: "IA opérationnelle",     kind: "branch", desc: "Enrichissement CRM, automatisation d'outreach, account mapping, agents vocaux, systèmes d'agents." },
     { id: "finance-blockchain",label: "Finance & blockchain",  kind: "branch", desc: "Stablecoins, paiements, crypto institutionnel, DeFi, blockchain publique, MiCA." },
@@ -1512,16 +1550,18 @@ window.PORTFOLIO = {
       { n: "03", t: "Pédagogue",   b: "Référent IA en interne chez OVHcloud, ateliers IA en entreprise. J’adapte mon discours à l’audience — du COMEX aux équipes opérationnelles — avec un format formation déjà éprouvé." },
     ],
     timeline: [
-      { date: "janv. 2025 — auj.", role: "Account Manager · Financial Services", co: "OVHcloud", body: "Portefeuille >2 M€ ARR sur 10 grands comptes FSI (paiement, assurance). Vente cloud + IA + infra blockchain articulée sur la souveraineté européenne et la conformité (DORA, MiCA, SecNumCloud). Représentant OVHcloud FSI : VivaTech, FIC, Paris Blockchain Week, EthCC, France Quantum." },
-      { date: "2024 — auj.", role: "Co-fondateur", co: "Agence alAin", body: "Automatisation IA pour PME : voice agents (Retell, Vapi), workflows HubSpot, formation IA. Stack n8n, Claude API, MCP. Projets clients : Aligner (réceptionniste IA hôtellerie), Henri (formation IA), CS Transitions." },
-      { date: "mai — août 2024", role: "Stagiaire VC Impact", co: "BNP Paribas BCEF — Act For Impact", body: "Suivi de projets d’investissement à impact social, gestion partenaires, communication Label." },
-      { date: "sept. 2023 — 2025", role: "Responsable financier", co: "ETNA EDHEC Télévision", body: "Pilotage de 100 k€ de chiffre d’affaires annuel. Implémentation Sage (conformité e-invoicing)." },
-      { date: "2023 — 2026", role: "Master in Management · Grande École Program", co: "EDHEC Business School", body: "Top 4 mondial Financial Times 2024. Spécialisation Accounting, Finance, Data Analysis, Entrepreneurship." },
+      { date: "janv. 2025 — auj.", role: "Account Manager · Financial Services", co: "OVHcloud", logo: "ovhcloud", body: "Portefeuille >2 M€ ARR sur 10 grands comptes FSI (paiement, assurance). Vente cloud + IA + infra blockchain articulée sur la souveraineté européenne et la conformité (DORA, MiCA, SecNumCloud). Représentant OVHcloud FSI : VivaTech, FIC, Paris Blockchain Week, EthCC, France Quantum." },
+      { date: "2024 — auj.", role: "Co-fondateur", co: "Agence alAin", logo: "alain", body: "Automatisation des process en entreprise pour des PME : gains de productivité et de chiffre d’affaires. Stack n8n, Claude API, MCP." },
+      { date: "avr. — août 2024", role: "Stagiaire VC Impact", co: "BNP Paribas BCEF — Act For Impact", logo: "bnpparibas", body: "Suivi et évaluation de projets d’investissement dans des startups (impact), gestion de partenaires, communication du Label." },
+      { date: "sept. 2023 — 2025", role: "Responsable financier", co: "ETNA EDHEC Télévision", logo: "etna", body: "Pilotage de 100 k€ de chiffre d’affaires annuel. Implémentation Sage (conformité e-invoicing)." },
+      { date: "2023 — 2026", role: "Master in Management · Grande École Program", co: "EDHEC Business School", logo: "edhec", academic: true, body: "Top 4 mondial Financial Times 2024. Spécialisation Accounting, Finance, Data Analysis, Entrepreneurship." },
+      { date: "2021 — 2023", role: "Classes Préparatoires D2 · économie-gestion", co: "Lycée Marie Curie · Versailles", logo: "mariecurie", academic: true, body: "Prépa éco-gestion (voie D2, ENS Rennes). Économie, mathématiques, management, langues. Baccalauréat général." },
+      { date: "2 ans 5 mois", role: "Directeur de camp · BAFA", co: "Scouts et Guides de France (SGDF)", logo: "sgdf", body: "Encadrement et responsabilité d’un camp de jeunes : pilotage d’une équipe de chefs, logistique, budget et sécurité sur le terrain. L’école concrète du leadership et de la décision sous contrainte." },
     ],
   },
 
   sideHustle: [
-    { n: "01", name: "Agence alAin",               italic: "alAin",    tag: "automatisation IA / 2024→", desc: "Automatisation IA pour PME. Voice agents (Retell, Vapi), workflows HubSpot, formation IA. Projets : Aligner, Henri, CS Transitions.", stats: [{k:"3",v:"clients"}] },
+    { n: "01", name: "Agence alAin",               italic: "alAin",    tag: "automatisation IA / 2024→", desc: "Automatisation des process en entreprise pour des PME : gains de productivité et de chiffre d’affaires. Stack n8n, Claude API, MCP.", stats: [{k:"3",v:"clients"}] },
     { n: "02", name: "Dashboard on-chain",          italic: "on-chain", tag: "data / 2025",               desc: "Parts de marché OVH sur les blockchains publiques majeures via mapping Nodes/ASN et enrichissement.", stats: [] },
     { n: "03", name: "Second cerveau",              italic: "cerveau",  tag: "notion × claude / 2023→",   desc: "Système personnel piloté par Claude. Capture, retrieval, restitution. Augmente la productivité au quotidien.", stats: [] },
     { n: "04", name: "Ext. Chrome anti-Shadow AI",  italic: "Shadow",   tag: "open source / 2024",         desc: "Extension Chrome open source pour détecter et limiter le Shadow AI en entreprise.", stats: [] },
@@ -2176,9 +2216,27 @@ function ParcoursSection() {
         </div>
         <div className="exp-list reveal-stagger" style={{ marginTop: 72 }}>
           {d.timeline.map((e, i) => (
-            <div key={i} className="exp">
+            <div key={i} className={"exp" + (e.academic ? " is-academic" : "")}>
               <div className="exp-date">{e.date}</div>
-              <div><div className="exp-role">{e.role}</div><div className="exp-co">{e.co}</div></div>
+              <div className="exp-id">
+                {e.logo && (
+                  <span className="exp-logo-chip">
+                    <img className="exp-logo" src={"assets/logos/" + e.logo + ".svg"} alt={e.co} loading="lazy" decoding="async"
+                      onError={(ev) => {
+                        const t = ev.currentTarget;
+                        const exts = ["png", "jpg", "jpeg", "webp"];
+                        const n = +(t.dataset.try || 0);
+                        if (n < exts.length) { t.dataset.try = n + 1; t.src = "assets/logos/" + e.logo + "." + exts[n]; }
+                        else { t.closest(".exp-logo-chip").style.display = "none"; }
+                      }} />
+                  </span>
+                )}
+                <div>
+                  <div className="exp-role">{e.role}</div>
+                  <div className="exp-co">{e.co}</div>
+                  {e.academic && <span className="exp-tag">Académique</span>}
+                </div>
+              </div>
               <div className="exp-body">{e.body}</div>
             </div>
           ))}
