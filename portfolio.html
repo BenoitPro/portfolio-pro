@@ -1016,15 +1016,21 @@
   .exp:first-child { border-top-color: var(--line-2); }
   .exp-date { font-family: "JetBrains Mono", monospace; font-size: 12px; color: var(--ink-55); letter-spacing: 0.04em; }
   .exp-id { display: flex; gap: 16px; align-items: center; }
-  /* Logo officiel — flottant : pas de carte, ombre portée qui suit la forme du logo */
-  .exp-logo {
-    width: 92px; height: 32px; flex: 0 0 92px; display: block;
-    object-fit: contain; object-position: left center;
-    filter: drop-shadow(0 3px 9px rgba(11, 20, 38, 0.15));
-    transition: transform .4s cubic-bezier(.2, .7, .2, 1), filter .4s cubic-bezier(.2, .7, .2, 1);
+  /* Logo officiel — pastille uniforme : tous les logos au même format, monochromes au repos, couleur au survol */
+  .exp-logo-chip {
+    flex: 0 0 auto; width: 44px; height: 44px; border-radius: 12px;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: rgba(11, 20, 38, 0.035); border: 1px solid var(--line);
+    transition: transform .4s cubic-bezier(.2, .7, .2, 1), box-shadow .4s cubic-bezier(.2, .7, .2, 1), border-color .3s ease, background .3s ease;
   }
-  .exp:hover .exp-logo { transform: translateY(-3px); filter: drop-shadow(0 9px 20px rgba(11, 20, 38, 0.22)); }
-  @media (prefers-reduced-motion: reduce) { .exp-logo { transition: none; } .exp:hover .exp-logo { transform: none; } }
+  .exp-logo {
+    width: 26px; height: 26px; object-fit: contain; display: block;
+    filter: grayscale(1) opacity(0.45);
+    transition: filter .4s cubic-bezier(.2, .7, .2, 1);
+  }
+  .exp:hover .exp-logo-chip { transform: translateY(-2px); border-color: var(--line-2); background: #fff; box-shadow: 0 8px 20px rgba(11, 20, 38, 0.10); }
+  .exp:hover .exp-logo { filter: grayscale(0) opacity(1); }
+  @media (prefers-reduced-motion: reduce) { .exp-logo, .exp-logo-chip { transition: none; } .exp:hover .exp-logo-chip { transform: none; } }
   .exp-role { font-size: 19px; font-weight: 500; letter-spacing: -0.015em; }
   .exp-co { color: var(--ink-55); font-size: 14px; margin-top: 4px; }
   .exp-tag {
@@ -2214,14 +2220,18 @@ function ParcoursSection() {
             <div key={i} className={"exp" + (e.academic ? " is-academic" : "")}>
               <div className="exp-date">{e.date}</div>
               <div className="exp-id">
-                {e.logo && <img className="exp-logo" src={"assets/logos/" + e.logo + ".svg"} alt={e.co} loading="lazy" decoding="async"
-                  onError={(ev) => {
-                    const t = ev.currentTarget;
-                    const exts = ["png", "jpg", "jpeg", "webp"];
-                    const n = +(t.dataset.try || 0);
-                    if (n < exts.length) { t.dataset.try = n + 1; t.src = "assets/logos/" + e.logo + "." + exts[n]; }
-                    else { t.style.display = "none"; }
-                  }} />}
+                {e.logo && (
+                  <span className="exp-logo-chip">
+                    <img className="exp-logo" src={"assets/logos/" + e.logo + ".svg"} alt={e.co} loading="lazy" decoding="async"
+                      onError={(ev) => {
+                        const t = ev.currentTarget;
+                        const exts = ["png", "jpg", "jpeg", "webp"];
+                        const n = +(t.dataset.try || 0);
+                        if (n < exts.length) { t.dataset.try = n + 1; t.src = "assets/logos/" + e.logo + "." + exts[n]; }
+                        else { t.closest(".exp-logo-chip").style.display = "none"; }
+                      }} />
+                  </span>
+                )}
                 <div>
                   <div className="exp-role">{e.role}</div>
                   <div className="exp-co">{e.co}</div>
