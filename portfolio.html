@@ -2214,7 +2214,14 @@ function ParcoursSection() {
             <div key={i} className={"exp" + (e.academic ? " is-academic" : "")}>
               <div className="exp-date">{e.date}</div>
               <div className="exp-id">
-                {e.logo && <img className="exp-logo" src={"assets/logos/" + e.logo + ".svg"} alt={e.co} loading="lazy" decoding="async" />}
+                {e.logo && <img className="exp-logo" src={"assets/logos/" + e.logo + ".svg"} alt={e.co} loading="lazy" decoding="async"
+                  onError={(ev) => {
+                    const t = ev.currentTarget;
+                    const exts = ["png", "jpg", "jpeg", "webp"];
+                    const n = +(t.dataset.try || 0);
+                    if (n < exts.length) { t.dataset.try = n + 1; t.src = "assets/logos/" + e.logo + "." + exts[n]; }
+                    else { t.style.display = "none"; }
+                  }} />}
                 <div>
                   <div className="exp-role">{e.role}</div>
                   <div className="exp-co">{e.co}</div>
