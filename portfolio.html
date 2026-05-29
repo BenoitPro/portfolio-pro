@@ -1053,14 +1053,16 @@
   }
 
   /* Timeline serpentin verticale — toutes les expériences visibles, cartes alternées */
-  .tl { position: relative; max-width: 1020px; margin: 0 auto; }
+  .tl { position: relative; max-width: 1080px; margin: 0 auto; }
   .tl::before {
     content: ""; position: absolute; left: 50%; top: 10px; bottom: 10px; width: 2px;
     background: var(--line-2); transform: translateX(-50%);
   }
-  .tl-item { position: relative; width: 50%; box-sizing: border-box; padding: 0 38px; margin-bottom: 21px; }
+  .tl-item { position: relative; width: 50%; box-sizing: border-box; padding: 0 30px; margin-bottom: 0; }
   .tl-item:nth-child(odd) { left: 0; }
   .tl-item:nth-child(even) { left: 50%; }
+  /* chevauchement vertical : la carte suivante remonte dans l'espace vide de la moitié opposée */
+  .tl-item + .tl-item { margin-top: -76px; }
   .tl-item::after {
     content: ""; position: absolute; top: 24px; width: 14px; height: 14px; border-radius: 50%;
     background: var(--bg); border: 2px solid var(--line-2); z-index: 2;
@@ -1089,6 +1091,7 @@
   @media (max-width: 760px) {
     .tl::before { left: 21px; }
     .tl-item, .tl-item:nth-child(odd), .tl-item:nth-child(even) { width: 100%; left: 0; padding: 0 0 0 48px; }
+    .tl-item + .tl-item { margin-top: 18px; }
     .tl-item:nth-child(odd)::after, .tl-item:nth-child(even)::after { left: 14px; right: auto; }
   }
   @media (prefers-reduced-motion: reduce) { .tl-card, .tl-logo, .tl-item::after { transition: none; } }
