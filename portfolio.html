@@ -2851,12 +2851,20 @@ function App() {
 
   const paletteItems = useMemo(() => {
     const out = [];
-    sectionIds.forEach((id) => {
-      out.push({ id: "sec-" + id, label: "Aller à " + id.charAt(0).toUpperCase() + id.slice(1), hint: id, action: () => scrollTo(id) });
+    const navSections = [
+      { id: "hero",     label: "Accueil" },
+      { id: "parcours", label: "Parcours" },
+      { id: "galerie",  label: "Galerie" },
+      { id: "contact",  label: "Contact" },
+    ];
+    navSections.forEach((s) => {
+      out.push({ id: "sec-" + s.id, label: "Aller à " + s.label, hint: s.id, action: () => scrollTo(s.id) });
     });
-    const shNode = data.nodes.find(n => n.id === "side-hustle");
+    // Chaque projet ouvre sa fiche dédiée du knowledge graph si elle existe, sinon le hub Side Hustle.
+    const projToNode = { "Agence alAin": "safegpt", "Hackathons IA & Web3": "hackathons" };
     data.sideHustle.forEach((p) => {
-      out.push({ id: "proj-" + p.n, label: "Projet : " + p.name, hint: p.tag.split(" / ")[0], action: () => { if (shNode?.concept) setOpenConcept(shNode.concept); } });
+      const node = data.nodes.find(n => n.id === (projToNode[p.name] || "side-hustle"));
+      out.push({ id: "proj-" + p.n, label: "Projet : " + p.name, hint: p.tag.split(" / ")[0], action: () => { if (node?.concept) setOpenConcept(node.concept); } });
     });
     out.push({ id: "email", label: "Envoyer un email", hint: data.contact.email, action: () => window.location.href = "mailto:" + data.contact.email });
     out.push({ id: "linkedin", label: "Ouvrir LinkedIn", hint: data.contact.linkedin, action: () => window.open("https://" + data.contact.linkedin, "_blank") });
