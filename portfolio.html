@@ -1105,32 +1105,42 @@
   }
   @media (prefers-reduced-motion: reduce) { .tl-card, .tl-logo, .tl-item::after { transition: none; } }
 
-  /* Frise temporelle proportionnelle */
-  .tlf { position: relative; max-width: 730px; margin: 0 auto; }
-  .tlf-axis { position: absolute; left: 70px; top: 0; bottom: 12px; width: 2px; background: var(--line-2); }
-  .tlf-tick { position: absolute; left: 0; width: 70px; height: 0; }
-  .tlf-tick::after { content: ""; position: absolute; right: 0; top: 0; width: 9px; height: 2px; background: var(--line-2); }
-  .tlf-year { position: absolute; right: 16px; top: -8px; font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--ink-55); letter-spacing: 0.04em; }
-  .tlf-seg {
-    position: absolute; left: 67px; width: 8px; border-radius: 6px;
-    background: linear-gradient(var(--accent), var(--accent-2)); box-shadow: 0 0 0 3px var(--bg);
+  /* Frise temporelle horizontale + carte au survol */
+  .thz { position: relative; }
+  .thz-track { position: relative; margin: 0 0 28px; padding-top: 26px; }
+  .thz-grid { position: absolute; top: 26px; bottom: 0; width: 0; border-left: 1px dashed var(--line); }
+  .thz-grid:first-of-type { border-left: none; }
+  .thz-year { position: absolute; top: -24px; left: 0; transform: translateX(-50%); font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--ink-55); letter-spacing: 0.04em; white-space: nowrap; }
+  .thz-grid:first-of-type .thz-year { transform: none; left: 0; }
+  .thz-bar {
+    position: absolute; display: flex; align-items: center; gap: 8px; min-width: 0;
+    padding: 0 12px; border: 1px solid var(--line-2); border-radius: 11px; cursor: pointer;
+    background: var(--surface); color: var(--ink-75); overflow: hidden; text-align: left;
+    box-shadow: 0 1px 2px rgba(11, 20, 38, 0.04);
+    transition: transform .22s cubic-bezier(.2,.7,.2,1), box-shadow .22s ease, border-color .22s ease, background .22s ease;
   }
-  .tlf-seg.is-academic { background: var(--academic); }
-  .tlf-links { position: absolute; left: 0; top: 0; pointer-events: none; overflow: visible; }
-  .tlf-link { stroke: var(--accent-mid); stroke-width: 1.5; stroke-dasharray: 2 4; fill: none; }
-  .tlf-link.is-academic { stroke: var(--academic); }
-  .tlf-card {
-    position: absolute; left: 150px; width: 560px; box-sizing: border-box;
-    transition: transform .3s cubic-bezier(.2, .7, .2, 1), box-shadow .3s ease, border-color .3s ease;
+  .thz-bar::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--accent); opacity: .55; }
+  .thz-bar.is-academic::before { background: var(--academic); }
+  .thz-bar-logo { width: 18px; height: 18px; object-fit: contain; flex: none; filter: grayscale(1) opacity(.6); transition: filter .22s ease; }
+  .thz-bar-label { font-size: 13px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .thz-bar:hover, .thz-bar:focus-visible { outline: none; transform: translateY(-2px); border-color: var(--accent-mid); box-shadow: 0 8px 20px rgba(11, 20, 38, 0.10); }
+  .thz-bar:hover .thz-bar-logo, .thz-bar.is-sel .thz-bar-logo { filter: grayscale(0) opacity(1); }
+  .thz-bar.is-sel {
+    color: #fff; border-color: transparent;
+    background: linear-gradient(120deg, var(--accent), var(--accent-2));
+    box-shadow: 0 10px 26px var(--accent-soft);
   }
-  .tlf-card:hover { transform: translateY(-3px); border-color: var(--line-2); box-shadow: 0 12px 28px rgba(11, 20, 38, 0.08); z-index: 3; }
-  .tlf-card:hover .tl-logo { filter: grayscale(0) opacity(1); }
+  .thz-bar.is-sel::before { opacity: 0; }
+  .thz-bar.is-sel .thz-bar-logo { filter: brightness(0) invert(1); }
+  .thz-bar.is-academic.is-sel { background: linear-gradient(120deg, var(--academic), #8b6fd6); box-shadow: 0 10px 26px var(--academic-soft); }
+  .thz-card { animation: thzFade .35s cubic-bezier(.2,.7,.2,1); }
+  @keyframes thzFade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
   /* Frise — repli mobile : liste verticale simple */
   .tl-narrow { display: flex; flex-direction: column; gap: 16px; }
   .tl-narrow-card { border-left: 3px solid var(--accent); }
   .tl-narrow-card.is-academic { border-left-color: var(--academic); }
   .tl-narrow-card:hover .tl-logo { filter: grayscale(0) opacity(1); }
-  @media (prefers-reduced-motion: reduce) { .tlf-card { transition: none; } }
+  @media (prefers-reduced-motion: reduce) { .thz-bar, .thz-card { transition: none; animation: none; } }
 
   /* Gallery */
   .gallery {
@@ -2252,7 +2262,7 @@ function SectionHead({ idx, kicker, title }) {
   );
 }
 
-// Frise chronologique : axe temporel proportionnel + segments de durée réelle + connecteurs pointillés vers les cartes
+// Frise chronologique : timeline horizontale (segments par période, lignes parallèles pour le concurrent) + carte au survol
 function TimelineFrise({ items }) {
   const NOW = 2026.42, TOP = 2026.5, BOT = 2021.0, SPAN = TOP - BOT;
   // Périodes (années décimales). end null = en cours. sgdf approximatif (à confirmer).
@@ -2261,30 +2271,35 @@ function TimelineFrise({ items }) {
     etna: [2023.70, 2025.0], edhec: [2023.0, 2026.0], mariecurie: [2021.0, 2023.0],
     sgdf: [2021.0, 2024.0],
   };
+  const SHORT = {
+    ovhcloud: "OVHcloud", alain: "alAin", bnpparibas: "BNP Paribas",
+    etna: "ETNA", edhec: "EDHEC", mariecurie: "Marie Curie", sgdf: "SGDF",
+  };
   const per = (e) => { const p = PERIOD[e.logo] || [BOT, null]; return [p[0], p[1] == null ? NOW : p[1]]; };
-  const estH = (e) => 104 + (e.bullets ? e.bullets.length : 3) * 23;
+  const xPct = (yr) => (yr - BOT) / SPAN * 100;
 
-  const cardRefs = useRef([]);
-  const [heights, setHeights] = useState(items.map(estH));
-  const [narrow, setNarrow] = useState(typeof window !== "undefined" && window.innerWidth < 820);
-
+  const [sel, setSel] = useState(0);
+  const [narrow, setNarrow] = useState(typeof window !== "undefined" && window.innerWidth < 760);
   useEffect(() => {
-    const measure = () => {
-      setNarrow(window.innerWidth < 820);
-      const hs = items.map((e, i) => cardRefs.current[i] ? cardRefs.current[i].offsetHeight : estH(e));
-      setHeights(hs);
-    };
-    measure();
-    window.addEventListener("resize", measure);
-    return () => window.removeEventListener("resize", measure);
+    const onR = () => setNarrow(window.innerWidth < 760);
+    onR(); window.addEventListener("resize", onR);
+    return () => window.removeEventListener("resize", onR);
   }, []);
 
-  // Empilement chronologique des cartes (ordre des données = plus récent en haut)
-  const GAP = 20;
-  let y = 0;
-  const cards = items.map((e, i) => { const h = heights[i] || estH(e); const top = y; y += h + GAP; return { top, h, center: top + h / 2 }; });
-  const H = Math.max(y - GAP, 360);
-  const yAxis = (yr) => (TOP - yr) / SPAN * H;
+  // Affectation en lignes : les expériences qui se chevauchent dans le temps vont sur des lignes différentes
+  const lane = {};
+  const laneEnds = [];
+  items.map((e, i) => ({ i, s: per(e)[0], en: per(e)[1] }))
+    .sort((a, b) => a.s - b.s || b.en - a.en)
+    .forEach((it) => {
+      let placed = -1;
+      for (let l = 0; l < laneEnds.length; l++) { if (it.s >= laneEnds[l] - 0.02) { placed = l; break; } }
+      if (placed < 0) { placed = laneEnds.length; laneEnds.push(0); }
+      laneEnds[placed] = it.en; lane[it.i] = placed;
+    });
+  const nLanes = Math.max(laneEnds.length, 1);
+  const BARH = 48, LGAP = 12;
+  const trackH = nLanes * BARH + (nLanes - 1) * LGAP;
   const years = [2021, 2022, 2023, 2024, 2025, 2026];
 
   const renderCardInner = (e) => (
@@ -2313,7 +2328,7 @@ function TimelineFrise({ items }) {
 
   if (narrow) {
     return (
-      <div className="tl-narrow reveal-stagger" style={{ marginTop: 56 }}>
+      <div className="tl-narrow reveal-stagger" style={{ marginTop: 48 }}>
         {items.map((e, i) => (
           <div key={i} className={"tl-card tl-narrow-card reveal" + (e.academic ? " is-academic" : "")}>
             {renderCardInner(e)}
@@ -2323,33 +2338,34 @@ function TimelineFrise({ items }) {
     );
   }
 
+  const cur = items[sel] || items[0];
   return (
-    <div className="tlf reveal" style={{ marginTop: 64, height: H + 12 }}>
-      {years.map((yr) => (
-        <div key={yr} className="tlf-tick" style={{ top: yAxis(yr) }}>
-          <span className="tlf-year">{yr}</span>
-        </div>
-      ))}
-      <div className="tlf-axis" />
-      {items.map((e, i) => {
-        const [s, en] = per(e);
-        const top = yAxis(en), bot = yAxis(s);
-        return <div key={i} className={"tlf-seg" + (e.academic ? " is-academic" : "")} style={{ top, height: Math.max(bot - top, 7) }} />;
-      })}
-      <svg className="tlf-links" width="100%" height={H + 12} preserveAspectRatio="none">
+    <div className="thz reveal" style={{ marginTop: 56 }}>
+      <div className="thz-track" style={{ height: trackH }}>
+        {years.map((yr) => (
+          <div key={yr} className="thz-grid" style={{ left: xPct(yr) + "%" }}>
+            <span className="thz-year">{yr}</span>
+          </div>
+        ))}
         {items.map((e, i) => {
           const [s, en] = per(e);
-          const segMid = (yAxis(en) + yAxis(s)) / 2;
-          return <line key={i} x1="70" y1={segMid} x2="150" y2={cards[i].center}
-            className={"tlf-link" + (e.academic ? " is-academic" : "")} />;
+          const left = xPct(s), w = xPct(en) - xPct(s);
+          return (
+            <button key={i} type="button"
+              className={"thz-bar" + (e.academic ? " is-academic" : "") + (i === sel ? " is-sel" : "")}
+              style={{ left: left + "%", width: w + "%", top: lane[i] * (BARH + LGAP), height: BARH }}
+              onMouseEnter={() => setSel(i)} onFocus={() => setSel(i)} onClick={() => setSel(i)}
+              aria-label={e.role + " — " + e.co}>
+              {e.logo && <img className="thz-bar-logo" src={"assets/logos/" + e.logo + ".svg"} alt="" loading="lazy" decoding="async"
+                onError={(ev) => { ev.currentTarget.style.display = "none"; }} />}
+              <span className="thz-bar-label">{SHORT[e.logo] || e.co}</span>
+            </button>
+          );
         })}
-      </svg>
-      {items.map((e, i) => (
-        <div key={i} ref={(el) => cardRefs.current[i] = el}
-          className={"tl-card tlf-card" + (e.academic ? " is-academic" : "")} style={{ top: cards[i].top }}>
-          {renderCardInner(e)}
-        </div>
-      ))}
+      </div>
+      <div className={"tl-card thz-card" + (cur.academic ? " is-academic" : "")} key={sel}>
+        {renderCardInner(cur)}
+      </div>
     </div>
   );
 }
