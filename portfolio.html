@@ -283,7 +283,8 @@
     display: inline-flex;
     align-items: center;
     gap: clamp(8px, 0.8vw, 14px);
-    flex: 0 1 auto;
+    flex: 0 0 100%;
+    margin-top: clamp(6px, 0.9vw, 14px);
     min-width: 0;
     pointer-events: none;
   }
@@ -2236,7 +2237,7 @@ function ParcoursSection() {
           <div style={{ flex: 1, minWidth: 0 }}>
             <div className="sec-kicker">Parcours</div>
             <div className="sec-title-row">
-              <h2 className="sec-title">Le commercial qui <span className="italic">code</span>.</h2>
+              <h2 className="sec-title">Le commercial <span className="italic">boost&eacute;</span> &agrave; l'IA.</h2>
               <span className="sec-rotator" aria-label="Principes de travail">
                 <span className="sr-arrow" aria-hidden="true">&rarr;</span>
                 <span className="hr-frame">
@@ -2250,24 +2251,14 @@ function ParcoursSection() {
                   </span>
                   <span className="hr-word">
                     <span className="hr-strike">prompt-engineered</span>
-                    <span className="hr-keep">augment&eacute; par <span className="accent">Claude</span>.</span>
+                    <span className="hr-keep">context-engineered.</span>
                   </span>
                 </span>
               </span>
             </div>
           </div>
         </div>
-        <div className="why-grid">
-          <div className="reveal">
-            {d.lead.length > 0 && (
-              <p className="why-lead">
-                {d.lead.map((p, i) => p.italic ? <span key={i} className="italic">{p.t}</span> : <span key={i}>{p.t}</span>)}
-              </p>
-            )}
-            <p className="why-body">{d.body}</p>
-          </div>
-        </div>
-        <div className="tl reveal-stagger" style={{ marginTop: 72 }}>
+        <div className="tl reveal-stagger" style={{ marginTop: 48 }}>
           {d.timeline.map((e, i) => (
             <div key={i} className={"tl-item reveal" + (e.academic ? " is-academic" : "")}>
               <div className="tl-card">
