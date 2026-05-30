@@ -278,7 +278,7 @@
     gap: clamp(10px, 1.4vw, 22px);
     column-gap: clamp(14px, 1.6vw, 26px);
   }
-  .sec-title-row .sec-title { flex: 0 0 auto; width: max-content; }
+  .sec-title-row .sec-title { flex: 0 0 auto; width: max-content; font-size: clamp(27px, 3.06vw, 44px); }
   .sec-rotator {
     display: inline-flex;
     align-items: center;
@@ -1052,6 +1052,59 @@
     .exp.is-academic { margin: 0 -12px; padding: 18px 12px; }
   }
 
+  /* Timeline serpentin verticale — toutes les expériences visibles, cartes alternées */
+  .tl { position: relative; max-width: 1080px; margin: 0 auto; }
+  .tl::before {
+    content: ""; position: absolute; left: 50%; top: 10px; bottom: 10px; width: 2px;
+    background: var(--line-2); transform: translateX(-50%);
+  }
+  .tl-item { position: relative; width: 50%; box-sizing: border-box; padding: 0 30px; margin-bottom: 0; }
+  .tl-item:nth-child(odd) { left: 0; }
+  .tl-item:nth-child(even) { left: 50%; }
+  /* chevauchement vertical : la carte suivante remonte dans l'espace vide de la moitié opposée */
+  .tl-item + .tl-item { margin-top: -76px; }
+  .tl-item::after {
+    content: ""; position: absolute; top: 24px; width: 14px; height: 14px; border-radius: 50%;
+    background: var(--bg); border: 2px solid var(--line-2); z-index: 2;
+    transition: background .3s ease, border-color .3s ease, box-shadow .3s ease;
+  }
+  .tl-item:nth-child(odd)::after { right: -7px; }
+  .tl-item:nth-child(even)::after { left: -7px; }
+  .tl-card {
+    background: rgba(11, 20, 38, 0.025); border: 1px solid var(--line); border-radius: 14px; padding: 18px 20px;
+    transition: transform .35s cubic-bezier(.2, .7, .2, 1), box-shadow .35s ease, border-color .3s ease;
+  }
+  .tl-head { display: flex; align-items: center; gap: 13px; }
+  .tl-logo {
+    width: 38px; height: 38px; object-fit: contain; flex: 0 0 auto;
+    filter: grayscale(1) opacity(0.45); transition: filter .35s cubic-bezier(.2, .7, .2, 1);
+  }
+  .tl-role { font-size: 17px; font-weight: 600; letter-spacing: -0.01em; line-height: 1.25; }
+  .tl-co { color: var(--ink-55); font-size: 13px; margin-top: 2px; }
+  .tl-date { font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--ink-55); letter-spacing: 0.04em; margin-top: 13px; }
+  .tl-bullets { list-style: none; margin: 10px 0 0; padding: 0; }
+  .tl-bullets li {
+    position: relative; padding-left: 16px; color: var(--ink-70);
+    font-size: 13.5px; line-height: 1.5; margin-top: 6px;
+  }
+  .tl-bullets li::before {
+    content: ""; position: absolute; left: 2px; top: 8px; width: 5px; height: 5px;
+    border-radius: 50%; background: var(--accent-mid);
+  }
+  .tl-item.is-academic .tl-bullets li::before { background: var(--academic); }
+  .tl-item:hover .tl-card { transform: translateY(-3px); border-color: var(--line-2); box-shadow: 0 12px 28px rgba(11, 20, 38, 0.08); }
+  .tl-item:hover .tl-logo { filter: grayscale(0) opacity(1); }
+  .tl-item:hover::after { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 0 5px var(--accent-soft); }
+  .tl-item.is-academic:hover::after { background: var(--academic); border-color: var(--academic); box-shadow: 0 0 0 5px var(--academic-soft); }
+  .tl-item.is-academic .tl-card { background: var(--academic-soft); }
+  @media (max-width: 760px) {
+    .tl::before { left: 21px; }
+    .tl-item, .tl-item:nth-child(odd), .tl-item:nth-child(even) { width: 100%; left: 0; padding: 0 0 0 48px; }
+    .tl-item + .tl-item { margin-top: 18px; }
+    .tl-item:nth-child(odd)::after, .tl-item:nth-child(even)::after { left: 14px; right: auto; }
+  }
+  @media (prefers-reduced-motion: reduce) { .tl-card, .tl-logo, .tl-item::after { transition: none; } }
+
   /* Gallery */
   .gallery {
     position: relative;
@@ -1550,13 +1603,13 @@ window.PORTFOLIO = {
       { n: "03", t: "Pédagogue",   b: "Référent IA en interne chez OVHcloud, ateliers IA en entreprise. J’adapte mon discours à l’audience — du COMEX aux équipes opérationnelles — avec un format formation déjà éprouvé." },
     ],
     timeline: [
-      { date: "janv. 2025 — auj.", role: "Account Manager · Financial Services", co: "OVHcloud", logo: "ovhcloud", body: "Portefeuille >2 M€ ARR sur 10 grands comptes FSI (paiement, assurance). Vente cloud + IA + infra blockchain articulée sur la souveraineté européenne et la conformité (DORA, MiCA, SecNumCloud). Représentant OVHcloud FSI : VivaTech, FIC, Paris Blockchain Week, EthCC, France Quantum." },
-      { date: "2024 — auj.", role: "Co-fondateur", co: "Agence alAin", logo: "alain", body: "Automatisation des process en entreprise pour des PME : gains de productivité et de chiffre d’affaires. Stack n8n, Claude API, MCP." },
-      { date: "avr. — août 2024", role: "Stagiaire VC Impact", co: "BNP Paribas BCEF — Act For Impact", logo: "bnpparibas", body: "Suivi et évaluation de projets d’investissement dans des startups (impact), gestion de partenaires, communication du Label." },
-      { date: "sept. 2023 — 2025", role: "Responsable financier", co: "ETNA EDHEC Télévision", logo: "etna", body: "Pilotage de 100 k€ de chiffre d’affaires annuel. Implémentation Sage (conformité e-invoicing)." },
-      { date: "2023 — 2026", role: "Master in Management · Grande École Program", co: "EDHEC Business School", logo: "edhec", academic: true, body: "Top 4 mondial Financial Times 2024. Spécialisation Accounting, Finance, Data Analysis, Entrepreneurship." },
-      { date: "2021 — 2023", role: "Classes Préparatoires D2 · économie-gestion", co: "Lycée Marie Curie · Versailles", logo: "mariecurie", academic: true, body: "Prépa éco-gestion (voie D2, ENS Rennes). Économie, mathématiques, management, langues. Baccalauréat général." },
-      { date: "2 ans 5 mois", role: "Directeur de camp · BAFA", co: "Scouts et Guides de France (SGDF)", logo: "sgdf", body: "Encadrement et responsabilité d’un camp de jeunes : pilotage d’une équipe de chefs, logistique, budget et sécurité sur le terrain. L’école concrète du leadership et de la décision sous contrainte." },
+      { date: "janv. 2025 — auj.", role: "Account Manager · Financial Services", co: "OVHcloud", logo: "ovhcloud", bullets: ["Portefeuille >2 M€ ARR sur 10 grands comptes FSI (paiement, assurance)", "Vente cloud + IA + infra blockchain, axée souveraineté européenne et conformité (DORA, MiCA, SecNumCloud)", "Interlocuteur des RSSI, CTO et directions achats sur des cycles de décision longs", "Représentant OVHcloud FSI : VivaTech, FIC, Paris Blockchain Week, EthCC, France Quantum"] },
+      { date: "2025 — auj.", role: "Co-fondateur", co: "Agence alAin", logo: "alain", bullets: ["Agence d’automatisation IA pour PME, fondée et pilotée", "Conception et déploiement de workflows sur-mesure supprimant les tâches répétitives", "Gains concrets de productivité et de chiffre d’affaires pour les clients", "Stack : n8n, Claude API, MCP"] },
+      { date: "avr. — août 2024", role: "Stagiaire VC Impact", co: "BNP Paribas BCEF — Act For Impact", logo: "bnpparibas", bullets: ["Suivi et évaluation de projets d’investissement dans des startups à impact", "Analyse de dossiers et gestion de la relation partenaires", "Structuration de la communication autour du Label Act For Impact"] },
+      { date: "sept. 2023 — 2025", role: "Responsable financier", co: "ETNA EDHEC Télévision", logo: "etna", bullets: ["Pilotage du budget et de 100 k€ de chiffre d’affaires annuel de la chaîne étudiante", "Implémentation de l’outil de gestion Sage", "Mise en conformité de la facturation (e-invoicing)"] },
+      { date: "2023 — 2026", role: "Master in Management · Grande École Program", co: "EDHEC Business School", logo: "edhec", academic: true, bullets: ["Grande École de management, Top 4 mondial (Financial Times 2024)", "Spécialisation Accounting, Finance, Data Analysis & Entrepreneurship", "Orientation forte vers la data et la création d’entreprise"] },
+      { date: "2021 — 2023", role: "Classes Préparatoires D2 · économie-gestion", co: "Lycée Marie Curie · Versailles", logo: "mariecurie", academic: true, bullets: ["Prépa éco-gestion voie D2 (préparation ENS Rennes)", "Économie, mathématiques appliquées, management, langues", "Deux années de méthode et de rythme de travail intensif", "Baccalauréat général"] },
+      { date: "3 ans", role: "Directeur de camp · BAFA", co: "Scouts et Guides de France (SGDF)", logo: "sgdf", bullets: ["Encadrement d’un camp de jeunes sur plusieurs étés", "Pilotage d’une équipe de chefs, logistique, budget et sécurité sur le terrain", "L’école concrète du leadership et de la décision sous contrainte"] },
     ],
   },
 
@@ -2183,7 +2236,7 @@ function ParcoursSection() {
           <div style={{ flex: 1, minWidth: 0 }}>
             <div className="sec-kicker">Parcours</div>
             <div className="sec-title-row">
-              <h2 className="sec-title">Le commercial qui <span className="italic">code</span>.</h2>
+              <h2 className="sec-title">Le commercial <span className="italic">boost&eacute;</span> &agrave; l'IA.</h2>
               <span className="sec-rotator" aria-label="Principes de travail">
                 <span className="sr-arrow" aria-hidden="true">&rarr;</span>
                 <span className="hr-frame">
@@ -2197,47 +2250,37 @@ function ParcoursSection() {
                   </span>
                   <span className="hr-word">
                     <span className="hr-strike">prompt-engineered</span>
-                    <span className="hr-keep">augment&eacute; par <span className="accent">Claude</span>.</span>
+                    <span className="hr-keep">context-engineered.</span>
                   </span>
                 </span>
               </span>
             </div>
           </div>
         </div>
-        <div className="why-grid">
-          <div className="reveal">
-            {d.lead.length > 0 && (
-              <p className="why-lead">
-                {d.lead.map((p, i) => p.italic ? <span key={i} className="italic">{p.t}</span> : <span key={i}>{p.t}</span>)}
-              </p>
-            )}
-            <p className="why-body">{d.body}</p>
-          </div>
-        </div>
-        <div className="exp-list reveal-stagger" style={{ marginTop: 72 }}>
+        <div className="tl reveal-stagger" style={{ marginTop: 48 }}>
           {d.timeline.map((e, i) => (
-            <div key={i} className={"exp" + (e.academic ? " is-academic" : "")}>
-              <div className="exp-date">{e.date}</div>
-              <div className="exp-id">
-                {e.logo && (
-                  <span className="exp-logo-chip">
-                    <img className="exp-logo" src={"assets/logos/" + e.logo + ".svg"} alt={e.co} loading="lazy" decoding="async"
-                      onError={(ev) => {
-                        const t = ev.currentTarget;
-                        const exts = ["png", "jpg", "jpeg", "webp"];
-                        const n = +(t.dataset.try || 0);
-                        if (n < exts.length) { t.dataset.try = n + 1; t.src = "assets/logos/" + e.logo + "." + exts[n]; }
-                        else { t.closest(".exp-logo-chip").style.display = "none"; }
-                      }} />
-                  </span>
-                )}
-                <div>
-                  <div className="exp-role">{e.role}</div>
-                  <div className="exp-co">{e.co}</div>
-                  {e.academic && <span className="exp-tag">Académique</span>}
+            <div key={i} className={"tl-item reveal" + (e.academic ? " is-academic" : "")}>
+              <div className="tl-card">
+                <div className="tl-head">
+                  {e.logo && <img className="tl-logo" src={"assets/logos/" + e.logo + ".svg"} alt={e.co} loading="lazy" decoding="async"
+                    onError={(ev) => {
+                      const t = ev.currentTarget;
+                      const exts = ["png", "jpg", "jpeg", "webp"];
+                      const n = +(t.dataset.try || 0);
+                      if (n < exts.length) { t.dataset.try = n + 1; t.src = "assets/logos/" + e.logo + "." + exts[n]; }
+                      else { t.style.visibility = "hidden"; }
+                    }} />}
+                  <div>
+                    <div className="tl-role">{e.role}</div>
+                    <div className="tl-co">{e.co}</div>
+                  </div>
                 </div>
+                <div className="tl-date">{e.date}</div>
+                <ul className="tl-bullets">
+                  {(e.bullets || []).map((b, bi) => <li key={bi}>{b}</li>)}
+                </ul>
+                {e.academic && <span className="exp-tag" style={{ marginTop: 10 }}>Académique</span>}
               </div>
-              <div className="exp-body">{e.body}</div>
             </div>
           ))}
         </div>
