@@ -1105,6 +1105,33 @@
   }
   @media (prefers-reduced-motion: reduce) { .tl-card, .tl-logo, .tl-item::after { transition: none; } }
 
+  /* Frise temporelle proportionnelle */
+  .tlf { position: relative; max-width: 730px; margin: 0 auto; }
+  .tlf-axis { position: absolute; left: 70px; top: 0; bottom: 12px; width: 2px; background: var(--line-2); }
+  .tlf-tick { position: absolute; left: 0; width: 70px; height: 0; }
+  .tlf-tick::after { content: ""; position: absolute; right: 0; top: 0; width: 9px; height: 2px; background: var(--line-2); }
+  .tlf-year { position: absolute; right: 16px; top: -8px; font-family: "JetBrains Mono", monospace; font-size: 11px; color: var(--ink-55); letter-spacing: 0.04em; }
+  .tlf-seg {
+    position: absolute; left: 67px; width: 8px; border-radius: 6px;
+    background: linear-gradient(var(--accent), var(--accent-2)); box-shadow: 0 0 0 3px var(--bg);
+  }
+  .tlf-seg.is-academic { background: var(--academic); }
+  .tlf-links { position: absolute; left: 0; top: 0; pointer-events: none; overflow: visible; }
+  .tlf-link { stroke: var(--accent-mid); stroke-width: 1.5; stroke-dasharray: 2 4; fill: none; }
+  .tlf-link.is-academic { stroke: var(--academic); }
+  .tlf-card {
+    position: absolute; left: 150px; width: 560px; box-sizing: border-box;
+    transition: transform .3s cubic-bezier(.2, .7, .2, 1), box-shadow .3s ease, border-color .3s ease;
+  }
+  .tlf-card:hover { transform: translateY(-3px); border-color: var(--line-2); box-shadow: 0 12px 28px rgba(11, 20, 38, 0.08); z-index: 3; }
+  .tlf-card:hover .tl-logo { filter: grayscale(0) opacity(1); }
+  /* Frise — repli mobile : liste verticale simple */
+  .tl-narrow { display: flex; flex-direction: column; gap: 16px; }
+  .tl-narrow-card { border-left: 3px solid var(--accent); }
+  .tl-narrow-card.is-academic { border-left-color: var(--academic); }
+  .tl-narrow-card:hover .tl-logo { filter: grayscale(0) opacity(1); }
+  @media (prefers-reduced-motion: reduce) { .tlf-card { transition: none; } }
+
   /* Gallery */
   .gallery {
     position: relative;
@@ -2225,6 +2252,108 @@ function SectionHead({ idx, kicker, title }) {
   );
 }
 
+// Frise chronologique : axe temporel proportionnel + segments de durée réelle + connecteurs pointillés vers les cartes
+function TimelineFrise({ items }) {
+  const NOW = 2026.42, TOP = 2026.5, BOT = 2021.0, SPAN = TOP - BOT;
+  // Périodes (années décimales). end null = en cours. sgdf approximatif (à confirmer).
+  const PERIOD = {
+    ovhcloud: [2025.0, null], alain: [2025.0, null], bnpparibas: [2024.30, 2024.66],
+    etna: [2023.70, 2025.0], edhec: [2023.0, 2026.0], mariecurie: [2021.0, 2023.0],
+    sgdf: [2021.0, 2024.0],
+  };
+  const per = (e) => { const p = PERIOD[e.logo] || [BOT, null]; return [p[0], p[1] == null ? NOW : p[1]]; };
+  const estH = (e) => 104 + (e.bullets ? e.bullets.length : 3) * 23;
+
+  const cardRefs = useRef([]);
+  const [heights, setHeights] = useState(items.map(estH));
+  const [narrow, setNarrow] = useState(typeof window !== "undefined" && window.innerWidth < 820);
+
+  useEffect(() => {
+    const measure = () => {
+      setNarrow(window.innerWidth < 820);
+      const hs = items.map((e, i) => cardRefs.current[i] ? cardRefs.current[i].offsetHeight : estH(e));
+      setHeights(hs);
+    };
+    measure();
+    window.addEventListener("resize", measure);
+    return () => window.removeEventListener("resize", measure);
+  }, []);
+
+  // Empilement chronologique des cartes (ordre des données = plus récent en haut)
+  const GAP = 20;
+  let y = 0;
+  const cards = items.map((e, i) => { const h = heights[i] || estH(e); const top = y; y += h + GAP; return { top, h, center: top + h / 2 }; });
+  const H = Math.max(y - GAP, 360);
+  const yAxis = (yr) => (TOP - yr) / SPAN * H;
+  const years = [2021, 2022, 2023, 2024, 2025, 2026];
+
+  const renderCardInner = (e) => (
+    <React.Fragment>
+      <div className="tl-head">
+        {e.logo && <img className="tl-logo" src={"assets/logos/" + e.logo + ".svg"} alt={e.co} loading="lazy" decoding="async"
+          onError={(ev) => {
+            const t = ev.currentTarget;
+            const exts = ["png", "jpg", "jpeg", "webp"];
+            const n = +(t.dataset.try || 0);
+            if (n < exts.length) { t.dataset.try = n + 1; t.src = "assets/logos/" + e.logo + "." + exts[n]; }
+            else { t.style.visibility = "hidden"; }
+          }} />}
+        <div>
+          <div className="tl-role">{e.role}</div>
+          <div className="tl-co">{e.co}</div>
+        </div>
+      </div>
+      <div className="tl-date">{e.date}</div>
+      <ul className="tl-bullets">
+        {(e.bullets || []).map((b, bi) => <li key={bi}>{b}</li>)}
+      </ul>
+      {e.academic && <span className="exp-tag" style={{ marginTop: 10 }}>Académique</span>}
+    </React.Fragment>
+  );
+
+  if (narrow) {
+    return (
+      <div className="tl-narrow reveal-stagger" style={{ marginTop: 56 }}>
+        {items.map((e, i) => (
+          <div key={i} className={"tl-card tl-narrow-card reveal" + (e.academic ? " is-academic" : "")}>
+            {renderCardInner(e)}
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  return (
+    <div className="tlf reveal" style={{ marginTop: 64, height: H + 12 }}>
+      {years.map((yr) => (
+        <div key={yr} className="tlf-tick" style={{ top: yAxis(yr) }}>
+          <span className="tlf-year">{yr}</span>
+        </div>
+      ))}
+      <div className="tlf-axis" />
+      {items.map((e, i) => {
+        const [s, en] = per(e);
+        const top = yAxis(en), bot = yAxis(s);
+        return <div key={i} className={"tlf-seg" + (e.academic ? " is-academic" : "")} style={{ top, height: Math.max(bot - top, 7) }} />;
+      })}
+      <svg className="tlf-links" width="100%" height={H + 12} preserveAspectRatio="none">
+        {items.map((e, i) => {
+          const [s, en] = per(e);
+          const segMid = (yAxis(en) + yAxis(s)) / 2;
+          return <line key={i} x1="70" y1={segMid} x2="150" y2={cards[i].center}
+            className={"tlf-link" + (e.academic ? " is-academic" : "")} />;
+        })}
+      </svg>
+      {items.map((e, i) => (
+        <div key={i} ref={(el) => cardRefs.current[i] = el}
+          className={"tl-card tlf-card" + (e.academic ? " is-academic" : "")} style={{ top: cards[i].top }}>
+          {renderCardInner(e)}
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function ParcoursSection() {
   const ref = useReveal();
   const d = window.PORTFOLIO.parcours;
@@ -2267,33 +2396,7 @@ function ParcoursSection() {
             <p className="why-body">{d.body}</p>
           </div>
         </div>
-        <div className="tl reveal-stagger" style={{ marginTop: 72 }}>
-          {d.timeline.map((e, i) => (
-            <div key={i} className={"tl-item reveal" + (e.academic ? " is-academic" : "")}>
-              <div className="tl-card">
-                <div className="tl-head">
-                  {e.logo && <img className="tl-logo" src={"assets/logos/" + e.logo + ".svg"} alt={e.co} loading="lazy" decoding="async"
-                    onError={(ev) => {
-                      const t = ev.currentTarget;
-                      const exts = ["png", "jpg", "jpeg", "webp"];
-                      const n = +(t.dataset.try || 0);
-                      if (n < exts.length) { t.dataset.try = n + 1; t.src = "assets/logos/" + e.logo + "." + exts[n]; }
-                      else { t.style.visibility = "hidden"; }
-                    }} />}
-                  <div>
-                    <div className="tl-role">{e.role}</div>
-                    <div className="tl-co">{e.co}</div>
-                  </div>
-                </div>
-                <div className="tl-date">{e.date}</div>
-                <ul className="tl-bullets">
-                  {(e.bullets || []).map((b, bi) => <li key={bi}>{b}</li>)}
-                </ul>
-                {e.academic && <span className="exp-tag" style={{ marginTop: 10 }}>Académique</span>}
-              </div>
-            </div>
-          ))}
-        </div>
+        <TimelineFrise items={d.timeline} />
       </div>
     </section>
   );
