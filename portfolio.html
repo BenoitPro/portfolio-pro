@@ -523,24 +523,25 @@
   }
   .concept-link {
     appearance: none;
-    background: var(--accent-soft);
-    border: 1px solid rgba(0, 102, 255, 0.18);
+    background: none;
+    border: none;
     color: var(--accent);
     font: inherit;
     font-weight: 500;
-    padding: 1px 7px;
-    border-radius: 6px;
+    padding: 0;
     cursor: pointer;
-    transition: background 0.15s, border-color 0.15s, color 0.15s, transform 0.15s;
+    text-decoration: underline;
+    text-decoration-color: var(--accent-mid);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+    transition: color 0.15s, text-decoration-color 0.15s;
     white-space: nowrap;
   }
-  .concept-link::before { content: "→ "; opacity: 0.7; }
   .concept-link:hover {
-    background: rgba(0, 102, 255, 0.14);
-    border-color: var(--accent-mid);
     color: var(--accent-2);
+    text-decoration-color: var(--accent-2);
   }
-  .concept-link:active { transform: translateY(1px); }
+  .concept-link:active { opacity: 0.7; }
   .concept-proofs-label {
     font-family: "JetBrains Mono", monospace;
     font-size: 10px;
@@ -1547,13 +1548,22 @@ window.PORTFOLIO = {
       concept: { badge: "Expertise", title: "Réglementation FSI", caption: "DORA · MiCA · SecNumCloud · DSP3 · ACPR",
         body: "Le terrain réglementaire est mon angle de vente sur les comptes Finance : je traduis la contrainte en architecture. DORA (UE 2022/2554, en application depuis janv. 2025) qualifie le cloud de prestataire ICT critique (TPICT) → clauses contractuelles art. 30, droits d'audit régulateur, registre TPICT. MiCA encadre les PSCA et stablecoins (ART/EMT), DSP3/PSD3 les paiements, et SecNumCloud porte la souveraineté. Côté français, l'ACPR octroie les agréments (EME, PSCA) et contrôle l'application de DORA. Je relie tout ça au [→Cloud souverain] et à la [→Vente B2B Enterprise].",
         proofs: ["DORA présent dans la quasi-totalité des deals FSI actifs — levier contractuel universel (clauses art. 30, registre TPICT, droits d'audit)", "RFP 80+ pages traitées sous contrainte SecNumCloud / DORA chez [→OVHcloud]", "Tandem avec les équipes risk/compliance des candidats à l'agrément ACPR (EME, PSCA)", "Vulgarisation des contraintes MiCA / DSP3 en décisions business pour RSSI, DPO et DAF"] } },
-    { id: "souverainete",      label: "Cloud souverain",       section: "parcours", kind: "branch", desc: "Infra européenne certifiée. Sujet clé pour les clients FSI sous pression réglementaire." },
-    { id: "ia-operationnelle", label: "IA opérationnelle",     kind: "branch", desc: "Enrichissement CRM, automatisation d'outreach, account mapping, agents vocaux, systèmes d'agents." },
-    { id: "finance-blockchain",label: "Finance & blockchain",  kind: "branch", desc: "Stablecoins, paiements, crypto institutionnel, DeFi, blockchain publique, MiCA." },
+    { id: "souverainete",      label: "Cloud souverain",       section: "parcours", kind: "branch", desc: "Expertise marché des solutions souveraines FR/EU : acteurs, réglementations, benchmarks.",
+      concept: { badge: "Expertise", title: "Cloud souverain", caption: "Solutions FR/EU · benchmarks · gap analysis",
+        body: "Mon angle, ce n'est pas l'offre OVHcloud (déjà dans le nœud [→OVHcloud]) mais une expertise du marché des solutions souveraines françaises et européennes. Plusieurs benchmarks menés chez [→OVHcloud] m'ont donné une vision fine des acteurs, des réglementations, des gap analysis face aux hyperscalers, des lois extraterritoriales (Cloud Act, FISA) et des go-to-market associés.",
+        proofs: ["Benchmarks concurrentiels du marché cloud souverain FR/EU", "Lecture des gaps réglementaires face aux hyperscalers (lois extraterritoriales)", "Vision des acteurs, certifications et GTM souverains", "Sujet clé pour les clients FSI sous pression [→Réglementation]"] } },
+    { id: "ia-operationnelle", label: "IA opérationnelle",     kind: "branch", desc: "Initiatives IA chez OVH, workflows PME via alAin, automatisations perso.",
+      concept: { badge: "Expertise", title: "IA opérationnelle", caption: "Initiatives OVH · workflows PME · automatisation perso",
+        body: "L'IA qui produit, pas la démo. Chez [→OVHcloud], j'ai porté des initiatives internes pour booster la productivité des sales avec l'IA. Avec l'[→Agence alAin], j'ai livré des PME — hôtels, startups, indépendants — des workflows qui leur font gagner du temps : pour un hôtel, automatiser une tâche répétitive et optimiser le taux d'occupation en closant du corporate sur les créneaux à faible fréquentation. À titre perso, j'automatise une partie de mon GTM OVH et ma veille concurrentielle, techno et réglementaire.",
+        proofs: ["Initiatives IA internes chez [→OVHcloud] pour la productivité des sales", "Workflows livrés via l'[→Agence alAin] : hôtels, startups, indépendants", "Automatisation perso : GTM OVH + veille concurrentielle / techno / réglementaire"] } },
+    { id: "finance-blockchain",label: "Finance & blockchain",  kind: "branch", desc: "Stablecoins, paiements, crypto institutionnel, écosystème blockchain FR.",
+      concept: { badge: "Expertise", title: "Finance & blockchain", caption: "Stablecoins · paiement · écosystème FR",
+        body: "Un sujet qui me passionne depuis plusieurs années. Mon mémoire EDHEC porte sur les stablecoins, prolongement concret de ma spécialisation finance. J'ai déployé des agents d'arbitrage automatiques et je suis présent sur les événements de l'écosystème finance-blockchain français. Chez [→OVHcloud], j'adresse des clients fintech et paiement — dont certains portent des initiatives stablecoins — face aux nouveaux enjeux de la finance.",
+        proofs: ["Mémoire EDHEC sur les stablecoins — mise en œuvre de ma spécialisation finance", "Agents d'arbitrage automatiques déployés", "Présence terrain : événements finance-blockchain FR (EthCC, Paris Blockchain Week)", "Clients fintech / paiement chez [→OVHcloud], dont initiatives stablecoins"] } },
     { id: "approche-client",   label: "Approche client",       kind: "concept",
       concept: { badge: "Signature", title: "Approche client", caption: "Traduction besoin métier → architecture → pricing",
         body: "L'angle rare : partir du problème métier pour construire une architecture, puis traduire en pricing. Pas l'inverse. Applicable côté vente cloud ([→OVHcloud]) comme côté delivery IA ([→Agence alAin]).",
-        proofs: [] } },
+        proofs: ["Deals A→Z avec des acteurs de la finance tier 1 : RFP, cycles longs, interlocuteurs high-level", "Orchestration des parties prenantes : légal, finance, technique, partenaires", "Stratégies commerciales qui ont porté leurs fruits, du deal court/moyen terme au gros projet long", "Approche petits comptes en parallèle via l'[→Agence alAin] : PME, indépendants, formation"] } },
     { id: "side-hustle",       label: "Side Hustle",           kind: "hub",
       concept: { badge: "Expérience", title: "Side Hustle", caption: "Ce que je construis en dehors d'OVHcloud",
         body: "Co-fondateur avec Raph et Louis de [→Agence alAin]. Mémoire EDHEC sur les stablecoins (cf. [→Finance & blockchain]).\n\nOutils construits pour moi-même : Second cerveau (~930 notes personnelles interconnectées formant un réseau de connaissances activable en minutes), Ext. Chrome anti-Shadow AI (open source). Terrain Web3 : EthCC, Paris Blockchain Week, side events, [→Hackathons].",
@@ -1565,7 +1575,7 @@ window.PORTFOLIO = {
     { id: "hackathons",        label: "Hackathons",            kind: "leaf",
       concept: { badge: "Preuve", title: "Hackathons", caption: "2 victoires · IA & Web3",
         body: "Hackathons comme terrain d'apprentissage accéléré : 24–48h pour aller de zéro à un prototype présentable. Chaque hackathon est un stress-test de [→Approche client] appliqué à la vitesse.",
-        proofs: ["🏆 Hackathon Aleo (mai 2025) — Legacium · Privacy-preserving inheritance protocol sur zk-SNARKs (Aleo/Arcium). Victoire catégorie Privacy.", "🏆 AI Fintech (avril 2026) — Victoire. Système IA appliqué à la finance.", "Hackathon AI Voice (fév. 2026) — Mark · Gestionnaire vocal de messages pro (Gmail/LinkedIn/Instagram) via OpenAI GPT-4o + Speechmatics.", "Hackathon LLM — SiteManager · Agent LLM de gestion de site e-commerce.", "Présence terrain : EthCC, Paris Blockchain Week, side events Web3."] } },
+        proofs: ["🏆 Hackathon Aleo (mai 2025) — zLegacy · Privacy-preserving inheritance protocol sur zk-SNARKs (Aleo/Arcium). Victoire.", "🏆 AI Fintech (avril 2026) — Victoire. Système IA appliqué à la finance.", "Hackathon AI Voice (fév. 2026) — Mark · Gestionnaire vocal de messages pro (Gmail/LinkedIn/Instagram) via OpenAI GPT-4o + Speechmatics.", "Hackathon LLM — SiteManager · Agent LLM de gestion de site e-commerce.", "Présence terrain : EthCC, Paris Blockchain Week, side events Web3."] } },
     { id: "vente-b2b",         label: "Vente B2B Enterprise",  kind: "concept",
       concept: { badge: "Signature", title: "Vente B2B Enterprise", caption: "GTM · cycles complexes · RFP",
         body: "Cycles 6–18 mois, 8–15 interlocuteurs simultanés, BANT/MEDDIC, négociation achats, escalade C-level. RFP 80+ pages sous contrainte [→Réglementation]. Segmentation par persona (RSSI, CTO, DPO) et par contrainte (PSP, assureurs, blockchain institutionnels). Orchestration multi-équipes : pre-sales, légal, finance, technique, intégrateurs partenaires.",
@@ -1616,7 +1626,7 @@ window.PORTFOLIO = {
   sideHustle: [
     { n: "01", name: "Agence alAin",               italic: "alAin",    tag: "automatisation IA / 2024→", desc: "Automatisation des process en entreprise pour des PME : gains de productivité et de chiffre d’affaires. Stack n8n, Claude API, MCP.", stats: [{k:"3",v:"clients"}] },
     { n: "02", name: "Dashboard on-chain",          italic: "on-chain", tag: "data / 2025",               desc: "Parts de marché OVH sur les blockchains publiques majeures via mapping Nodes/ASN et enrichissement.", stats: [] },
-    { n: "03", name: "Second cerveau",              italic: "cerveau",  tag: "notion × claude / 2023→",   desc: "Système personnel piloté par Claude. Capture, retrieval, restitution. Augmente la productivité au quotidien.", stats: [] },
+    { n: "03", name: "Second cerveau",              italic: "cerveau",  tag: "notion × claude / 2023→",   desc: "Système personnel piloté par Claude. Capture, recherche, restitution. Augmente la productivité au quotidien.", stats: [] },
     { n: "04", name: "Ext. Chrome anti-Shadow AI",  italic: "Shadow",   tag: "open source / 2024",         desc: "Extension Chrome open source pour détecter et limiter le Shadow AI en entreprise.", stats: [] },
     { n: "05", name: "Hackathons IA & Web3",        italic: "Hack",     tag: "compétitions",               desc: "2 victoires : Privacy blockchain Aleo (mai 2025) et AI fintech (avril 2026). Montée en compétences techniques.", stats: [{k:"2",v:"victoires"}] },
   ],
