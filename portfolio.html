@@ -1502,6 +1502,10 @@
 
   /* Mobile hero */
   @media (max-width: 768px) {
+    html, body { overflow-x: hidden; }
+    .sec-title-row { flex-direction: column; align-items: flex-start; }
+    .sec-title-row .sec-title { width: auto; max-width: 100%; white-space: normal; word-break: normal; }
+    .sec-rotator { flex-basis: 100%; }
     .hero-meta { position: relative; top: 0; padding: 92px 20px 0; max-width: 100%; }
     .hero { min-height: auto; }
     .graph-stage { position: relative; left: auto; right: auto; top: auto; bottom: auto; height: 380px; margin-top: 12px; }
