@@ -1970,6 +1970,7 @@ function KnowledgeGraph({ activeSection, onNodeClick }) {
     const tmpVec = new THREE.Vector3();
     const tmpScale = new THREE.Vector3();
     let raf = 0;
+    const isMobile = window.matchMedia("(max-width: 768px)").matches;
     const animate = () => {
       const now = performance.now();
       const idleMs = now - lastInteract;
@@ -1997,8 +1998,13 @@ function KnowledgeGraph({ activeSection, onNodeClick }) {
           el.style.transform = "translate(-50%, calc(-100% - 16px))";
           el.style.left = sx + "px";
           el.style.top = sy + "px";
-          el.style.opacity = String(isConcept ? 0.35 + depthAlpha * 0.65 : 0.22 + depthAlpha * 0.78);
-          el.style.pointerEvents = depthAlpha > 0.30 ? "auto" : "none";
+          let baseOp = isConcept ? 0.35 + depthAlpha * 0.65 : 0.22 + depthAlpha * 0.78;
+          if (isMobile) {
+            const reveal = (m.userData.kind === "center") || isActive || isHover || isThinking;
+            baseOp = reveal ? Math.max(0.85, baseOp) : 0;
+          }
+          el.style.opacity = String(baseOp);
+          el.style.pointerEvents = (isMobile ? baseOp > 0.05 : depthAlpha > 0.30) ? "auto" : "none";
           el.classList.toggle("is-active", isActive);
           el.classList.toggle("is-hover", isHover);
           el.classList.toggle("is-thinking", isThinking && !isHover);
