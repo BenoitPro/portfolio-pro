@@ -11,7 +11,7 @@ Le portfolio n'est pas exploitable sur téléphone. Audit réalisé dans le prev
 |---|---|---|
 | Hero | cassé | Ordre photo → brain → pitch (le message arrive en dernier). Photo en plein cadre tronquée. Brain 3D compressé sur 380px → labels qui se chevauchent, illisible |
 | Parcours | déborde | Le titre déborde à droite → scroll horizontal (`scrollWidth` 415 vs `clientWidth` 375). Cards timeline OK |
-| Galerie | très cassé | Galerie « éparpillée » : `.gcard` positionnées en absolu jusqu'à x≈1035px → débordent des deux côtés, texte coupé. Cause principale du scroll horizontal |
+| Galerie | OK (corrigé) | PAS cassée : c'est un **marquee** (carrousel horizontal auto-défilant) dans un conteneur `overflow:hidden` masqué sur les bords. Les `.gcard` qui semblent « déborder » sont clippées par le parent → ne causent PAS de scroll horizontal. Juste un peu rapide/chargé sur mobile |
 | Contact | OK | Layout centré lisible |
 | Chat widget | cassé | Panneau plus large que l'écran : croix, bouton d'envoi et disclaimer coupés |
 | Topbar | mineur | Marque + « Paris » se chevauchent légèrement |
@@ -40,7 +40,7 @@ Principe : layout *mobile-first* empilé, pleine largeur, **zéro scroll horizon
 - Cards timeline conservées.
 
 ### 3. Galerie
-- Abandon de l'éparpillement (positions absolues) sur mobile → grille 2 colonnes verticale. Tags conservés.
+- On garde le marquee (il fonctionne). Ajustements mobile : ralentir le défilement et pause au tap/touch. Pas de refonte en grille.
 
 ### 4. Contact
 - Ajustement largeur des liens sociaux (linkedin/github) pour éviter tout débordement.
