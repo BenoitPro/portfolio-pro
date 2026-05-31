@@ -2000,7 +2000,7 @@ function KnowledgeGraph({ activeSection, onNodeClick }) {
           el.style.top = sy + "px";
           let baseOp = isConcept ? 0.35 + depthAlpha * 0.65 : 0.22 + depthAlpha * 0.78;
           if (isMobile) {
-            const reveal = (m.userData.kind === "center") || isActive || isHover || isThinking;
+            const reveal = (m.userData.kind === "center") || (m.userData.kind === "hub") || isActive || isHover || isThinking;
             baseOp = reveal ? Math.max(0.85, baseOp) : 0;
           }
           el.style.opacity = String(baseOp);
