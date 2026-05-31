@@ -1511,7 +1511,6 @@
     html, body { overflow-x: hidden; }
     .sec-title-row { flex-direction: column; align-items: flex-start; }
     .sec-title-row .sec-title { width: auto; max-width: 100%; white-space: normal; word-break: normal; }
-    .sec-rotator { flex-basis: 100%; }
     .hero { min-height: auto; display: flex; flex-direction: column; }
     .hero-meta { position: relative; top: 0; left: 0; order: 1; padding: 92px 20px 0; max-width: 100%; }
     .hero-selfie {
@@ -2006,7 +2005,7 @@ function KnowledgeGraph({ activeSection, onNodeClick }) {
           el.style.top = sy + "px";
           let baseOp = isConcept ? 0.35 + depthAlpha * 0.65 : 0.22 + depthAlpha * 0.78;
           if (isMobile) {
-            const reveal = (m.userData.kind === "center") || (m.userData.kind === "hub") || isActive || isHover || isThinking;
+            const reveal = (m.userData.kind === "hub") || isActive || isHover || isThinking;
             baseOp = reveal ? Math.max(0.85, baseOp) : 0;
           }
           el.style.opacity = String(baseOp);
