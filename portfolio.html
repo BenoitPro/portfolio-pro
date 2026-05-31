@@ -1235,6 +1235,12 @@
     .marquee + .marquee { margin-top: 16px; }
     .marquee-track { gap: 16px; }
   }
+  @media (max-width: 768px) {
+    .marquee-track { animation-duration: 120s; }
+    .marquee.reverse .marquee-track { animation-duration: 140s; }
+    .marquee:active .marquee-track,
+    .marquee.reverse:active .marquee-track { animation-play-state: paused; }
+  }
 
   /* Contact */
   .contact {
