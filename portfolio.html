@@ -1514,13 +1514,13 @@
     .hero { min-height: 100vh; display: block; position: relative; overflow: hidden; }
     .hero-meta { position: absolute; top: 84px; left: 0; right: 0; padding: 0 20px; max-width: 100%; z-index: 3; }
     .graph-stage {
-      position: absolute; top: 40%; bottom: 16%;
-      left: 32%; right: -8%;
+      position: absolute; top: 32%; bottom: 14%;
+      left: 16%; right: -4%;
       width: auto; height: auto; margin: 0; z-index: 1;
     }
     .hero-selfie {
-      position: absolute; left: -14%; bottom: -2%; top: auto;
-      width: clamp(300px, 82vw, 400px); margin: 0; z-index: 2;
+      position: absolute; left: -16%; bottom: -2%; top: auto;
+      width: clamp(250px, 68vw, 330px); margin: 0; z-index: 2;
     }
     .hero-hint { display: none; }
   }
@@ -1976,8 +1976,8 @@ function KnowledgeGraph({ activeSection, onNodeClick }) {
     const tmpVec = new THREE.Vector3();
     const tmpScale = new THREE.Vector3();
     let raf = 0;
-    const isMobile = window.matchMedia("(max-width: 768px)").matches;
     const animate = () => {
+      const isMobile = window.innerWidth <= 768;
       const now = performance.now();
       const idleMs = now - lastInteract;
       const auto = (!dragging && idleMs > 400 && !reduceMotion) ? 0.0010 : 0.0;
