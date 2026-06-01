@@ -207,7 +207,10 @@
     border: 1px solid var(--line);
   }
   @media (max-width: 768px) {
-    .nav-links { display: none; }
+    .nav-links { gap: 14px; padding: 6px 10px; }
+    .nav-links .nav-cmd { display: none; }
+    .nav-link-icon { font-size: 12px; gap: 4px; }
+    .nav-link-icon svg { width: 11px; height: 11px; }
   }
 
   /* Hero */
@@ -1521,6 +1524,8 @@
     .hero-selfie {
       position: absolute; left: -16%; bottom: -2%; top: auto;
       width: clamp(250px, 68vw, 330px); margin: 0; z-index: 2;
+      -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 95%);
+      mask-image: linear-gradient(to bottom, #000 70%, transparent 95%);
     }
     .hero-hint { display: none; }
   }
