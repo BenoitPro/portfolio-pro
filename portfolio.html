@@ -1511,15 +1511,16 @@
     html, body { overflow-x: hidden; }
     .sec-title-row { flex-direction: column; align-items: flex-start; }
     .sec-title-row .sec-title { width: auto; max-width: 100%; white-space: normal; word-break: normal; }
-    .hero { min-height: auto; display: flex; flex-direction: column; }
-    .hero-meta { position: relative; top: 0; left: 0; order: 1; padding: 92px 20px 0; max-width: 100%; }
-    .hero-selfie {
-      position: relative; left: auto; bottom: auto; order: 2;
-      width: clamp(220px, 70vw, 320px); margin: 24px auto 0; display: block;
-    }
+    .hero { min-height: 100vh; display: block; position: relative; overflow: hidden; }
+    .hero-meta { position: absolute; top: 84px; left: 0; right: 0; padding: 0 20px; max-width: 100%; z-index: 3; }
     .graph-stage {
-      position: relative; left: auto; right: auto; top: auto; bottom: auto;
-      order: 3; width: 100%; height: 420px; margin-top: 8px;
+      position: absolute; top: 40%; bottom: 16%;
+      left: 32%; right: -8%;
+      width: auto; height: auto; margin: 0; z-index: 1;
+    }
+    .hero-selfie {
+      position: absolute; left: -14%; bottom: -2%; top: auto;
+      width: clamp(300px, 82vw, 400px); margin: 0; z-index: 2;
     }
     .hero-hint { display: none; }
   }
