@@ -1522,11 +1522,13 @@
       width: auto; height: auto; margin: 0; z-index: 1;
     }
     .hero-selfie {
-      position: absolute; left: -16%; bottom: 5%; top: auto;
+      position: absolute; left: -16%; bottom: 0; top: auto;
       width: clamp(250px, 68vw, 330px); margin: 0; z-index: 2;
-      -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 95%);
-      mask-image: linear-gradient(to bottom, #000 70%, transparent 95%);
+      transform: none !important;
+      -webkit-mask-image: linear-gradient(to bottom, #000 82%, transparent 100%);
+      mask-image: linear-gradient(to bottom, #000 82%, transparent 100%);
     }
+    .hero-selfie.parallax-ready { transform: none !important; }
     .hero-hint { display: none; }
   }
 </style>
@@ -1985,10 +1987,16 @@ function KnowledgeGraph({ activeSection, onNodeClick }) {
       const isMobile = window.innerWidth <= 768;
       const now = performance.now();
       const idleMs = now - lastInteract;
-      const auto = (!dragging && idleMs > 400 && !reduceMotion) ? 0.0010 : 0.0;
-      autoRotY += auto;
-      root.rotation.y = userRotY + autoRotY;
-      root.rotation.x = userRotX;
+      if (isMobile) {
+        const sTilt = Math.min(window.scrollY, 900) * 0.00055;
+        root.rotation.y = userRotY + sTilt;
+        root.rotation.x = userRotX + sTilt * 0.35;
+      } else {
+        const auto = (!dragging && idleMs > 400 && !reduceMotion) ? 0.0010 : 0.0;
+        autoRotY += auto;
+        root.rotation.y = userRotY + autoRotY;
+        root.rotation.x = userRotX;
+      }
 
       const aSet = activeRef.current;
       const hId = hoverRef.current;
