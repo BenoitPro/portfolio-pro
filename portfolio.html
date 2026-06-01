@@ -207,7 +207,10 @@
     border: 1px solid var(--line);
   }
   @media (max-width: 768px) {
-    .nav-links { display: none; }
+    .nav-links { gap: 14px; padding: 6px 10px; }
+    .nav-links .nav-cmd { display: none; }
+    .nav-link-icon { font-size: 14px; gap: 5px; }
+    .nav-link-icon svg { width: 13px; height: 13px; }
   }
 
   /* Hero */
@@ -1235,6 +1238,12 @@
     .marquee + .marquee { margin-top: 16px; }
     .marquee-track { gap: 16px; }
   }
+  @media (max-width: 768px) {
+    .marquee-track { animation-duration: 120s; }
+    .marquee.reverse .marquee-track { animation-duration: 140s; }
+    .marquee:active .marquee-track,
+    .marquee.reverse:active .marquee-track { animation-play-state: paused; }
+  }
 
   /* Contact */
   .contact {
@@ -1502,18 +1511,25 @@
 
   /* Mobile hero */
   @media (max-width: 768px) {
-    .hero-meta { position: relative; top: 0; padding: 92px 20px 0; max-width: 100%; }
-    .hero { min-height: auto; }
-    .graph-stage { position: relative; left: auto; right: auto; top: auto; bottom: auto; height: 380px; margin-top: 12px; }
-    .hero-hint { display: none; }
-    .hero-selfie {
-      position: relative;
-      left: auto; bottom: auto;
-      width: 100%;
-      max-width: 460px;
-      margin: -20px auto 0;
-      display: block;
+    html, body { overflow-x: hidden; }
+    .sec-title-row { flex-direction: column; align-items: flex-start; }
+    .sec-title-row .sec-title { width: auto; max-width: 100%; white-space: normal; word-break: normal; }
+    .hero { min-height: 100vh; display: block; position: relative; overflow: hidden; }
+    .hero-meta { position: absolute; top: 84px; left: 0; right: 0; padding: 0 20px; max-width: 100%; z-index: 3; }
+    .graph-stage {
+      position: absolute; top: 25%; bottom: 21%;
+      left: 16%; right: -4%;
+      width: auto; height: auto; margin: 0; z-index: 1;
     }
+    .hero-selfie {
+      position: absolute; left: -16%; bottom: 0; top: auto;
+      width: clamp(250px, 68vw, 330px); margin: 0; z-index: 2;
+      transform: none !important;
+      -webkit-mask-image: linear-gradient(to bottom, #000 82%, transparent 100%);
+      mask-image: linear-gradient(to bottom, #000 82%, transparent 100%);
+    }
+    .hero-selfie.parallax-ready { transform: none !important; }
+    .hero-hint { display: none; }
   }
 </style>
 </head>
@@ -1968,12 +1984,19 @@ function KnowledgeGraph({ activeSection, onNodeClick }) {
     const tmpScale = new THREE.Vector3();
     let raf = 0;
     const animate = () => {
+      const isMobile = window.innerWidth <= 768;
       const now = performance.now();
       const idleMs = now - lastInteract;
-      const auto = (!dragging && idleMs > 400 && !reduceMotion) ? 0.0010 : 0.0;
-      autoRotY += auto;
-      root.rotation.y = userRotY + autoRotY;
-      root.rotation.x = userRotX;
+      if (isMobile) {
+        const sTilt = Math.min(window.scrollY, 900) * 0.00055;
+        root.rotation.y = userRotY + sTilt;
+        root.rotation.x = userRotX + sTilt * 0.35;
+      } else {
+        const auto = (!dragging && idleMs > 400 && !reduceMotion) ? 0.0010 : 0.0;
+        autoRotY += auto;
+        root.rotation.y = userRotY + autoRotY;
+        root.rotation.x = userRotX;
+      }
 
       const aSet = activeRef.current;
       const hId = hoverRef.current;
@@ -1994,8 +2017,13 @@ function KnowledgeGraph({ activeSection, onNodeClick }) {
           el.style.transform = "translate(-50%, calc(-100% - 16px))";
           el.style.left = sx + "px";
           el.style.top = sy + "px";
-          el.style.opacity = String(isConcept ? 0.35 + depthAlpha * 0.65 : 0.22 + depthAlpha * 0.78);
-          el.style.pointerEvents = depthAlpha > 0.30 ? "auto" : "none";
+          let baseOp = isConcept ? 0.35 + depthAlpha * 0.65 : 0.22 + depthAlpha * 0.78;
+          if (isMobile) {
+            const reveal = (m.userData.kind === "hub") || isActive || isHover || isThinking;
+            baseOp = reveal ? Math.max(0.85, baseOp) : 0;
+          }
+          el.style.opacity = String(baseOp);
+          el.style.pointerEvents = (isMobile ? baseOp > 0.05 : depthAlpha > 0.30) ? "auto" : "none";
           el.classList.toggle("is-active", isActive);
           el.classList.toggle("is-hover", isHover);
           el.classList.toggle("is-thinking", isThinking && !isHover);
