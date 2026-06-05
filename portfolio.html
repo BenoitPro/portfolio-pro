@@ -1101,27 +1101,15 @@
   .tl-item:hover::after { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 0 5px var(--accent-soft); }
   .tl-item.is-academic:hover::after { background: var(--academic); border-color: var(--academic); box-shadow: 0 0 0 5px var(--academic-soft); }
   .tl-item.is-academic .tl-card { background: var(--academic-soft); }
-  /* Fil conducteur — se remplit de haut en bas au scroll, recouvre la ligne grise.
+  /* Fil conducteur — Option C : trait fin et net, sans glow (look minimaliste Linear/Vercel).
+     Largeur 3px pour recouvrir proprement la ligne grise (2px).
      !important : neutralise le transform/opacity hérité de `.reveal-stagger > *`
-     pour que le fil reste centré sur la ligne grise (sinon décalage horizontal). */
+     pour que le fil reste centré sur la ligne grise. */
   .tl-progress {
-    position: absolute; left: 50%; top: 9px; width: 4px; height: 0;
-    transform: translateX(-50%) !important; opacity: 1 !important; transform-origin: top; z-index: 1;
-    background: linear-gradient(to bottom,
-      color-mix(in srgb, var(--accent) 55%, transparent) 0%,
-      var(--accent) 38%, var(--accent-2) 100%);
-    border-radius: 999px; pointer-events: none;
-    box-shadow:
-      0 0 0 1px color-mix(in srgb, var(--accent) 22%, transparent),
-      0 0 14px 1px var(--accent-soft),
-      0 0 30px 2px color-mix(in srgb, var(--accent) 14%, transparent);
-  }
-  /* Reflet « glass » : fine arête lumineuse le long du fil */
-  .tl-progress::before {
-    content: ""; position: absolute; inset: 0; border-radius: inherit;
-    background: linear-gradient(90deg,
-      rgba(255,255,255,0.55) 0%, rgba(255,255,255,0) 55%);
-    mix-blend-mode: overlay;
+    position: absolute; left: 50%; top: 9px; width: 3px; height: 0;
+    transform: translateX(-50%) !important; opacity: 0.65 !important; transform-origin: top; z-index: 0;
+    background: var(--accent); border-radius: 2px; pointer-events: none;
+    filter: blur(0.8px);
   }
   /* Pastille « atteinte » par le fil : s'allume comme au hover */
   .tl-item.is-reached::after {
@@ -1926,7 +1914,7 @@ function KnowledgeGraph({ activeSection, onNodeClick }) {
       const mat = new THREE.MeshBasicMaterial({ color: defaultColor, transparent: true, opacity: 0.96 });
       const m = new THREE.Mesh(geo, mat);
       m.position.set(n.pos[0], n.pos[1], n.pos[2]);
-      m.userData = { id: n.id, kind, node, baseScale: 1 };
+      m.userData = { id: n.id, kind, node, baseScale: 1, baseHex: defaultColor };
       root.add(m);
       namedMeshes.push(m);
 
@@ -2071,8 +2059,7 @@ function KnowledgeGraph({ activeSection, onNodeClick }) {
           el.classList.toggle("is-thinking", isThinking && !isHover);
           el.classList.toggle("is-back", depthAlpha < 0.35);
         }
-        const DARK_IDS_ANIM = ["ovh", "side-hustle", "safegpt", "hackathons"];
-        const defaultHex = DARK_IDS_ANIM.includes(m.userData.id) ? 0x0B1426 : 0x163D78;
+        const defaultHex = m.userData.baseHex;
         const targetHex = (isActive || isHover) ? 0x0055E9 : defaultHex;
         m.material.color.setHex(targetHex);
         m.material.opacity = 0.45 + depthAlpha * 0.55;
@@ -2090,10 +2077,14 @@ function KnowledgeGraph({ activeSection, onNodeClick }) {
         const pulse = 0.5 + 0.5 * Math.sin(now * 0.002 + g.phase);
         let opacity = 0.32 + 0.12 * pulse;
         let sizeMul = 1.0 + 0.08 * pulse;
-        let colorHex = g.defaultHex;
-        if (isThinking) { opacity = 0.55 + 0.18 * pulse; sizeMul = 1.18 + 0.10 * pulse; colorHex = 0x0055E9; }
-        if (isActive)   { opacity = Math.max(opacity, 0.60); sizeMul = Math.max(sizeMul, 1.22); colorHex = 0x0055E9; }
-        if (isHover)    { opacity = 0.75; sizeMul = 1.45; colorHex = 0x0066FF; }
+        // Le halo suit EXACTEMENT la couleur du cœur du nœud (cf. targetHex du mesh) :
+        // couleur propre du nœud au repos, bleu vif seulement quand le cœur s'allume (actif/survol).
+        // Le clignotement « thinking » ne fait plus virer le halo au bleu : il pulse en taille/opacité
+        // dans la couleur réelle du nœud, donc plus de décalage halo/cœur.
+        let colorHex = (isActive || isHover) ? 0x0055E9 : g.defaultHex;
+        if (isThinking) { opacity = 0.55 + 0.18 * pulse; sizeMul = 1.18 + 0.10 * pulse; }
+        if (isActive)   { opacity = Math.max(opacity, 0.60); sizeMul = Math.max(sizeMul, 1.22); }
+        if (isHover)    { opacity = 0.75; sizeMul = 1.45; }
         g.sprite.material.opacity = opacity;
         g.sprite.material.color.setHex(colorHex);
         const s = g.baseSize * sizeMul;
