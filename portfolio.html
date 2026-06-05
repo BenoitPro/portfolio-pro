@@ -1101,8 +1101,28 @@
   .tl-item:hover::after { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 0 5px var(--accent-soft); }
   .tl-item.is-academic:hover::after { background: var(--academic); border-color: var(--academic); box-shadow: 0 0 0 5px var(--academic-soft); }
   .tl-item.is-academic .tl-card { background: var(--academic-soft); }
+  /* Fil conducteur — Option C : trait fin et net, sans glow (look minimaliste Linear/Vercel).
+     Largeur 3px pour recouvrir proprement la ligne grise (2px).
+     !important : neutralise le transform/opacity hérité de `.reveal-stagger > *`
+     pour que le fil reste centré sur la ligne grise. */
+  .tl-progress {
+    position: absolute; left: 50%; top: 9px; width: 3px; height: 0;
+    transform: translateX(-50%) !important; opacity: 0.65 !important; transform-origin: top; z-index: 0;
+    background: var(--accent); border-radius: 2px; pointer-events: none;
+    filter: blur(0.8px);
+  }
+  /* Pastille « atteinte » par le fil : s'allume comme au hover */
+  .tl-item.is-reached::after {
+    background: var(--accent); border-color: var(--accent);
+    box-shadow: 0 0 0 5px var(--accent-soft);
+  }
+  .tl-item.is-academic.is-reached::after {
+    background: var(--academic); border-color: var(--academic);
+    box-shadow: 0 0 0 5px var(--academic-soft);
+  }
   @media (max-width: 760px) {
     .tl::before { left: 21px; }
+    .tl-progress { left: 21px; }
     .tl-item, .tl-item:nth-child(odd), .tl-item:nth-child(even) { width: 100%; left: 0; padding: 0 0 0 48px; }
     .tl-item + .tl-item { margin-top: 18px; }
     .tl-item:nth-child(odd)::after, .tl-item:nth-child(even)::after { left: 14px; right: auto; }
@@ -1894,7 +1914,7 @@ function KnowledgeGraph({ activeSection, onNodeClick }) {
       const mat = new THREE.MeshBasicMaterial({ color: defaultColor, transparent: true, opacity: 0.96 });
       const m = new THREE.Mesh(geo, mat);
       m.position.set(n.pos[0], n.pos[1], n.pos[2]);
-      m.userData = { id: n.id, kind, node, baseScale: 1 };
+      m.userData = { id: n.id, kind, node, baseScale: 1, baseHex: defaultColor };
       root.add(m);
       namedMeshes.push(m);
 
@@ -2039,8 +2059,7 @@ function KnowledgeGraph({ activeSection, onNodeClick }) {
           el.classList.toggle("is-thinking", isThinking && !isHover);
           el.classList.toggle("is-back", depthAlpha < 0.35);
         }
-        const DARK_IDS_ANIM = ["ovh", "side-hustle", "safegpt", "hackathons"];
-        const defaultHex = DARK_IDS_ANIM.includes(m.userData.id) ? 0x0B1426 : 0x163D78;
+        const defaultHex = m.userData.baseHex;
         const targetHex = (isActive || isHover) ? 0x0055E9 : defaultHex;
         m.material.color.setHex(targetHex);
         m.material.opacity = 0.45 + depthAlpha * 0.55;
@@ -2058,10 +2077,14 @@ function KnowledgeGraph({ activeSection, onNodeClick }) {
         const pulse = 0.5 + 0.5 * Math.sin(now * 0.002 + g.phase);
         let opacity = 0.32 + 0.12 * pulse;
         let sizeMul = 1.0 + 0.08 * pulse;
-        let colorHex = g.defaultHex;
-        if (isThinking) { opacity = 0.55 + 0.18 * pulse; sizeMul = 1.18 + 0.10 * pulse; colorHex = 0x0055E9; }
-        if (isActive)   { opacity = Math.max(opacity, 0.60); sizeMul = Math.max(sizeMul, 1.22); colorHex = 0x0055E9; }
-        if (isHover)    { opacity = 0.75; sizeMul = 1.45; colorHex = 0x0066FF; }
+        // Le halo suit EXACTEMENT la couleur du cœur du nœud (cf. targetHex du mesh) :
+        // couleur propre du nœud au repos, bleu vif seulement quand le cœur s'allume (actif/survol).
+        // Le clignotement « thinking » ne fait plus virer le halo au bleu : il pulse en taille/opacité
+        // dans la couleur réelle du nœud, donc plus de décalage halo/cœur.
+        let colorHex = (isActive || isHover) ? 0x0055E9 : g.defaultHex;
+        if (isThinking) { opacity = 0.55 + 0.18 * pulse; sizeMul = 1.18 + 0.10 * pulse; }
+        if (isActive)   { opacity = Math.max(opacity, 0.60); sizeMul = Math.max(sizeMul, 1.22); }
+        if (isHover)    { opacity = 0.75; sizeMul = 1.45; }
         g.sprite.material.opacity = opacity;
         g.sprite.material.color.setHex(colorHex);
         const s = g.baseSize * sizeMul;
@@ -2265,7 +2288,42 @@ function SectionHead({ idx, kicker, title }) {
 
 function ParcoursSection() {
   const ref = useReveal();
+  const tlRef = useRef(null);
+  const progressRef = useRef(null);
   const d = window.PORTFOLIO.parcours;
+
+  // Fil conducteur : le fil se remplit et les pastilles s'allument au fil du scroll
+  useEffect(() => {
+    const tl = tlRef.current;
+    const bar = progressRef.current;
+    if (!tl || !bar) return;
+    const items = Array.from(tl.querySelectorAll(".tl-item"));
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const rect = tl.getBoundingClientRect();
+      const mid = window.innerHeight / 2;
+      // la ligne démarre à 10px du haut du conteneur, finit à 10px du bas
+      const maxH = Math.max(0, rect.height - 20);
+      const h = Math.max(0, Math.min(maxH, mid - rect.top - 10));
+      bar.style.height = h + "px";
+      items.forEach((it) => {
+        const r = it.getBoundingClientRect();
+        const dotY = r.top + 31; // top:24px de la pastille + 7px (demi-hauteur)
+        it.classList.toggle("is-reached", dotY <= mid);
+      });
+    };
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, []);
+
   return (
     <section id="parcours" className="sec" ref={ref}>
       <div className="container">
@@ -2295,7 +2353,7 @@ function ParcoursSection() {
             </div>
           </div>
         </div>
-        <div className="tl reveal-stagger" style={{ marginTop: 48 }}>
+        <div className="tl reveal-stagger" ref={tlRef} style={{ marginTop: 48 }}>
           {d.timeline.map((e, i) => (
             <div key={i} className={"tl-item reveal" + (e.academic ? " is-academic" : "")}>
               <div className="tl-card">
@@ -2321,6 +2379,7 @@ function ParcoursSection() {
               </div>
             </div>
           ))}
+          <div className="tl-progress" ref={progressRef} aria-hidden="true" />
         </div>
       </div>
     </section>
