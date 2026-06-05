@@ -1101,8 +1101,40 @@
   .tl-item:hover::after { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 0 5px var(--accent-soft); }
   .tl-item.is-academic:hover::after { background: var(--academic); border-color: var(--academic); box-shadow: 0 0 0 5px var(--academic-soft); }
   .tl-item.is-academic .tl-card { background: var(--academic-soft); }
+  /* Fil conducteur — se remplit de haut en bas au scroll, recouvre la ligne grise.
+     !important : neutralise le transform/opacity hérité de `.reveal-stagger > *`
+     pour que le fil reste centré sur la ligne grise (sinon décalage horizontal). */
+  .tl-progress {
+    position: absolute; left: 50%; top: 9px; width: 4px; height: 0;
+    transform: translateX(-50%) !important; opacity: 1 !important; transform-origin: top; z-index: 1;
+    background: linear-gradient(to bottom,
+      color-mix(in srgb, var(--accent) 55%, transparent) 0%,
+      var(--accent) 38%, var(--accent-2) 100%);
+    border-radius: 999px; pointer-events: none;
+    box-shadow:
+      0 0 0 1px color-mix(in srgb, var(--accent) 22%, transparent),
+      0 0 14px 1px var(--accent-soft),
+      0 0 30px 2px color-mix(in srgb, var(--accent) 14%, transparent);
+  }
+  /* Reflet « glass » : fine arête lumineuse le long du fil */
+  .tl-progress::before {
+    content: ""; position: absolute; inset: 0; border-radius: inherit;
+    background: linear-gradient(90deg,
+      rgba(255,255,255,0.55) 0%, rgba(255,255,255,0) 55%);
+    mix-blend-mode: overlay;
+  }
+  /* Pastille « atteinte » par le fil : s'allume comme au hover */
+  .tl-item.is-reached::after {
+    background: var(--accent); border-color: var(--accent);
+    box-shadow: 0 0 0 5px var(--accent-soft);
+  }
+  .tl-item.is-academic.is-reached::after {
+    background: var(--academic); border-color: var(--academic);
+    box-shadow: 0 0 0 5px var(--academic-soft);
+  }
   @media (max-width: 760px) {
     .tl::before { left: 21px; }
+    .tl-progress { left: 21px; }
     .tl-item, .tl-item:nth-child(odd), .tl-item:nth-child(even) { width: 100%; left: 0; padding: 0 0 0 48px; }
     .tl-item + .tl-item { margin-top: 18px; }
     .tl-item:nth-child(odd)::after, .tl-item:nth-child(even)::after { left: 14px; right: auto; }
@@ -2265,7 +2297,42 @@ function SectionHead({ idx, kicker, title }) {
 
 function ParcoursSection() {
   const ref = useReveal();
+  const tlRef = useRef(null);
+  const progressRef = useRef(null);
   const d = window.PORTFOLIO.parcours;
+
+  // Fil conducteur : le fil se remplit et les pastilles s'allument au fil du scroll
+  useEffect(() => {
+    const tl = tlRef.current;
+    const bar = progressRef.current;
+    if (!tl || !bar) return;
+    const items = Array.from(tl.querySelectorAll(".tl-item"));
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const rect = tl.getBoundingClientRect();
+      const mid = window.innerHeight / 2;
+      // la ligne démarre à 10px du haut du conteneur, finit à 10px du bas
+      const maxH = Math.max(0, rect.height - 20);
+      const h = Math.max(0, Math.min(maxH, mid - rect.top - 10));
+      bar.style.height = h + "px";
+      items.forEach((it) => {
+        const r = it.getBoundingClientRect();
+        const dotY = r.top + 31; // top:24px de la pastille + 7px (demi-hauteur)
+        it.classList.toggle("is-reached", dotY <= mid);
+      });
+    };
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+      if (raf) cancelAnimationFrame(raf);
+    };
+  }, []);
+
   return (
     <section id="parcours" className="sec" ref={ref}>
       <div className="container">
@@ -2295,7 +2362,7 @@ function ParcoursSection() {
             </div>
           </div>
         </div>
-        <div className="tl reveal-stagger" style={{ marginTop: 48 }}>
+        <div className="tl reveal-stagger" ref={tlRef} style={{ marginTop: 48 }}>
           {d.timeline.map((e, i) => (
             <div key={i} className={"tl-item reveal" + (e.academic ? " is-academic" : "")}>
               <div className="tl-card">
@@ -2321,6 +2388,7 @@ function ParcoursSection() {
               </div>
             </div>
           ))}
+          <div className="tl-progress" ref={progressRef} aria-hidden="true" />
         </div>
       </div>
     </section>
