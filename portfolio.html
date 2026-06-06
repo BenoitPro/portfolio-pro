@@ -1107,7 +1107,7 @@
      pour que le fil reste centré sur la ligne grise. */
   .tl-progress {
     position: absolute; left: 50%; top: 9px; width: 3px; height: 0;
-    transform: translateX(-50%) !important; opacity: 0.65 !important; transform-origin: top; z-index: 0;
+    transform: translateX(-50%) !important; opacity: 0.65 !important; transform-origin: top; z-index: -1;
     background: var(--accent); border-radius: 2px; pointer-events: none;
     filter: blur(0.8px);
   }
@@ -1543,13 +1543,13 @@
       width: auto; height: auto; margin: 0; z-index: 1;
     }
     .hero-selfie {
-      position: absolute; left: -16%; bottom: 0; top: auto;
-      width: clamp(250px, 68vw, 330px); margin: 0; z-index: 2;
-      transform: none !important;
-      -webkit-mask-image: linear-gradient(to bottom, #000 82%, transparent 100%);
-      mask-image: linear-gradient(to bottom, #000 82%, transparent 100%);
+      position: absolute; left: 50%; bottom: 0; top: auto;
+      transform: translateX(-50%) !important;
+      width: clamp(220px, 58vw, 310px); margin: 0; z-index: 2;
+      -webkit-mask-image: linear-gradient(to bottom, #000 78%, transparent 100%);
+      mask-image: linear-gradient(to bottom, #000 78%, transparent 100%);
     }
-    .hero-selfie.parallax-ready { transform: none !important; }
+    .hero-selfie.parallax-ready { transform: translateX(-50%) !important; }
     .hero-hint { display: none; }
   }
 </style>
