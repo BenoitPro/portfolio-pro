@@ -2649,7 +2649,7 @@ function Hero({ onNodeClick }) {
 
   return (
     <section id="hero" className="hero">
-      <img ref={selfieRef} className="hero-selfie" src="assets/selfie.png" alt="Beno&icirc;t &mdash; portrait" loading="eager" decoding="async" />
+      <img ref={selfieRef} className="hero-selfie" src="assets/selfie.png" alt="Benoit &mdash; portrait" loading="eager" decoding="async" />
       <KnowledgeGraph activeSection="hero" onNodeClick={onNodeClick} />
       <div className="hero-meta">
         <h1 className="hero-h1 reveal in">
@@ -2729,7 +2729,7 @@ function ChatWidget() {
     "Quelle est ton expérience commerciale ?",
   ];
   const [messages, setMessages] = useState([
-    { role: "assistant", content: "Salut 👋 Je suis le second cerveau de Benoît. Pose-moi une question sur son parcours, sa stack, ses convictions — ou demande-moi pourquoi tu devrais le recruter.\n\nSi tu préfères me challenger avec ton propre LLM, colle ce repo dans ton IA préférée : `github.com/BenoitPro/portfolio-pro`" },
+    { role: "assistant", content: "Salut 👋 Je suis le second cerveau de Benoit. Pose-moi une question sur son parcours, sa stack, ses convictions — ou demande-moi pourquoi tu devrais le recruter.\n\nSi tu préfères me challenger avec ton propre LLM, colle ce repo dans ton IA préférée : `github.com/BenoitPro/portfolio-pro`" },
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -2806,16 +2806,16 @@ function ChatWidget() {
 
   return (
     <React.Fragment>
-      <button className="chat-fab" onClick={() => setOpen((o) => !o)} aria-label="Ouvrir le chat avec le second cerveau de Beno&icirc;t">
+      <button className="chat-fab" onClick={() => setOpen((o) => !o)} aria-label="Ouvrir le chat avec le second cerveau de Benoit">
         <span className="dot"></span>
         {open ? "Fermer" : "Envie de me challenger ?"}
       </button>
       <div className={"chat-panel" + (open ? " open" : "")} role="dialog" aria-label="Chat second cerveau">
         <div className="chat-head">
           <div className="chat-head-title">
-            <span className="chat-head-avatar"><img src="assets/Benoit Baillon LinkedIn.png" alt="Beno&icirc;t" /></span>
+            <span className="chat-head-avatar"><img src="assets/Benoit Baillon LinkedIn.png" alt="Benoit" /></span>
             <div>
-              <strong>Second cerveau de Beno&icirc;t</strong>
+              <strong>Second cerveau de Benoit</strong>
             </div>
           </div>
           <button className="chat-close" onClick={() => setOpen(false)} aria-label="Fermer">
@@ -2828,7 +2828,7 @@ function ChatWidget() {
               <div key={i} className="chat-msg user">{m.content}</div>
             ) : (
               <div key={i} className="chat-msg-row">
-                <span className="chat-msg-avatar"><img src="assets/Benoit Baillon LinkedIn.png" alt="Beno&icirc;t" /></span>
+                <span className="chat-msg-avatar"><img src="assets/Benoit Baillon LinkedIn.png" alt="Benoit" /></span>
                 {m.content === "" && loading
                   ? <div className="chat-typing"><span></span><span></span><span></span></div>
                   : <div
