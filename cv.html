@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8" />
+<title>CV — Benoît Baillon</title>
+<style>
+  @page { size: A4; margin: 0; }
+  * { box-sizing: border-box; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  :root{
+    --ink:#1b2c47;        /* navy titres */
+    --body:#33404f;       /* corps */
+    --muted:#8a93a1;      /* dates / secondaire */
+    --rule:#d7dce3;       /* filets */
+    --link:#2563eb;
+  }
+  html,body{margin:0;padding:0}
+  body{
+    font-family:"Helvetica Neue",Arial,"Segoe UI",sans-serif;
+    color:var(--body);
+    font-size:9.6pt;
+    line-height:1.36;
+    -webkit-font-smoothing:antialiased;
+  }
+  .page{ width:210mm; padding:11mm 16mm 8mm; }
+
+  /* En-tête */
+  .name{ text-align:center; font-size:22pt; font-weight:700; color:var(--ink); letter-spacing:-0.01em; margin:0; }
+  .contact{ text-align:center; color:var(--muted); font-size:9.6pt; margin:4px 0 2px; }
+  .contact a{ color:var(--link); text-decoration:underline; }
+  .header{ margin-bottom:12px; }
+
+  /* Sections */
+  .sec{
+    font-size:12pt; font-weight:700; color:var(--ink); margin:0 0 6px;
+    padding-bottom:4px; border-bottom:1px solid var(--rule);
+  }
+  section{ margin-top:8px; }
+  section:first-of-type{ margin-top:2px; }
+
+  .profil{ text-align:justify; margin:0; }
+
+  /* Lignes expérience / formation : colonne date fixe pour aligner les titres */
+  .row{ display:flex; gap:14px; margin-top:8px; }
+  .row:first-child{ margin-top:2px; }
+  .date{ flex:0 0 37mm; color:var(--muted); font-style:italic; font-size:9.2pt; padding-top:1px; }
+  .content{ flex:1 1 auto; }
+  .title{ color:var(--ink); margin-bottom:2px; }
+  .title b{ font-weight:700; }
+  .title .org{ color:var(--body); font-weight:400; }
+
+  ul{ margin:2px 0 0; padding:0; list-style:none; }
+  li{ position:relative; padding-left:14px; margin-top:2px; text-align:justify; }
+  li::before{ content:"•"; position:absolute; left:1px; top:-0.5px; color:var(--muted); }
+
+  .skills p{ margin:0 0 2px; }
+  .skills b{ color:var(--ink); font-weight:700; }
+  .skills .val{ color:var(--body); }
+
+  .interests{ margin:0; }
+  .interests b{ color:var(--ink); font-weight:700; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <h1 class="name">Beno&icirc;t Baillon</h1>
+    <div class="contact">Paris · 07 70 12 32 01 · benoitbaillon78@gmail.com</div>
+    <div class="contact"><a href="https://linkedin.com/in/benoit-baillon-cloud">linkedin.com/in/benoit-baillon-cloud</a></div>
+  </div>
+
+  <section>
+    <h2 class="sec">Profil</h2>
+    <p class="profil">Commercial chez OVHcloud sur la verticale FSI. Co-fondateur de l'Agence alAin (automatisation IA pour PME). Je vends du cloud et de l'IA aux corporates, je build mes propres agents IA en parallèle. J'accompagne des dirigeants dans leurs enjeux liés à la transformation numérique.</p>
+  </section>
+
+  <section>
+    <h2 class="sec">Expériences professionnelles</h2>
+
+    <div class="row">
+      <div class="date">janv. 2025 — aujourd'hui</div>
+      <div class="content">
+        <div class="title"><b>Account Manager · Financial Services</b> <span class="org">· OVHcloud</span></div>
+        <ul>
+          <li>Élevage d'un portefeuille &gt;2 M€ ARR sur 10 grands comptes FSI (paiement, assurance).</li>
+          <li>Vente cloud + IA + infra blockchain articulée sur la souveraineté européenne et la conformité (DORA, MiCA, SecNumCloud).</li>
+          <li>Chasse et représentation d'OVHcloud FSI : VivaTech, FIC, Paris Blockchain Week, EthCC, France Quantum, Big Data &amp; AI.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="date">août 2025 — aujourd'hui</div>
+      <div class="content">
+        <div class="title"><b>Co-fondateur</b> <span class="org">· Agence alAin</span></div>
+        <ul>
+          <li>Automatisation et IA pour PME : processus répétitifs, outils de veille, développement de sites internet.</li>
+          <li>Projets clients : réceptionniste IA (hôtellerie), formation IA, rapprochement de données.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="date">sept. 2023 — 2025</div>
+      <div class="content">
+        <div class="title"><b>Responsable financier</b> <span class="org">· ETNA EDHEC Télévision</span></div>
+        <ul>
+          <li>Pilotage de 100 k€ de chiffre d'affaires : facturation, assurance, trésorerie, investissement.</li>
+          <li>Intégration de Sage pour la conformité de la facturation électronique.</li>
+          <li>Gestion des contrats commerciaux.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="date">mai — août 2024</div>
+      <div class="content">
+        <div class="title"><b>Investissement VC Impact</b> <span class="org">· BNP Paribas</span></div>
+        <ul>
+          <li>Suivi de projets d'investissement à impact, gestion et rencontre de partenaires, communication du Label.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="date">3 ans</div>
+      <div class="content">
+        <div class="title"><b>Animateur / Directeur de camp</b> <span class="org">· Scouts et Guides de France (SGDF)</span></div>
+        <ul>
+          <li>Encadrement et direction de camps (BAFA) : gestion d'une équipe d'animateurs, du budget et de la sécurité de groupes de jeunes.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="sec">Formation</h2>
+    <div class="row">
+      <div class="date">sept. 2023 — déc. 2026</div>
+      <div class="content">
+        <div class="title"><b>Master in Management · Grande École Program</b> <span class="org">· EDHEC Business School</span></div>
+        <ul>
+          <li>Top 4 mondial Financial Times 2024. Spécialisation Accounting, Finance, Data Analysis, Entrepreneurship.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="row">
+      <div class="date">2021 — 2023</div>
+      <div class="content">
+        <div class="title"><b>Classes Préparatoires D2 économie-gestion</b> <span class="org">· Marie Curie, Versailles</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="skills">
+    <h2 class="sec">Compétences</h2>
+    <p><b>IA, développement &amp; agents :</b> <span class="val">agents IA, automatisation (n8n, Claude API, MCP), prompt engineering, génération multi-format, STT/TTS, RAG · Claude Code, Vercel, HubSpot, Notion.</span></p>
+    <p><b>Cloud :</b> <span class="val">architecture cloud, souveraineté numérique, blockchain (infra, nœuds) · OVHcloud, SecNumCloud, solutions souveraines FR/EU.</span></p>
+    <p><b>Conformité &amp; régulation financière :</b> <span class="val">marchés financiers, actifs numériques, protection des données · DORA, MiCA, DSP3, EBA/AMF, RGPD.</span></p>
+    <p><b>Langues :</b> <span class="val">Français (natif), Anglais (C1), Espagnol (B2).</span></p>
+  </section>
+
+  <section>
+    <h2 class="sec">Centres d'intérêt</h2>
+    <p class="interests"><b>Builds &amp; projets perso :</b> second cerveau (productivité), extension Chrome open source anti Shadow AI, dashboard OVHcloud on-chain. <b>Hackathons IA &amp; Web3 :</b> 2× vainqueur (Aleo privacy, fintech). <b>Sport &amp; autres :</b> boxe thaï, trail et semi-marathon, investissement, lecture IA et géopolitique numérique.</p>
+  </section>
+
+</div>
+</body>
+</html>
