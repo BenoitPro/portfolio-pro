@@ -352,7 +352,10 @@
     position: absolute;
     left: clamp(40px, 6vw, 100px);
     bottom: -80px;
-    width: clamp(414px, 46vw, 759px);
+    /* La largeur est aussi plafonnée par la hauteur du viewport : sur écran large
+       mais court (laptop/iPad), le buste rétrécit juste assez pour que sa tête
+       reste sous le bloc de texte au lieu de passer devant. */
+    width: min(clamp(414px, 46vw, 759px), 64vh);
     height: auto;
     z-index: 2;
     pointer-events: none;
@@ -1538,18 +1541,18 @@
     .hero { min-height: 100vh; display: block; position: relative; overflow: hidden; }
     .hero-meta { position: absolute; top: 84px; left: 0; right: 0; padding: 0 20px; max-width: 100%; z-index: 3; }
     .graph-stage {
-      position: absolute; top: 25%; bottom: 21%;
+      position: absolute; top: 23%; bottom: 17%;
       left: 16%; right: -4%;
       width: auto; height: auto; margin: 0; z-index: 1;
     }
     .hero-selfie {
-      position: absolute; left: 50%; bottom: 0; top: auto;
-      transform: translateX(-50%) !important;
-      width: clamp(220px, 58vw, 310px); margin: 0; z-index: 2;
-      -webkit-mask-image: linear-gradient(to bottom, #000 78%, transparent 100%);
-      mask-image: linear-gradient(to bottom, #000 78%, transparent 100%);
+      position: absolute; left: -14%; bottom: 0; top: auto;
+      transform: none !important;
+      width: clamp(250px, 70vw, 340px); margin: 0; z-index: 2;
+      -webkit-mask-image: linear-gradient(to bottom, #000 84%, transparent 100%);
+      mask-image: linear-gradient(to bottom, #000 84%, transparent 100%);
     }
-    .hero-selfie.parallax-ready { transform: translateX(-50%) !important; }
+    .hero-selfie.parallax-ready { transform: none !important; }
     .hero-hint { display: none; }
   }
 </style>
