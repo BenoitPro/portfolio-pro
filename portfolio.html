@@ -352,10 +352,11 @@
     position: absolute;
     left: clamp(40px, 6vw, 100px);
     bottom: -80px;
-    /* La largeur est aussi plafonnée par la hauteur du viewport : sur écran large
-       mais court (laptop/iPad), le buste rétrécit juste assez pour que sa tête
-       reste sous le bloc de texte au lieu de passer devant. */
-    width: min(clamp(414px, 46vw, 759px), 64vh);
+    /* Plafond CSS de secours (viewport court). Le vrai garde-fou est en JS :
+       Hero() mesure le bas réel du bloc de texte et pose un max-width pour que
+       la tête reste toujours sous le texte, même quand le navigateur ouvre la
+       fenêtre en petit — plus besoin de dézoomer. */
+    width: min(clamp(414px, 46vw, 759px), 60vh);
     height: auto;
     z-index: 2;
     pointer-events: none;
@@ -2616,6 +2617,35 @@ function Hero({ onNodeClick }) {
   const id = window.PORTFOLIO.identity;
   const magRef = useRef(null);
   const selfieRef = useRef(null);
+  const metaRef = useRef(null);
+
+  // Guarantee the selfie never slides behind the text block.
+  // The text (top-left) and the portrait (bottom-left) share the same column,
+  // so on short / "opened-small" desktop windows the head used to rise into the
+  // copy. We cap the portrait's width from the real vertical space left under
+  // the measured text block, so its top always stays below it — no zoom needed.
+  useEffect(() => {
+    const el = selfieRef.current;
+    const meta = metaRef.current;
+    const hero = el && el.closest(".hero");
+    if (!el || !meta || !hero) return;
+    const RATIO = 850 / 739; // intrinsic w/h of assets/selfie.png
+    const GAP = 28;          // breathing room between text and head
+    const fit = () => {
+      // Below 769px the mobile hero layout takes over and works on its own.
+      if (window.innerWidth <= 768) { el.style.maxWidth = ""; return; }
+      const heroRect = hero.getBoundingClientRect();
+      const metaBottom = meta.getBoundingClientRect().bottom - heroRect.top;
+      // The portrait's bottom sits 80px below the hero (bottom: -80px).
+      const budget = (hero.clientHeight + 80) - (metaBottom + GAP);
+      el.style.maxWidth = Math.max(0, budget * RATIO) + "px";
+    };
+    fit();
+    window.addEventListener("resize", fit, { passive: true });
+    const t = setTimeout(fit, 300); // re-fit once async images/layout settle
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+    return () => { window.removeEventListener("resize", fit); clearTimeout(t); };
+  }, []);
 
   useEffect(() => {
     const el = magRef.current;
@@ -2654,7 +2684,7 @@ function Hero({ onNodeClick }) {
     <section id="hero" className="hero">
       <img ref={selfieRef} className="hero-selfie" src="assets/selfie.png" alt="Benoit &mdash; portrait" loading="eager" decoding="async" />
       <KnowledgeGraph activeSection="hero" onNodeClick={onNodeClick} />
-      <div className="hero-meta">
+      <div className="hero-meta" ref={metaRef}>
         <h1 className="hero-h1 reveal in">
           Sales le jour.<br />Builder <span className="italic">IA</span> le soir.
         </h1>
