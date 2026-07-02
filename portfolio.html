@@ -1367,6 +1367,19 @@
   .contact-side a { color: var(--ink-70); text-decoration: none; border-bottom: 1px solid var(--line-2); padding-bottom: 1px; }
   .contact-side a:hover { color: var(--accent); border-bottom-color: var(--accent); }
 
+  /* Contact — vidéo ambiante encre/réseau (activée seulement si assets/video/encre-reseau.mp4 existe) */
+  #contact { position: relative; overflow: hidden; }
+  .contact-ambient {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1.2s ease;
+    pointer-events: none;
+  }
+  .contact-ambient.playing { opacity: 0.14; }
+  #contact .container { position: relative; }
+
   /* Chat widget — second cerveau */
   /* Chat FAB — glassmorphisme cohérent avec la nav */
   .chat-fab {
@@ -2639,6 +2652,7 @@ function ContactSection() {
   const ref = useReveal();
   const c = window.PORTFOLIO.contact;
   const magRef = useRef(null);
+  const videoRef = useRef(null);
   useEffect(() => {
     const el = magRef.current;
     if (!el) return;
@@ -2648,8 +2662,25 @@ function ContactSection() {
     el.addEventListener("mouseleave", onLeave);
     return () => { el.removeEventListener("mousemove", onMove); el.removeEventListener("mouseleave", onLeave); };
   }, []);
+  // Vidéo ambiante : chargée seulement à l'approche de la section, jamais si
+  // prefers-reduced-motion, invisible tant que la lecture n'a pas démarré
+  // (donc no-op si le fichier n'existe pas encore).
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
+    const io = new IntersectionObserver((entries) => {
+      if (!entries[0].isIntersecting) return;
+      io.disconnect();
+      video.src = "assets/video/encre-reseau.mp4";
+      video.play().then(() => video.classList.add("playing")).catch(() => {});
+    }, { rootMargin: "200px" });
+    io.observe(video);
+    return () => io.disconnect();
+  }, []);
   return (
     <section id="contact" ref={ref}>
+      <video ref={videoRef} className="contact-ambient" muted loop playsInline preload="none" aria-hidden="true" />
       <div className="container contact">
         <div className="contact-eyebrow reveal">{c.eyebrow}</div>
         <h2 className="contact-h2 reveal">
