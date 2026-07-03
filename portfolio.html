@@ -983,8 +983,14 @@
     text-overflow: ellipsis;
   }
   .proof-shot { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: var(--bg-2); }
-  .proof-shot img { width: 100%; height: 100%; object-fit: cover; object-position: top; display: block; transition: transform 0.5s ease; }
-  .proof-card:hover .proof-shot img { transform: scale(1.03); }
+  .proof-shot img {
+    width: 100%; height: 124%; position: relative; top: -12%;
+    object-fit: cover; object-position: top; display: block;
+    transform: translateY(var(--py, 0px)) scale(var(--hs, 1));
+    transition: transform 0.15s ease-out;
+    will-change: transform;
+  }
+  .proof-card:hover .proof-shot img { --hs: 1.03; }
   .proof-meta { padding: 14px 16px 16px; }
   .proof-name { font-size: 14.5px; font-weight: 600; letter-spacing: -0.01em; }
   .proof-desc { font-size: 12.5px; color: var(--ink-55); margin-top: 4px; line-height: 1.45; }
@@ -2572,11 +2578,36 @@ function SideHustleSection() {
 
 function ProofSection() {
   const ref = useReveal();
+  const gridRef = useRef(null);
+  // Parallax scroll-lié : chaque capture dérive légèrement (jusqu'à ±14px) selon sa
+  // position par rapport au centre du viewport. Pas un effet signature en plus du hero,
+  // juste la grille "Preuve" qui répond au scroll comme le reste du site.
+  useEffect(() => {
+    const grid = gridRef.current;
+    if (!grid) return;
+    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const vh = window.innerHeight;
+      grid.querySelectorAll(".proof-shot img").forEach((img) => {
+        const r = img.parentElement.getBoundingClientRect();
+        const delta = (r.top + r.height / 2 - vh / 2) / vh;
+        const py = Math.max(-14, Math.min(14, delta * 26));
+        img.style.setProperty("--py", py.toFixed(1) + "px");
+      });
+    };
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => { window.removeEventListener("scroll", onScroll); window.removeEventListener("resize", onScroll); };
+  }, []);
   return (
     <section id="preuve" className="sec" ref={ref}>
       <div className="container">
         <SectionHead idx="02 /" kicker="Preuve" title='Pas des maquettes, du <span class="italic">livré</span>.' />
-        <div className="proof-grid reveal-stagger">
+        <div className="proof-grid reveal-stagger" ref={gridRef}>
           {window.PORTFOLIO.proof.map((p) => (
             <a key={p.name} className="proof-card" href={p.href} target={p.href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer">
               <div className="proof-browser-bar">
