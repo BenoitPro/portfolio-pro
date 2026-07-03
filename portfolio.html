@@ -2115,9 +2115,11 @@ function KnowledgeGraph({ activeSection, onNodeClick }) {
       const now = performance.now();
       const idleMs = now - lastInteract;
 
+      let entranceDone = false;
       if (!reduceMotion) {
         if (entranceStart === null) entranceStart = now;
         const et = Math.min(1, (now - entranceStart) / ENTRANCE_MS);
+        entranceDone = et >= 1;
         if (et < 1) {
           const ease = 1 - Math.pow(1 - et, 3); // easeOutCubic
           camera.position.z = ENTRANCE_CAM_Z + (FINAL_CAM_Z - ENTRANCE_CAM_Z) * ease;
@@ -2129,6 +2131,12 @@ function KnowledgeGraph({ activeSection, onNodeClick }) {
         }
       }
 
+      // Scroll pilote la caméra une fois l'entrée terminée : on "plonge" légèrement dans le
+      // graphe en scrollant hors du hero (effet signature existant, pas un 2e ajouté par-dessus).
+      // Capé à 700px de scroll pour ne jamais dépasser la profondeur des nœuds les plus proches.
+      const scrollDive = reduceMotion ? 0 : Math.min(window.scrollY, 700) / 700;
+      if (entranceDone) camera.position.z = FINAL_CAM_Z - scrollDive * 0.55;
+
       if (isMobile) {
         const sTilt = Math.min(window.scrollY, 900) * 0.00055;
         root.rotation.y = userRotY + sTilt;
@@ -2136,8 +2144,8 @@ function KnowledgeGraph({ activeSection, onNodeClick }) {
       } else {
         const auto = (!dragging && idleMs > 400 && !reduceMotion) ? 0.0010 : 0.0;
         autoRotY += auto;
-        root.rotation.y = userRotY + autoRotY;
-        root.rotation.x = userRotX;
+        root.rotation.y = userRotY + autoRotY + scrollDive * 0.30;
+        root.rotation.x = userRotX + scrollDive * 0.10;
       }
 
       const aSet = activeRef.current;
