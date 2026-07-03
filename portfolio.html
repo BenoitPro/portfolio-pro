@@ -2664,6 +2664,7 @@ function ContactSection() {
   const c = window.PORTFOLIO.contact;
   const magRef = useRef(null);
   const videoRef = useRef(null);
+  const frameRef = useRef(null);
   useEffect(() => {
     const el = magRef.current;
     if (!el) return;
@@ -2675,11 +2676,26 @@ function ContactSection() {
   }, []);
   // Vidéo ambiante : chargée seulement à l'approche de la section, jamais si
   // prefers-reduced-motion, invisible tant que la lecture n'a pas démarré
-  // (donc no-op si le fichier n'existe pas encore).
+  // (donc no-op si le fichier n'existe pas encore). Joue UNE FOIS (pas de loop) :
+  // à la fin, on capture la dernière frame sur un canvas et on fige un <img> à sa
+  // place — plus de redémarrage, plus de decode vidéo actif en continu.
   useEffect(() => {
     const video = videoRef.current;
-    if (!video) return;
+    const frame = frameRef.current;
+    if (!video || !frame) return;
     if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
+    const onEnded = () => {
+      try {
+        const canvas = document.createElement("canvas");
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        canvas.getContext("2d").drawImage(video, 0, 0);
+        frame.src = canvas.toDataURL("image/jpeg", 0.85);
+        frame.classList.add("playing");
+        video.classList.remove("playing");
+      } catch { /* toDataURL peut échouer (CORS) : la vidéo reste simplement figée sur sa dernière frame */ }
+    };
+    video.addEventListener("ended", onEnded);
     const io = new IntersectionObserver((entries) => {
       if (!entries[0].isIntersecting) return;
       io.disconnect();
@@ -2687,11 +2703,12 @@ function ContactSection() {
       video.play().then(() => video.classList.add("playing")).catch(() => {});
     }, { rootMargin: "200px" });
     io.observe(video);
-    return () => io.disconnect();
+    return () => { io.disconnect(); video.removeEventListener("ended", onEnded); };
   }, []);
   return (
     <section id="contact" ref={ref}>
-      <video ref={videoRef} className="contact-ambient" muted loop playsInline preload="none" aria-hidden="true" />
+      <video ref={videoRef} className="contact-ambient" muted playsInline preload="none" aria-hidden="true" />
+      <img ref={frameRef} className="contact-ambient" alt="" aria-hidden="true" />
       <div className="container contact">
         <div className="contact-eyebrow reveal">{c.eyebrow}</div>
         <h2 className="contact-h2 reveal">
