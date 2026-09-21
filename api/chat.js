@@ -1,8 +1,8 @@
-// Vercel serverless function — proxy to OpenCode Go (OpenAI-compatible)
+// Vercel serverless function — proxy to Qwen Cloud (DashScope, OpenAI-compatible)
 // Endpoint: POST /api/chat   body: { messages: [{role, content}, ...] }
 
-const OPENCODE_URL = "https://opencode.ai/zen/go/v1/chat/completions";
-const MODEL = "deepseek-v4-flash";
+const OPENCODE_URL = "https://dashscope-intl.aliyuncs.com/compatible-mode/v1/chat/completions";
+const MODEL = "qwen-flash";
 
 const BRAIN_FILES = [
   "https://raw.githubusercontent.com/BenoitPro/portfolio-pro/main/brain/profil.md",
@@ -187,9 +187,9 @@ export default async function handler(req, res) {
     return res.status(429).json({ error: "Trop de messages, reviens dans une heure." });
   }
 
-  const apiKey = process.env.OPENCODE_GO_API_KEY || process.env.OPENCODE_API_KEY;
+  const apiKey = process.env.QWEN_API_KEY || process.env.DASHSCOPE_API_KEY;
   if (!apiKey) {
-    return res.status(500).json({ error: "OPENCODE_GO_API_KEY non configurée côté serveur." });
+    return res.status(500).json({ error: "QWEN_API_KEY non configurée côté serveur." });
   }
 
   let body = req.body;

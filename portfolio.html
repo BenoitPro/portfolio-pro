@@ -4,7 +4,19 @@
 <meta charset="utf-8" />
 <title>Benoit Baillon — Portfolio</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+<link rel="icon" href="/assets/favicon-32.png" sizes="32x32" type="image/png" />
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png" />
 <meta name="description" content="Benoit Baillon — Account Manager Financial Services chez OVHcloud le jour, builder IA le soir. Je vends du cloud et de l'IA aux grands comptes, je build mes propres agents en parallèle." />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Benoit Baillon — Sales le jour, builder IA le soir." />
+<meta property="og:description" content="Account Manager Financial Services chez OVHcloud. Co-fondateur de l'Agence alAin. Je vends du cloud et de l'IA aux grands comptes, et je construis mes propres agents en parallèle." />
+<meta property="og:image" content="https://benoitbaillon.com/assets/og-image.png" />
+<meta property="og:url" content="https://benoitbaillon.com/" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Benoit Baillon — Sales le jour, builder IA le soir." />
+<meta name="twitter:description" content="Account Manager Financial Services chez OVHcloud. Co-fondateur de l'Agence alAin." />
+<meta name="twitter:image" content="https://benoitbaillon.com/assets/og-image.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Spectral:ital,wght@1,400;1,500&family=JetBrains+Mono:wght@400;500&family=Caveat:wght@500;600&display=swap" rel="stylesheet" />
@@ -927,6 +939,67 @@
     .proj-desc { grid-column: 2 / -1; }
   }
 
+  /* Proof grid — captures encadrées type "fenêtre de navigateur" */
+  .proof-lead {
+    font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--ink-55); margin: 48px 0 20px;
+  }
+  .proof-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+  }
+  .proof-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.35s cubic-bezier(.2,.7,.2,1), box-shadow 0.35s ease, border-color 0.3s ease;
+  }
+  .proof-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+    border-color: var(--line-2);
+  }
+  .proof-browser-bar {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 12px;
+    background: var(--bg-2);
+    border-bottom: 1px solid var(--line);
+  }
+  .proof-dots { display: inline-flex; gap: 5px; flex: 0 0 auto; }
+  .proof-dots span { width: 7px; height: 7px; border-radius: 50%; background: var(--ink-20); }
+  .proof-url {
+    font-family: "JetBrains Mono", monospace;
+    font-size: 10.5px;
+    color: var(--ink-55);
+    background: white;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 3px 10px;
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .proof-shot { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: var(--bg-2); }
+  .proof-shot img {
+    width: 100%; height: 124%; position: relative; top: -12%;
+    object-fit: cover; object-position: top; display: block;
+    transform: translateY(var(--py, 0px)) scale(var(--hs, 1));
+    transition: transform 0.15s ease-out;
+    will-change: transform;
+  }
+  .proof-card:hover .proof-shot img { --hs: 1.03; }
+  .proof-meta { padding: 14px 16px 16px; }
+  .proof-name { font-size: 14.5px; font-weight: 600; letter-spacing: -0.01em; }
+  .proof-desc { font-size: 12.5px; color: var(--ink-55); margin-top: 4px; line-height: 1.45; }
+  @media (prefers-reduced-motion: reduce) { .proof-card, .proof-shot img { transition: none; } }
+
   /* Approach */
   .approach-grid {
     display: grid;
@@ -1304,6 +1377,22 @@
   .contact-side a { color: var(--ink-70); text-decoration: none; border-bottom: 1px solid var(--line-2); padding-bottom: 1px; }
   .contact-side a:hover { color: var(--accent); border-bottom-color: var(--accent); }
 
+  /* Contact — vidéo ambiante encre/réseau (activée seulement si assets/video/encre-reseau.mp4 existe) */
+  #contact { position: relative; overflow: hidden; }
+  .contact-ambient {
+    position: absolute; inset: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1.6s ease;
+    pointer-events: none;
+    /* vignette : pas de rectangle visible, se fond dans le fond papier */
+    mask-image: radial-gradient(ellipse 65% 70% at 50% 50%, black 0%, transparent 72%);
+    -webkit-mask-image: radial-gradient(ellipse 65% 70% at 50% 50%, black 0%, transparent 72%);
+  }
+  .contact-ambient.playing { opacity: 0.16; }
+  #contact .container { position: relative; }
+
   /* Chat widget — second cerveau */
   /* Chat FAB — glassmorphisme cohérent avec la nav */
   .chat-fab {
@@ -1666,9 +1755,17 @@ window.PORTFOLIO = {
   sideHustle: [
     { n: "01", name: "Agence alAin",               italic: "alAin",    tag: "automatisation IA / 2025→", desc: "Automatisation des process en entreprise pour des PME : gains de productivité et de chiffre d’affaires. Stack n8n, Claude API, MCP.", stats: [{k:"3",v:"clients"}] },
     { n: "02", name: "Dashboard on-chain",          italic: "on-chain", tag: "data / 2025",               desc: "Parts de marché OVH sur les blockchains publiques majeures via mapping Nodes/ASN et enrichissement.", stats: [] },
-    { n: "03", name: "Second cerveau",              italic: "cerveau",  tag: "notion × claude / 2023→",   desc: "Système personnel piloté par Claude : ~930 notes interconnectées, interrogeables en langage naturel. Je l'active sur n'importe quel dossier en quelques minutes.", stats: [] },
+    { n: "03", name: "Second cerveau",              italic: "cerveau",  tag: "notion × claude / 2023→",   desc: "Système personnel piloté par Claude : ~930 notes interconnectées, interrogeables en langage naturel. Je l'active sur n'importe quel dossier en quelques minutes.", stats: [{k:"930",v:"notes"}] },
     { n: "04", name: "Ext. Chrome anti-Shadow AI",  italic: "Shadow",   tag: "open source / 2024",         desc: "Extension Chrome open source pour détecter et limiter le Shadow AI en entreprise.", stats: [] },
     { n: "05", name: "Hackathons IA & Web3",        italic: "Hack",     tag: "compétitions",               desc: "2 victoires : blockchain privacy sur Aleo (mai 2025) et AI fintech (avril 2026). 24-48h pour passer de zéro à un proto qui tient debout.", stats: [{k:"2",v:"victoires"}] },
+  ],
+
+  proof: [
+    { name: "Agence alAin",           url: "agence-alain.fr",              href: "https://www.agence-alain.fr/",          img: "assets/proof/agence-alain.jpg",        desc: "Site vitrine de l'agence, co-fondee avec Raph et Louis." },
+    { name: "OVHcloud x Blockchain",  url: "ovhcloud4blockchain.com",      href: "https://www.ovhcloud4blockchain.com/",  img: "assets/proof/ovhcloud4blockchain.jpg", desc: "Distribution des nodes Solana sur OVHcloud, initiative interne." },
+    { name: "Second cerveau",         url: "le chat en bas a droite de ce site", href: "#chat", img: "assets/proof/second-cerveau-chat.jpg", desc: "Le widget que tu peux tester juste ici." },
+    { name: "Atelier Soleil Yoga",    url: "atelier-soleil-yoga.fr",       href: "https://www.atelier-soleil-yoga.fr/",   img: "assets/proof/atelier-soleil-yoga.jpg", desc: "Prototype de prospection livre pour l'Agence alAin." },
+    { name: "Hedgen",                 url: "hedgenhackfintech.vercel.app", href: "https://hedgenhackfintech.vercel.app/", img: "assets/proof/hedgen.jpg",              desc: "Victoire hackathon AI Fintech, avril 2026." },
   ],
 
   approche: {
@@ -1775,9 +1872,17 @@ function KnowledgeGraph({ activeSection, onNodeClick }) {
     let width = Math.max(320, container.clientWidth);
     let height = Math.max(380, container.clientHeight);
 
+    const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+
+    // Entrée cinématique : la caméra recule au chargement puis "dolly-in" jusqu'à sa position finale.
+    const FINAL_CAM_Z = 6.35;
+    const ENTRANCE_CAM_Z = 9.6;
+    const ENTRANCE_MS = 1400;
+    let entranceStart = null;
+
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(30, width / height, 0.1, 100);
-    camera.position.set(0, 0, 6.35);
+    camera.position.set(0, 0, reduceMotion ? FINAL_CAM_Z : ENTRANCE_CAM_Z);
 
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true, powerPreference: "high-performance" });
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
@@ -2004,8 +2109,6 @@ function KnowledgeGraph({ activeSection, onNodeClick }) {
     const ro = new ResizeObserver(onResize);
     ro.observe(container);
 
-    const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
-
     const CONCEPT_CYCLE = namedList.map(n => n.id);
     let thinkingIdx = 0;
     let thinkingId = CONCEPT_CYCLE[0];
@@ -2021,6 +2124,29 @@ function KnowledgeGraph({ activeSection, onNodeClick }) {
       const isMobile = window.innerWidth <= 768;
       const now = performance.now();
       const idleMs = now - lastInteract;
+
+      let entranceDone = false;
+      if (!reduceMotion) {
+        if (entranceStart === null) entranceStart = now;
+        const et = Math.min(1, (now - entranceStart) / ENTRANCE_MS);
+        entranceDone = et >= 1;
+        if (et < 1) {
+          const ease = 1 - Math.pow(1 - et, 3); // easeOutCubic
+          camera.position.z = ENTRANCE_CAM_Z + (FINAL_CAM_Z - ENTRANCE_CAM_Z) * ease;
+          const s = 0.88 + 0.12 * ease;
+          root.scale.set(s, s, s);
+        } else if (camera.position.z !== FINAL_CAM_Z) {
+          camera.position.z = FINAL_CAM_Z;
+          root.scale.set(1, 1, 1);
+        }
+      }
+
+      // Scroll pilote la caméra une fois l'entrée terminée : on "plonge" légèrement dans le
+      // graphe en scrollant hors du hero (effet signature existant, pas un 2e ajouté par-dessus).
+      // Capé à 700px de scroll pour ne jamais dépasser la profondeur des nœuds les plus proches.
+      const scrollDive = reduceMotion ? 0 : Math.min(window.scrollY, 700) / 700;
+      if (entranceDone) camera.position.z = FINAL_CAM_Z - scrollDive * 0.55;
+
       if (isMobile) {
         const sTilt = Math.min(window.scrollY, 900) * 0.00055;
         root.rotation.y = userRotY + sTilt;
@@ -2028,8 +2154,8 @@ function KnowledgeGraph({ activeSection, onNodeClick }) {
       } else {
         const auto = (!dragging && idleMs > 400 && !reduceMotion) ? 0.0010 : 0.0;
         autoRotY += auto;
-        root.rotation.y = userRotY + autoRotY;
-        root.rotation.x = userRotX;
+        root.rotation.y = userRotY + autoRotY + scrollDive * 0.30;
+        root.rotation.x = userRotX + scrollDive * 0.10;
       }
 
       const aSet = activeRef.current;
@@ -2278,6 +2404,37 @@ function useReveal() {
   return ref;
 }
 
+function AnimatedStat({ value }) {
+  const str = String(value);
+  const m = str.match(/^(\d+)(.*)$/);
+  const target = m ? parseInt(m[1], 10) : null;
+  const suffix = m ? m[2] : "";
+  const ref = useRef(null);
+  const [display, setDisplay] = useState(target === null ? str : "0" + suffix);
+  useEffect(() => {
+    if (!ref.current || target === null) return;
+    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) { setDisplay(str); return; }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        io.disconnect();
+        const start = performance.now();
+        const DUR = 900;
+        const step = (now) => {
+          const t = Math.min(1, (now - start) / DUR);
+          const eased = 1 - Math.pow(1 - t, 3);
+          setDisplay(Math.round(target * eased) + suffix);
+          if (t < 1) requestAnimationFrame(step);
+        };
+        requestAnimationFrame(step);
+      });
+    }, { threshold: 0.4 });
+    io.observe(ref.current);
+    return () => io.disconnect();
+  }, []);
+  return <b ref={ref}>{display}</b>;
+}
+
 function SectionHead({ idx, kicker, title }) {
   return (
     <div className="sec-head reveal">
@@ -2409,7 +2566,7 @@ function SideHustleSection() {
                 </div>
                 <div className="proj-desc">{p.desc}</div>
                 <div className="proj-stats">
-                  {p.stats.map((s, i) => <div key={i} className="proj-stat"><b>{s.k}</b>{s.v}</div>)}
+                  {p.stats.map((s, i) => <div key={i} className="proj-stat"><AnimatedStat value={s.k} />{s.v}</div>)}
                 </div>
                 <svg className="proj-arrow" width="24" height="24" viewBox="0 0 24 24" fill="none">
                   <path d="M6 12h12M12 6l6 6-6 6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
@@ -2417,6 +2574,57 @@ function SideHustleSection() {
               </a>
             );
           })}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ProofSection() {
+  const ref = useReveal();
+  const gridRef = useRef(null);
+  // Parallax scroll-lié : chaque capture dérive légèrement (jusqu'à ±14px) selon sa
+  // position par rapport au centre du viewport. Pas un effet signature en plus du hero,
+  // juste la grille "Preuve" qui répond au scroll comme le reste du site.
+  useEffect(() => {
+    const grid = gridRef.current;
+    if (!grid) return;
+    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const vh = window.innerHeight;
+      grid.querySelectorAll(".proof-shot img").forEach((img) => {
+        const r = img.parentElement.getBoundingClientRect();
+        const delta = (r.top + r.height / 2 - vh / 2) / vh;
+        const py = Math.max(-14, Math.min(14, delta * 26));
+        img.style.setProperty("--py", py.toFixed(1) + "px");
+      });
+    };
+    const onScroll = () => { if (!raf) raf = requestAnimationFrame(update); };
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => { window.removeEventListener("scroll", onScroll); window.removeEventListener("resize", onScroll); };
+  }, []);
+  return (
+    <section id="preuve" className="sec" ref={ref}>
+      <div className="container">
+        <SectionHead idx="02 /" kicker="Preuve" title='Pas des maquettes, du <span class="italic">livré</span>.' />
+        <div className="proof-grid reveal-stagger" ref={gridRef}>
+          {window.PORTFOLIO.proof.map((p) => (
+            <a key={p.name} className="proof-card" href={p.href} target={p.href.startsWith("http") ? "_blank" : undefined} rel="noopener noreferrer">
+              <div className="proof-browser-bar">
+                <span className="proof-dots"><span></span><span></span><span></span></span>
+                <span className="proof-url mono">{p.url}</span>
+              </div>
+              <div className="proof-shot"><img src={p.img} alt={p.name} loading="lazy" decoding="async" /></div>
+              <div className="proof-meta">
+                <div className="proof-name">{p.name}</div>
+                <div className="proof-desc">{p.desc}</div>
+              </div>
+            </a>
+          ))}
         </div>
       </div>
     </section>
@@ -2490,6 +2698,8 @@ function ContactSection() {
   const ref = useReveal();
   const c = window.PORTFOLIO.contact;
   const magRef = useRef(null);
+  const videoRef = useRef(null);
+  const frameRef = useRef(null);
   useEffect(() => {
     const el = magRef.current;
     if (!el) return;
@@ -2499,8 +2709,41 @@ function ContactSection() {
     el.addEventListener("mouseleave", onLeave);
     return () => { el.removeEventListener("mousemove", onMove); el.removeEventListener("mouseleave", onLeave); };
   }, []);
+  // Vidéo ambiante : chargée seulement à l'approche de la section, jamais si
+  // prefers-reduced-motion, invisible tant que la lecture n'a pas démarré
+  // (donc no-op si le fichier n'existe pas encore). Joue UNE FOIS (pas de loop) :
+  // à la fin, on capture la dernière frame sur un canvas et on fige un <img> à sa
+  // place — plus de redémarrage, plus de decode vidéo actif en continu.
+  useEffect(() => {
+    const video = videoRef.current;
+    const frame = frameRef.current;
+    if (!video || !frame) return;
+    if (window.matchMedia?.("(prefers-reduced-motion: reduce)").matches) return;
+    const onEnded = () => {
+      try {
+        const canvas = document.createElement("canvas");
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        canvas.getContext("2d").drawImage(video, 0, 0);
+        frame.src = canvas.toDataURL("image/jpeg", 0.85);
+        frame.classList.add("playing");
+        video.classList.remove("playing");
+      } catch { /* toDataURL peut échouer (CORS) : la vidéo reste simplement figée sur sa dernière frame */ }
+    };
+    video.addEventListener("ended", onEnded);
+    const io = new IntersectionObserver((entries) => {
+      if (!entries[0].isIntersecting) return;
+      io.disconnect();
+      video.src = "assets/video/encre-reseau.mp4";
+      video.play().then(() => video.classList.add("playing")).catch(() => {});
+    }, { rootMargin: "200px" });
+    io.observe(video);
+    return () => { io.disconnect(); video.removeEventListener("ended", onEnded); };
+  }, []);
   return (
     <section id="contact" ref={ref}>
+      <video ref={videoRef} className="contact-ambient" muted playsInline preload="none" aria-hidden="true" />
+      <img ref={frameRef} className="contact-ambient" alt="" aria-hidden="true" />
       <div className="container contact">
         <div className="contact-eyebrow reveal">{c.eyebrow}</div>
         <h2 className="contact-h2 reveal">
@@ -2951,6 +3194,42 @@ function App() {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
+  // Micro-interactions : hover magnétique sur les CTAs + tilt léger sur les cartes galerie.
+  // Délégué sur window pour couvrir tous les .btn/.gcard sans toucher chaque JSX. Desktop only.
+  useEffect(() => {
+    const coarse = window.matchMedia?.("(pointer: coarse)").matches;
+    const reduceMotion = window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
+    if (coarse || reduceMotion) return;
+
+    const MAG_RADIUS = 70, MAG_STRENGTH = 0.35, TILT_MAX = 6;
+    let magEl = null, tiltEl = null;
+
+    const onMove = (e) => {
+      const btn = e.target.closest?.(".btn");
+      if (btn !== magEl) { if (magEl) magEl.style.transform = ""; magEl = btn; }
+      if (btn) {
+        const r = btn.getBoundingClientRect();
+        const dx = e.clientX - (r.left + r.width / 2), dy = e.clientY - (r.top + r.height / 2);
+        if (Math.hypot(dx, dy) < MAG_RADIUS) btn.style.transform = `translate(${(dx * MAG_STRENGTH).toFixed(1)}px, ${(dy * MAG_STRENGTH).toFixed(1)}px)`;
+        else btn.style.transform = "";
+      }
+
+      const card = e.target.closest?.(".gcard");
+      if (card !== tiltEl) { if (tiltEl) tiltEl.style.transform = ""; tiltEl = card; }
+      if (card) {
+        const r = card.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width - 0.5, py = (e.clientY - r.top) / r.height - 0.5;
+        card.style.transform = `perspective(600px) rotateX(${(-py * TILT_MAX).toFixed(2)}deg) rotateY(${(px * TILT_MAX).toFixed(2)}deg) translateY(-2px)`;
+      }
+    };
+    window.addEventListener("pointermove", onMove, { passive: true });
+    return () => {
+      window.removeEventListener("pointermove", onMove);
+      if (magEl) magEl.style.transform = "";
+      if (tiltEl) tiltEl.style.transform = "";
+    };
+  }, []);
+
   useEffect(() => {
     const name = window.PORTFOLIO.identity.name;
     const styleHead = "background:#0B1426;color:#FAFAF8;font:600 13px/1.4 Inter,sans-serif;padding:6px 12px;border-radius:4px 4px 0 0;";
@@ -2993,6 +3272,7 @@ function App() {
       <main>
         <Hero onNodeClick={onNodeClick} />
         <ParcoursSection />
+        <ProofSection />
         <GallerySection />
         <ContactSection />
         <footer>
