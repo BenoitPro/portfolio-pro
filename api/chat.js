@@ -1,8 +1,8 @@
-// Vercel serverless function — proxy to Qwen Cloud (DashScope, OpenAI-compatible)
+// Vercel serverless function — proxy to Qwen Cloud Token Plan (OpenAI-compatible)
 // Endpoint: POST /api/chat   body: { messages: [{role, content}, ...] }
 
-const OPENCODE_URL = "https://dashscope-intl.aliyuncs.com/compatible-mode/v1/chat/completions";
-const MODEL = "qwen-flash";
+const OPENCODE_URL = "https://token-plan.ap-southeast-1.maas.aliyuncs.com/compatible-mode/v1/chat/completions";
+const MODEL = "qwen3.8-flash";
 
 const BRAIN_FILES = [
   "https://raw.githubusercontent.com/BenoitPro/portfolio-pro/main/brain/profil.md",
